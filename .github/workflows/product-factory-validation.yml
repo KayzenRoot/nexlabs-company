@@ -82,7 +82,8 @@ jobs:
             if(!productCase.includes(field)) throw new Error('Product Case field missing: '+field);
           }
           if(!actions.includes('Sunk cost')) throw new Error('Sunk-cost rule missing');
-          if(!capacity.includes('Work-in-progress') || !capacity.includes('Idle code executor')) throw new Error('Portfolio capacity/WIP rule missing');
+          const capacityLower=capacity.toLowerCase();
+          if(!capacityLower.includes('work-in-progress') || !capacityLower.includes('idle code executor')) throw new Error('Portfolio capacity/WIP rule missing');
           if(!portfolio.includes('does not exist to maximize project count')) throw new Error('Anti-sprawl portfolio rule missing');
 
           console.log('WO-008 Product Factory validation passed.');
