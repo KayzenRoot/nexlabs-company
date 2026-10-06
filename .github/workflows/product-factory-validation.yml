@@ -65,9 +65,11 @@ jobs:
           const actions=fs.readFileSync('company/ITERATE-SCALE-PAUSE-KILL.md','utf8');
           const capacity=fs.readFileSync('company/PORTFOLIO-CAPACITY-POLICY.md','utf8');
 
-          for(const stage of ['IDEA','RESEARCH','VALIDATION','SPECIFIED','BUILD','RELEASED','OBSERVE']){
+          for(const stage of ['IDEA','RESEARCH','VALIDATION','SPECIFIED','BUILD','OBSERVE']){
             if(!lifecycle.includes(stage) || !factory.includes(stage)) throw new Error('Lifecycle stage missing: '+stage);
           }
+          if(!lifecycle.includes('RELEASED')) throw new Error('Lifecycle state RELEASED missing');
+          if(!factory.includes('RELEASE')) throw new Error('Product Factory RELEASE stage missing');
           for(const dim of ['Strategic Fit','Problem / User Value','Market / Distribution','Technical Feasibility','Economic Potential','Reuse / Compounding','Risk']){
             if(!score.includes(dim)) throw new Error('Portfolio scoring dimension missing: '+dim);
           }
