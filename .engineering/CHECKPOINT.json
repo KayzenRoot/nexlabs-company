@@ -14,7 +14,7 @@
   "activeStatus": "ADMITTED_IN_PROGRESS",
   "knownCritical": 0,
   "knownHigh": 0,
-  "nextLegalAction": "EXECUTE_WO_012_FINANCE_BUDGET_UNIT_ECONOMICS_INVESTMENT_MODEL",
+  "nextLegalAction": "VALIDATE_WO_012_FINANCE_MODEL_AND_OPEN_PR",
   "stopState": "NO_WO_013_OR_LATER_EXECUTION_BEFORE_WO_012_APPROVAL_MERGE_AND_CHECKPOINT_PROMOTION",
   "repositoryDisclosure": "PUBLIC_SAFE_ONLY",
   "securityArchitectureAuthority": "company/SECURITY-ARCHITECTURE.md"
