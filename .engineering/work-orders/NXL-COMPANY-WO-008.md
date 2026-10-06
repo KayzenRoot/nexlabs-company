@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-008 — Product Portfolio Strategy & Product Factory
 
 **Issue:** #9  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** STANDARD / strategy-critical  
 **Base:** `543aa91977d14d51c9984632ef0d2debe0e10b13`  
@@ -134,3 +134,15 @@ Brazilian Portuguese: exact base/head, portfolio coherence, validation rigor, ca
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-008. Do not admit or execute WO-009 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `0a4f112be5b49708f09656ac42740b3b1d2491f8`
+- All required persistent checks: `SUCCESS`
+- Validate NexLabs Product Factory: `SUCCESS`
+- Product Factory merge SHA: `38c2bbb088a010a3e1267311f53030a254e38160`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Correction history: two validator-only fixes; no Product Factory requirement was weakened.
+- Successor execution authority: `NONE`; WO-009 remains NOT_ADMITTED until separately compiled and locked.
