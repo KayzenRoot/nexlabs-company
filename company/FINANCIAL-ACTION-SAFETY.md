@@ -15,7 +15,7 @@ Analysis permission does not imply execution permission.
 
 ## High-assurance actions
 
-Company money movement, trading execution and value-bearing financial operations require:
+Company money movement, trading execution and value-bearing financial operations are classified as `HIGH_ASSURANCE` and require:
 - exact action preview;
 - beneficiary/account/instrument identity;
 - amount/value/currency;
