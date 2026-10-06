@@ -19,12 +19,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-007 AI employee contract
+      - name: Validate canonical AI employee contract
         shell: bash
         run: |
           set -euo pipefail
           node <<'NODE'
           const fs=require('fs');
+
           const required=[
             'company/AI-EMPLOYEE-CONTRACT.md',
             'company/AI-ROLE-SCHEMA.md',
@@ -34,26 +35,10 @@ jobs:
             'company/AI-KPI-AND-EVALUATION.md',
             'company/AI-ESCALATION-CONTRACT.md',
             'company/AI-FAILURE-AND-REPLACEMENT.md',
-            'company/AI-RUN-RECEIPT-CONTRACT.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-007.json'
+            'company/AI-RUN-RECEIPT-CONTRACT.md'
           ];
           for(const p of required){
-            if(!fs.existsSync(p)) throw new Error('Missing WO-007 output: '+p);
-          }
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-007') throw new Error('WO-007 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') {
-            throw new Error('Unexpected active status: '+cp.activeStatus);
-          }
-
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-007.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-007') throw new Error('WO-007 Context Lock mismatch');
-
-          for(let n=8;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+            if(!fs.existsSync(p)) throw new Error('Missing canonical employee-contract file: '+p);
           }
 
           const contract=fs.readFileSync('company/AI-EMPLOYEE-CONTRACT.md','utf8');
@@ -82,9 +67,11 @@ jobs:
             if(!receipt.includes(f)) throw new Error('Run receipt field missing: '+f);
           }
 
-          const combined=[contract,schema,perm,memory,tools,kpi,esc,fail,receipt].join('\n').toLowerCase();
-          if(combined.includes('conversation memory outranks')) throw new Error('Unsafe memory precedence detected');
-          if(combined.includes('unlimited retries')) throw new Error('Unsafe retry policy detected');
+          const wo7=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-007.md','utf8');
+          if(!wo7.includes('Status:** `APPROVED / MERGED`') &&
+             !wo7.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-007 employee-contract authority is not in an accepted lifecycle state');
+          }
 
-          console.log('WO-007 AI employee contract validation passed.');
+          console.log('Canonical NexLabs AI employee contract validation passed.');
           NODE

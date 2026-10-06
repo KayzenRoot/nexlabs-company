@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-007 — AI Employee Contract, Memory, Permissions & Escalation
 
 **Issue:** #8  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** ELEVATED / governance-critical  
 **Base:** `3db001f9bba7c6b2349edb4ef83fde77757b60d1`  
@@ -137,3 +137,19 @@ Brazilian Portuguese: exact base/head, contract completeness, permission/memory 
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-007. Do not admit or execute WO-008 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `900693fee0b4eafad15202567765f6195e3f1d3d`
+- Validate GEF 1.1.2: `SUCCESS`
+- Validate NexLabs Source Pack: `SUCCESS`
+- Validate NexLabs Company Strategy: `SUCCESS`
+- Validate NexLabs Business Model: `SUCCESS`
+- Validate NexLabs Governance: `SUCCESS`
+- Validate NexLabs AI Workforce: `SUCCESS`
+- Validate NexLabs AI Employee Contract: `SUCCESS`
+- Employee-contract merge SHA: `ec82d94c1c9e909d53fe4d5c590fc6196bc4cd25`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Successor execution authority: `NONE`; WO-008 remains NOT_ADMITTED until separately compiled and locked.

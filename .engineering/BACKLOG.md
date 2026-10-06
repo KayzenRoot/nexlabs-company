@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-006 are complete. WO-007 is the only currently admitted Work Order.
+WO-002 through WO-007 are complete. No Work Order is currently admitted; WO-008 is the next eligible admission.
 
 | WO | Issue | Classification | Phase | Status |
 | --- | ---: | --- | --- | --- |
@@ -11,7 +11,7 @@ WO-002 through WO-006 are complete. WO-007 is the only currently admitted Work O
 | NXL-COMPANY-WO-004 | #5 | NECESSARY | Company Blueprint | APPROVED / MERGED |
 | NXL-COMPANY-WO-005 | #6 | NECESSARY | Company Blueprint | APPROVED / MERGED |
 | NXL-COMPANY-WO-006 | #7 | NECESSARY | Company Blueprint | APPROVED / MERGED |
-| NXL-COMPANY-WO-007 | #8 | NECESSARY | Company Blueprint | ADMITTED / IN_PROGRESS |
+| NXL-COMPANY-WO-007 | #8 | NECESSARY | Company Blueprint | APPROVED / MERGED |
 | NXL-COMPANY-WO-008 | #9 | NECESSARY | Company Blueprint | PLANNED / NOT_ADMITTED |
 | NXL-COMPANY-WO-009 | #10 | NECESSARY | Company Blueprint | PLANNED / NOT_ADMITTED |
 | NXL-COMPANY-WO-010 | #11 | IMPORTANT | Company Blueprint | PLANNED / NOT_ADMITTED |
