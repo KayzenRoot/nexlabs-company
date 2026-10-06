@@ -10,7 +10,7 @@
 | NXL-COMPANY-WO-007 | #8 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-007-ai-employee-contract` |
 | NXL-COMPANY-WO-008 | #9 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-008-product-factory` |
 | NXL-COMPANY-WO-009 | #10 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-009-autonomous-software-factory` |
-| NXL-COMPANY-WO-010 | #11 | NOT_ADMITTED | TBD at admission |
+| NXL-COMPANY-WO-010 | #11 | ADMITTED / IN_PROGRESS | `planning/NXL-COMPANY-WO-010-research-innovation-ip` |
 | NXL-COMPANY-WO-011 | #12 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-012 | #13 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-013 | #14 | NOT_ADMITTED | TBD at admission |
