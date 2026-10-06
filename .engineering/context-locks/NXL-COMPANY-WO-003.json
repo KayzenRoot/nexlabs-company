@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-003",
+  "issue": 4,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "planning/NXL-COMPANY-WO-003-company-master",
+  "baseSha": "a0d3650183ee30ff9ca8aefaff936abd699e4fae",
+  "compiledDate": "2026-10-06",
+  "authorityModel": "GEF_1_1_2",
+  "criticalSourceFingerprints": {
+    ".engineering/CHECKPOINT.json": "blob:2d060c9b3116fae683ac2cffd3880be00213e03c",
+    ".engineering/DECISIONS-LEDGER.md": "blob:3483360eb85f34c53b975cade4301cade1663022",
+    ".engineering/SCOPE.md": "blob:d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "blob:a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/ARCHITECTURE.md": "blob:77289da4b7fc7161a5f45d3acfdb8d81deb328bf",
+    ".engineering/REQUIREMENTS.md": "blob:2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/work-orders/NXL-COMPANY-WO-003.md": "blob:f14031e8c7fae6511b1f383c9957ba8998983b1a"
+  },
+  "admittedOutputs": [
+    "company/COMPANY-MASTER.md",
+    "company/MISSION-VISION-VALUES.md",
+    "company/COMPANY-THESIS.md",
+    "company/POSITIONING.md",
+    "company/STRATEGIC-BOUNDARIES.md",
+    "company/FIVE-YEAR-DIRECTION.md",
+    ".engineering/SOURCE-HIERARCHY.md",
+    ".engineering/DECISIONS-LEDGER.md",
+    ".engineering/CHECKPOINT.md",
+    ".engineering/CHECKPOINT.json",
+    ".engineering/WORK-ORDER-REGISTRY.md",
+    ".engineering/BACKLOG.md",
+    ".engineering/work-orders/NXL-COMPANY-WO-003.md",
+    ".engineering/context-locks/NXL-COMPANY-WO-003.json",
+    ".github/workflows/company-strategy-validation.yml"
+  ],
+  "refreshTriggers": [
+    "main changes before WO-003 implementation audit",
+    "any locked critical source changes outside admitted WO-003 delta",
+    "WO-003 scope or accepted company-strategy authority changes",
+    "GEF baseline changes"
+  ],
+  "state": "LOCKED_FOR_WO_003"
+}
