@@ -1,0 +1,68 @@
+name: Validate NexLabs Source Pack
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate canonical source pack
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+          const required = [
+            'AGENTS.md',
+            '.engineering/SOURCE-HIERARCHY.md',
+            '.engineering/PROJECT-OVERVIEW.md',
+            '.engineering/REQUIREMENTS.md',
+            '.engineering/SCOPE.md',
+            '.engineering/ARCHITECTURE.md',
+            '.engineering/SECURITY.md',
+            '.engineering/TEST-BENCHMARK-PLAN.md',
+            '.engineering/DEPLOYMENT.md',
+            '.engineering/BACKLOG.md',
+            '.engineering/DEFINITION-OF-DONE.md',
+            '.engineering/DECISIONS-LEDGER.md',
+            '.engineering/CHECKPOINT.md',
+            '.engineering/CHECKPOINT.json',
+            '.engineering/WORK-ORDER-REGISTRY.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-002.json'
+          ];
+          for (const path of required) {
+            if (!fs.existsSync(path)) throw new Error('Missing canonical file: ' + path);
+          }
+          const cp = JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if (cp.activeWorkOrder !== 'NXL-COMPANY-WO-002') throw new Error('WO-002 must be active');
+          if (cp.activeStatus !== 'ADMITTED_IN_PROGRESS' && cp.activeStatus !== 'APPROVED_READY_FOR_PROMOTION') {
+            throw new Error('Unexpected active status: ' + cp.activeStatus);
+          }
+          const lock = JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-002.json','utf8'));
+          if (lock.workOrderId !== 'NXL-COMPANY-WO-002') throw new Error('Context Lock mismatch');
+          for (let n=2;n<=22;n++) {
+            const id = 'NXL-COMPANY-WO-' + String(n).padStart(3,'0');
+            const path = '.engineering/work-orders/' + id + '.md';
+            if (!fs.existsSync(path)) throw new Error('Missing Work Order: ' + id);
+            const body = fs.readFileSync(path,'utf8');
+            if (n === 2) {
+              if (!body.includes('Status:** `ADMITTED`')) throw new Error('WO-002 not admitted');
+            } else if (!body.includes('NOT_ADMITTED')) {
+              throw new Error(id + ' must remain NOT_ADMITTED');
+            }
+          }
+          console.log('Source Pack structural validation passed.');
+          NODE
