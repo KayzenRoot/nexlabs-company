@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-009 — GEF-Native Autonomous Software Factory
 
 **Issue:** #10  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** ELEVATED / engineering-governance critical  
 **Base:** `f0e63bbaac0622259efc2be6c1cf15e884a6f7c3`  
@@ -146,3 +146,15 @@ Brazilian Portuguese: exact base/head, lifecycle integrity, authority boundaries
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-009. Do not admit or execute WO-010 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `d078c285ab45c744a386c98fa2bc2360a7093985`
+- All nine required validations: `SUCCESS`
+- Software Factory merge SHA: `71ad4d381bbd65c387d08d800ce7c4e90d22cbbb`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Recovery evidence: admission timeouts were reconciled read-only; only missing writes were completed.
+- Correction history: two validator-only corrections and one content clarification making `RECOVERY_REQUIRED` explicit.
+- Successor execution authority: `NONE`; WO-010 remains NOT_ADMITTED until separately compiled and locked.
