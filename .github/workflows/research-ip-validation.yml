@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-010 research innovation IP strategy
+      - name: Validate canonical research innovation IP strategy
         shell: bash
         run: |
           set -euo pipefail
@@ -36,25 +36,10 @@ jobs:
             'company/IP-OWNERSHIP-AND-PROVENANCE.md',
             'company/LICENSING-STRATEGY.md',
             'company/OPEN-SOURCE-AND-PUBLICATION-POLICY.md',
-            'company/TECHNOLOGY-TRANSFER-TO-PRODUCT.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-010.json'
+            'company/TECHNOLOGY-TRANSFER-TO-PRODUCT.md'
           ];
           for(const p of required){
             if(!fs.existsSync(p)) throw new Error('Missing WO-010 output: '+p);
-          }
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-010') throw new Error('WO-010 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION'){
-            throw new Error('Unexpected active status: '+cp.activeStatus);
-          }
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-010.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-010') throw new Error('WO-010 Context Lock mismatch');
-
-          for(let n=11;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
           }
 
           const strategy=fs.readFileSync('company/RESEARCH-INNOVATION-STRATEGY.md','utf8');
@@ -94,5 +79,11 @@ jobs:
             if(!disclosure.includes('not a patent filing') && !provenance.includes('does not replace formal legal analysis')) throw new Error('Legal/IP boundary missing');
           }
 
-          console.log('WO-010 Research/IP validation passed.');
+          const wo10=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-010.md','utf8');
+          if(!wo10.includes('Status:** `APPROVED / MERGED`') &&
+             !wo10.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-010 Research/IP authority is not in an accepted lifecycle state');
+          }
+
+          console.log('Canonical NexLabs Research/IP validation passed.');
           NODE
