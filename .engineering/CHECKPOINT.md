@@ -1,25 +1,46 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_011_ADMITTED_SECURITY_PRIVACY_WEB3_FINANCIAL_RISK_IN_PROGRESS`
+**Status:** `WO_011_COMPLETE_SECURITY_ARCHITECTURE_CANONICAL`
 
 - Project: NexLabs Company
 - Version target: `v0.1`
-- Phase: `COMPANY_BLUEPRINT_SECURITY`
+- Phase: `FINANCE_OPERATIONS_READY_FOR_WO_012_ADMISSION`
 - GEF baseline: `1.1.2`
-- Completed through Work Order: `NXL-COMPANY-WO-010`
-- Admission base SHA: `51d21ccc61ec6469118319eac5796c6fafc94d3d`
-- Active Work Order: `NXL-COMPANY-WO-011`
-- Active issue: `#12`
-- Active branch: `planning/NXL-COMPANY-WO-011-security-privacy-web3-financial-risk`
-- Active Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-011.json`
-- Active status: `ADMITTED / IN_PROGRESS`
-- Known HIGH/CRITICAL blockers: `0 known for current architecture-only scope`
+- Completed through Work Order: `NXL-COMPANY-WO-011`
+- WO-011 audited head: `da885a11d4082d669500e2c950249f7859188a75`
+- WO-011 Security Architecture merge SHA: `99a733fa14cea9665aa249d31aa5f24393e35c31`
+- Active Work Order: `NONE`
+- Active issue: `NONE`
+- Active branch: `NONE`
+- Active Context Lock: `NONE`
+- Known HIGH/CRITICAL blockers: `0 known`
 - Repository disclosure risk: `PUBLIC — public-safe information only`
+
+## Canonical security authority
+
+Primary authority: `company/SECURITY-ARCHITECTURE.md`
+
+Supporting authority:
+- `company/IDENTITY-AND-ACCESS-CONTROL.md`
+- `company/SECRETS-KEYS-AND-CREDENTIALS.md`
+- `company/DATA-GOVERNANCE-AND-PRIVACY.md`
+- `company/SECURITY-INCIDENT-RESPONSE.md`
+- `company/BACKUP-RECOVERY-AND-BCP.md`
+- `company/SUPPLY-CHAIN-SECURITY.md`
+- `company/AGENT-AND-TOOL-SECURITY.md`
+- `company/WEB3-SIGNING-AND-CUSTODY-POLICY.md`
+- `company/FINANCIAL-ACTION-SAFETY.md`
+- `company/HIGH-ASSURANCE-ACTION-PROTOCOL.md`
+- `company/SECURITY-LOGGING-AND-AUDIT.md`
+- `company/THREAT-MODEL-BASELINE.md`
+- `company/REGULATORY-APPLICABILITY-REGISTER.md`
 
 ## Next legal action
 
-`VALIDATE_WO_011_SECURITY_ARCHITECTURE_AND_OPEN_PR`
+`ADMIT_NXL_COMPANY_WO_012`
+
+Admission requires rehydrating this checkpoint and canonical sources, recompiling WO-012 against the current main SHA and creating a fresh Context Lock.
 
 ## Stop state
 
-Do not admit or execute WO-012 or any later Work Order until WO-011 is exact-head audited, merged and checkpoint-promoted.
+WO-012 remains `PLANNED / NOT_ADMITTED`. No WO-012 execution may begin until its own admission and Context Lock are committed.
