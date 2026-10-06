@@ -6,7 +6,7 @@
 | NXL-COMPANY-WO-003 | #4 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-003-company-master` |
 | NXL-COMPANY-WO-004 | #5 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-004-business-model` |
 | NXL-COMPANY-WO-005 | #6 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-005-governance` |
-| NXL-COMPANY-WO-006 | #7 | NOT_ADMITTED | TBD at admission |
+| NXL-COMPANY-WO-006 | #7 | ADMITTED / IN_PROGRESS | `planning/NXL-COMPANY-WO-006-ai-workforce` |
 | NXL-COMPANY-WO-007 | #8 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-008 | #9 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-009 | #10 | NOT_ADMITTED | TBD at admission |
