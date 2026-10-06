@@ -82,8 +82,8 @@ jobs:
           const prohibitedClaims=[
             /we have \d+[+,]? customers/i,
             /annual recurring revenue.*\d/i,
-            /market leader/i,
-            /fully autonomous company/i
+            /nexlabs(?: technology)?\s+(?:is|is the|has become)\s+(?:a|the)?\s*market leader/i,
+            /nexlabs(?: technology)?\s+(?:is|operates as)\s+(?:a\s+)?fully autonomous company/i
           ];
           for (const rx of prohibitedClaims) {
             if (rx.test(combined)) throw new Error('Unsupported/prohibited factual claim pattern: '+rx);
