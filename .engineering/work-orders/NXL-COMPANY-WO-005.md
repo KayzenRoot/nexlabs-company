@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-005 — Corporate Governance, Authority & Risk Model
 
 **Issue:** #6  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** ELEVATED / governance-critical  
 **Base:** `0b4a6d3c15684503212a36c6174d9535a1b534ca`  
@@ -127,3 +127,17 @@ Brazilian Portuguese: exact base/head, authority consistency, risk mapping, sepa
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-005. Do not admit or execute WO-006 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `26f93f3ac2be1454b170cfa2672bad6a1400ccee`
+- Validate GEF 1.1.2: `SUCCESS`
+- Validate NexLabs Source Pack: `SUCCESS`
+- Validate NexLabs Company Strategy: `SUCCESS`
+- Validate NexLabs Business Model: `SUCCESS`
+- Validate NexLabs Governance: `SUCCESS`
+- Governance merge SHA: `61b182dc8f94a462dcdd7e15537b81cecc8e3857`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Successor execution authority: `NONE`; WO-006 remains NOT_ADMITTED until separately compiled and locked.
