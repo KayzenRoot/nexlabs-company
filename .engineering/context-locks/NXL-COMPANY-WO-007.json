@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-007",
+  "issue": 8,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "planning/NXL-COMPANY-WO-007-ai-employee-contract",
+  "baseSha": "3db001f9bba7c6b2349edb4ef83fde77757b60d1",
+  "compiledDate": "2026-10-06",
+  "authorityModel": "GEF_1_1_2",
+  "criticalSourceFingerprints": {
+    ".engineering/CHECKPOINT.json": "blob:df8a2035525f484c52e57f80b60420aa96bf78f1",
+    ".engineering/DECISIONS-LEDGER.md": "blob:0ddf39846703db32966764eee6018995395b7132",
+    ".engineering/SCOPE.md": "blob:d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "blob:a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/ARCHITECTURE.md": "blob:77289da4b7fc7161a5f45d3acfdb8d81deb328bf",
+    ".engineering/REQUIREMENTS.md": "blob:2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/work-orders/NXL-COMPANY-WO-007.md": "blob:7a4e1c70194f2f5a2c258ecd8692bb9dbcec8c42",
+    "company/CORPORATE-GOVERNANCE.md": "blob:06effa50c2a1eecd751d55d212f38b63c884c04c",
+    "company/AUTHORITY-MATRIX.md": "blob:52f627c7ba72c4f39f9bf50f8889caa914fe48f5",
+    "company/AI-ORGANIZATION.md": "blob:fdefa607713ddccdcef761c0fb85dffa60a86bb6",
+    "company/AI-WORKFORCE-ARCHITECTURE.md": "blob:6149b28790c2bfcc000528ea509d25a9e9e3f095",
+    "company/ROLE-TAXONOMY.md": "blob:15940badc1d959b4f8332c566d2ac97032da5221"
+  },
+  "admittedOutputs": [
+    "company/AI-EMPLOYEE-CONTRACT.md",
+    "company/AI-ROLE-SCHEMA.md",
+    "company/AI-PERMISSIONS-MODEL.md",
+    "company/AI-MEMORY-POLICY.md",
+    "company/AI-TOOLS-AND-CAPABILITIES.md",
+    "company/AI-KPI-AND-EVALUATION.md",
+    "company/AI-ESCALATION-CONTRACT.md",
+    "company/AI-FAILURE-AND-REPLACEMENT.md",
+    "company/AI-RUN-RECEIPT-CONTRACT.md",
+    ".engineering/SOURCE-HIERARCHY.md",
+    ".engineering/DECISIONS-LEDGER.md",
+    ".engineering/CHECKPOINT.md",
+    ".engineering/CHECKPOINT.json",
+    ".engineering/WORK-ORDER-REGISTRY.md",
+    ".engineering/BACKLOG.md",
+    ".engineering/work-orders/NXL-COMPANY-WO-007.md",
+    ".engineering/context-locks/NXL-COMPANY-WO-007.json",
+    ".github/workflows/ai-employee-contract-validation.yml"
+  ],
+  "refreshTriggers": [
+    "main changes before WO-007 implementation audit",
+    "any locked critical source changes outside admitted WO-007 delta",
+    "WO-007 contract/memory/permission scope changes",
+    "governance or AI-workforce authority changes",
+    "GEF baseline changes"
+  ],
+  "state": "LOCKED_FOR_WO_007"
+}
