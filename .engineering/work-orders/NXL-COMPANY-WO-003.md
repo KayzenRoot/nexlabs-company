@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-003 — Company Master, Mission, Vision & Positioning
 
 **Issue:** #4  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** LOW / strategy-critical  
 **Base:** `a0d3650183ee30ff9ca8aefaff936abd699e4fae`  
@@ -115,3 +115,16 @@ Brazilian Portuguese: exact base/head, source consistency, scope compliance, acc
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-003. Do not admit or execute WO-004 in the same PR. Promotion and issue close require a separate bounded checkpoint delta after the approved implementation merge.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `81b0ea54f3276c45e777daa134ebf86bfae1fcfd`
+- Validate GEF 1.1.2: `SUCCESS`
+- Validate NexLabs Source Pack: `SUCCESS`
+- Validate NexLabs Company Strategy: `SUCCESS`
+- Strategy merge SHA: `151576c869566e89ada8ec09c65f4f75fdbd885f`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Correction history: two direct validator fixes; no strategic requirement or product scope was weakened.
+- Successor execution authority: `NONE`; WO-004 remains NOT_ADMITTED until separately compiled and locked.
