@@ -8,21 +8,15 @@ GEF Bootstrap **v1.1.2** is the governed engineering baseline.
 
 ## Company strategy
 
-**Category:** AI-native technology company and product studio.
-
-Primary strategy authority: `company/COMPANY-MASTER.md`
+Primary authority: `company/COMPANY-MASTER.md`
 
 ## Business model
 
-Primary business-model authority: `company/BUSINESS-MODEL.md`
-
-Economic orientation:
-
-`Owned recurring product revenue → usage/API revenue → technology licensing → bounded strategic services`
+Primary authority: `company/BUSINESS-MODEL.md`
 
 ## Corporate governance
 
-Primary governance authority: `company/CORPORATE-GOVERNANCE.md`
+Primary authority: `company/CORPORATE-GOVERNANCE.md`
 
 Canonical action classes:
 
@@ -30,22 +24,32 @@ Canonical action classes:
 
 ## AI organization
 
-Primary workforce authority: `company/AI-ORGANIZATION.md`
+Primary authority: `company/AI-ORGANIZATION.md`
 
-v0.1 organization:
+v0.1 shape:
 
 `Founder/CEO + AI Chief of Staff + AI Product/Strategy + AI Technology/Engineering + elastic specialist pool`
 
-The software-delivery cell preserves:
+## AI employee contract
 
-`Founder Intent → Planner/Architect → Work Order → Executor → Tests/Evidence → Reviewer/Auditor → Checkpoint → Next`
+Primary authority: `company/AI-EMPLOYEE-CONTRACT.md`
 
-Supporting workforce sources live under `company/`.
+Every AI employee has a stable logical role contract covering:
+- mission/responsibilities;
+- inputs/outputs;
+- tools and permission envelope;
+- memory precedence;
+- KPIs/evaluation;
+- escalation/limitations;
+- failure/replacement;
+- attributable run receipts.
+
+Model/provider/session identity is replaceable and does not define organizational authority.
 
 ## Current governed state
 
-`NXL-COMPANY-WO-006` is complete. The next legal action is to **admit WO-007: AI Employee Contract, Memory, Permissions & Escalation** against current canonical main and create a fresh Context Lock.
+`NXL-COMPANY-WO-007` is complete. The next legal action is to **admit WO-008: Product Portfolio Strategy & Product Factory** against current canonical main and create a fresh Context Lock.
 
-WO-007 and later remain non-executable until admitted.
+WO-008 and later remain non-executable until admitted.
 
 > Repository disclosure: this repository is currently public. Commit public-safe information only; never store credentials, secrets or confidential company/customer/investor material here.
