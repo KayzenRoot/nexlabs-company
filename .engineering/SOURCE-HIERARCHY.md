@@ -17,11 +17,12 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 10 | AI workforce | `company/AI-ORGANIZATION.md` plus supporting workforce architecture documents |
 | 11 | AI employee contract | `company/AI-EMPLOYEE-CONTRACT.md` plus supporting role/memory/permission documents |
 | 12 | Product Factory | `company/PRODUCT-FACTORY.md` plus supporting portfolio/lifecycle documents |
-| 13 | Security | `SECURITY.md` |
-| 14 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 15 | Deployment | `DEPLOYMENT.md` |
-| 16 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 17 | Conversation | transient context only |
+| 13 | Autonomous software factory | `company/AUTONOMOUS-SOFTWARE-FACTORY.md` plus supporting engineering lifecycle protocols |
+| 14 | Security | `SECURITY.md` |
+| 15 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 16 | Deployment | `DEPLOYMENT.md` |
+| 17 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 18 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -119,3 +120,21 @@ Supporting canonical Product Factory sources:
 - `company/PORTFOLIO-CAPACITY-POLICY.md`
 
 WO-009 may automate the engineering portion of this factory but may not remove research, validation, portfolio decision, evidence or capacity gates.
+
+
+## Autonomous-software-factory authority
+
+`company/AUTONOMOUS-SOFTWARE-FACTORY.md` is the primary authority for the GEF-native autonomous engineering lifecycle and transition semantics.
+
+Supporting canonical engineering-factory sources:
+- `company/ENGINEERING-ROLE-CONTRACTS.md`
+- `company/ENGINEERING-ORCHESTRATION-STATE-MACHINE.md`
+- `company/WORK-ORDER-ADMISSION-PROTOCOL.md`
+- `company/CONTEXT-LOCK-AND-PREFLIGHT.md`
+- `company/EXECUTOR-ADAPTER-CONTRACT.md`
+- `company/EVIDENCE-AND-EXACT-HEAD-PROTOCOL.md`
+- `company/REVIEW-AND-CORRECTION-PROTOCOL.md`
+- `company/CHECKPOINT-PROMOTION-PROTOCOL.md`
+- `company/AUTONOMOUS-ENGINEERING-MVP.md`
+
+Later Company OS and runtime Work Orders may implement this lifecycle, but may not silently remove admission, Context Lock, exact-head evidence, correction, review or checkpoint-promotion gates.

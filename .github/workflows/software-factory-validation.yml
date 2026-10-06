@@ -1,0 +1,100 @@
+name: Validate NexLabs Autonomous Software Factory
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  software-factory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-009 autonomous software factory
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+
+          const required=[
+            'company/AUTONOMOUS-SOFTWARE-FACTORY.md',
+            'company/ENGINEERING-ROLE-CONTRACTS.md',
+            'company/ENGINEERING-ORCHESTRATION-STATE-MACHINE.md',
+            'company/WORK-ORDER-ADMISSION-PROTOCOL.md',
+            'company/CONTEXT-LOCK-AND-PREFLIGHT.md',
+            'company/EXECUTOR-ADAPTER-CONTRACT.md',
+            'company/EVIDENCE-AND-EXACT-HEAD-PROTOCOL.md',
+            'company/REVIEW-AND-CORRECTION-PROTOCOL.md',
+            'company/CHECKPOINT-PROMOTION-PROTOCOL.md',
+            'company/AUTONOMOUS-ENGINEERING-MVP.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-009.json'
+          ];
+
+          for(const p of required){
+            if(!fs.existsSync(p)) throw new Error('Missing WO-009 output: '+p);
+          }
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-009') throw new Error('WO-009 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION'){
+            throw new Error('Unexpected active status: '+cp.activeStatus);
+          }
+
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-009.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-009') throw new Error('WO-009 Context Lock mismatch');
+
+          for(let n=10;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const factory=fs.readFileSync('company/AUTONOMOUS-SOFTWARE-FACTORY.md','utf8');
+          const roles=fs.readFileSync('company/ENGINEERING-ROLE-CONTRACTS.md','utf8');
+          const sm=fs.readFileSync('company/ENGINEERING-ORCHESTRATION-STATE-MACHINE.md','utf8');
+          const admission=fs.readFileSync('company/WORK-ORDER-ADMISSION-PROTOCOL.md','utf8');
+          const lockdoc=fs.readFileSync('company/CONTEXT-LOCK-AND-PREFLIGHT.md','utf8');
+          const executor=fs.readFileSync('company/EXECUTOR-ADAPTER-CONTRACT.md','utf8');
+          const evidence=fs.readFileSync('company/EVIDENCE-AND-EXACT-HEAD-PROTOCOL.md','utf8');
+          const review=fs.readFileSync('company/REVIEW-AND-CORRECTION-PROTOCOL.md','utf8');
+          const promotion=fs.readFileSync('company/CHECKPOINT-PROMOTION-PROTOCOL.md','utf8');
+          const mvp=fs.readFileSync('company/AUTONOMOUS-ENGINEERING-MVP.md','utf8');
+
+          for(const state of ['ANALYZE','SOURCE_CHECK','ADMITTED','CONTEXT_LOCKED','PREFLIGHT','EXECUTING','TEST_EVIDENCE','REVIEW','CORRECTION_REQUIRED','MERGED','CHECKPOINT_PROMOTION','COMPLETE','BLOCKED','RECOVERY_REQUIRED']){
+            if(!sm.includes(state)) throw new Error('State machine missing state: '+state);
+          }
+
+          for(const role of ['Planner / Architect','Executor','QA / Test','Reviewer / Auditor','Promotion Function']){
+            if(!roles.includes(role)) throw new Error('Engineering role missing: '+role);
+          }
+
+          if(!admission.includes('exact base') || !admission.includes('Context Lock')) throw new Error('Admission compile semantics missing');
+          const lockLower=lockdoc.toLowerCase();
+          if(!lockLower.includes('stale') || !lockLower.includes('context lock') || !lockLower.includes('preflight')) throw new Error('Context Lock/preflight safety missing');
+          if(!executor.includes('Provider independence') || !executor.includes('may not')) throw new Error('Executor authority/provider boundary missing');
+          if(!evidence.includes('Exact-head rule') || !evidence.includes('head changes')) throw new Error('Exact-head invalidation rule missing');
+          for(const verdict of ['APPROVED','CORRECTION_REQUIRED','BLOCKED']){
+            if(!review.includes(verdict)) throw new Error('Review verdict missing: '+verdict);
+          }
+          if(!review.includes('Same-Work-Order correction')) throw new Error('Bounded correction rule missing');
+          if(!promotion.includes('Implementation merge and checkpoint promotion are separate')) throw new Error('Merge/promotion separation missing');
+          const smLower=sm.toLowerCase();
+          if(!factory.includes('RECOVERY_REQUIRED') || !(smLower.includes('blind mutation retry') || smLower.includes('blindly replay'))) throw new Error('Ambiguous mutation recovery rule missing');
+
+          const mvpMarkers=['Work Order','Context Lock','Executor adapter','tests/evidence','Reviewer','correction','merged','checkpoint promotion','Founder'];
+          for(const marker of mvpMarkers){
+            if(!mvp.toLowerCase().includes(marker.toLowerCase())) throw new Error('MVP proof missing marker: '+marker);
+          }
+
+          console.log('WO-009 autonomous software factory validation passed.');
+          NODE

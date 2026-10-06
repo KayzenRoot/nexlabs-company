@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-009",
+  "issue": 10,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "planning/NXL-COMPANY-WO-009-autonomous-software-factory",
+  "baseSha": "f0e63bbaac0622259efc2be6c1cf15e884a6f7c3",
+  "compiledDate": "2026-10-06",
+  "authorityModel": "GEF_1_1_2",
+  "criticalSourceFingerprints": {
+    ".engineering/CHECKPOINT.json": "blob:3c12a37daa6566f1ff30bd20d41be5cefcdc23ac",
+    ".engineering/DECISIONS-LEDGER.md": "blob:39c94f513548dc119b007aa56fa05e5dca4d6dad",
+    ".engineering/SCOPE.md": "blob:d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "blob:a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/ARCHITECTURE.md": "blob:77289da4b7fc7161a5f45d3acfdb8d81deb328bf",
+    ".engineering/REQUIREMENTS.md": "blob:2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/work-orders/NXL-COMPANY-WO-009.md": "blob:3600540781f720349a988dc2f87825ffeae05717",
+    "company/CORPORATE-GOVERNANCE.md": "blob:06effa50c2a1eecd751d55d212f38b63c884c04c",
+    "company/AI-ORGANIZATION.md": "blob:fdefa607713ddccdcef761c0fb85dffa60a86bb6",
+    "company/AI-EMPLOYEE-CONTRACT.md": "blob:e0da3acc80833410cf6712cbf2c48d67bc1aaed8",
+    "company/PRODUCT-FACTORY.md": "blob:4a1d8965bed1278c9d111878b958e19074351039",
+    "company/SOFTWARE-DELIVERY-CELL.md": "blob:dbfbc7eab887f27eb79c95a88bce916a49f28888"
+  },
+  "admittedOutputs": [
+    "company/AUTONOMOUS-SOFTWARE-FACTORY.md",
+    "company/ENGINEERING-ROLE-CONTRACTS.md",
+    "company/ENGINEERING-ORCHESTRATION-STATE-MACHINE.md",
+    "company/WORK-ORDER-ADMISSION-PROTOCOL.md",
+    "company/CONTEXT-LOCK-AND-PREFLIGHT.md",
+    "company/EXECUTOR-ADAPTER-CONTRACT.md",
+    "company/EVIDENCE-AND-EXACT-HEAD-PROTOCOL.md",
+    "company/REVIEW-AND-CORRECTION-PROTOCOL.md",
+    "company/CHECKPOINT-PROMOTION-PROTOCOL.md",
+    "company/AUTONOMOUS-ENGINEERING-MVP.md",
+    ".engineering/SOURCE-HIERARCHY.md",
+    ".engineering/DECISIONS-LEDGER.md",
+    ".engineering/CHECKPOINT.md",
+    ".engineering/CHECKPOINT.json",
+    ".engineering/WORK-ORDER-REGISTRY.md",
+    ".engineering/BACKLOG.md",
+    ".engineering/work-orders/NXL-COMPANY-WO-009.md",
+    ".engineering/context-locks/NXL-COMPANY-WO-009.json",
+    ".github/workflows/software-factory-validation.yml"
+  ],
+  "refreshTriggers": [
+    "main changes before WO-009 implementation audit",
+    "locked critical source changes outside admitted WO-009 delta",
+    "software-factory lifecycle or authority scope changes",
+    "GEF baseline changes",
+    "governance/workforce/employee-contract/Product Factory authority changes"
+  ],
+  "state": "LOCKED_FOR_WO_009"
+}
