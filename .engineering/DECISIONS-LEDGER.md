@@ -90,3 +90,36 @@
 ## D-0022 — Product economics require explicit unknown states
 **Status:** APPROVED IN WO-004  
 **Decision:** Revenue, retention, cost-to-serve, margin and acquisition metrics may be MEASURED, ESTIMATED, UNAVAILABLE or NOT_APPLICABLE. Missing evidence must never be coerced to zero or treated as proof of scalability.
+
+
+## D-0023 — Founder/CEO retains ultimate human authority
+**Status:** APPROVED IN WO-005  
+**Decision:** The Founder/CEO retains final authority over strategy, governance changes, ownership/equity, material capital commitments, legal commitments and unrestricted privileged/security/signing authority.
+
+## D-0024 — NexLabs uses five canonical action classes
+**Status:** APPROVED IN WO-005  
+**Decision:** Every material action resolves to a minimum class: AUTO, AUTO+AUDIT, REVIEW_REQUIRED, CEO_APPROVAL or PROHIBITED. Stricter policy may raise, but not silently lower, the class.
+
+## D-0025 — Unknown authority fails closed
+**Status:** APPROVED IN WO-005  
+**Decision:** Missing, stale, ambiguous or conflicting authority produces BLOCKED/ESCALATE, never implicit permission.
+
+## D-0026 — AI agents cannot self-expand authority
+**Status:** APPROVED IN WO-005  
+**Decision:** No AI agent may increase its own permissions, secrets, spending envelope, approval class or governance authority. Capability possession is not authorization.
+
+## D-0027 — High-risk self-approval is prohibited
+**Status:** APPROVED IN WO-005  
+**Decision:** An R3/R4 action may not be solely proposed, executed and approved by the same agent/run. Founder approval does not remove technical evidence requirements.
+
+## D-0028 — High-assurance domains remain founder-gated by default
+**Status:** APPROVED IN WO-005  
+**Decision:** Funds, privileged credentials, legal commitments, material production/security actions and value-bearing Web3 signing default to CEO_APPROVAL unless a later governed policy defines a narrower pre-approved envelope.
+
+## D-0029 — Emergencies do not suspend governance
+**Status:** APPROVED IN WO-005  
+**Decision:** Incident automation may perform pre-approved reversible containment, but emergencies do not authorize evidence deletion, unrestricted privilege expansion, unknown fund transfers, secret disclosure or global governance disablement.
+
+## D-0030 — Material actions require attributable receipts
+**Status:** APPROVED IN WO-005  
+**Decision:** Material company actions must be reconstructable from role/action/risk/authorization/target/outcome/evidence records without embedding raw secrets.

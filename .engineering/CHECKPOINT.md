@@ -1,43 +1,25 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_004_COMPLETE_BUSINESS_MODEL_CANONICAL`
+**Status:** `WO_005_ADMITTED_GOVERNANCE_IN_PROGRESS`
 
 - Project: NexLabs Company
 - Version target: `v0.1`
-- Phase: `CORPORATE_GOVERNANCE_READY_FOR_WO_005_ADMISSION`
+- Phase: `COMPANY_BLUEPRINT`
 - GEF baseline: `1.1.2`
 - Completed through Work Order: `NXL-COMPANY-WO-004`
-- WO-004 audited head: `1f77eb68054beb7f0e5e423842c696e029a49e05`
-- WO-004 business-model merge SHA: `93af709929eea3a5df9d4abdabccaf3c33a76973`
-- Active Work Order: `NONE`
-- Active issue: `NONE`
-- Active branch: `NONE`
-- Active Context Lock: `NONE`
-- Known HIGH/CRITICAL blockers: `0 known`
+- Admission base SHA: `0b4a6d3c15684503212a36c6174d9535a1b534ca`
+- Active Work Order: `NXL-COMPANY-WO-005`
+- Active issue: `#6`
+- Active branch: `planning/NXL-COMPANY-WO-005-governance`
+- Active Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-005.json`
+- Active status: `ADMITTED / IN_PROGRESS`
+- Known HIGH/CRITICAL blockers: `0 known for current governance/documentation scope`
 - Repository disclosure risk: `PUBLIC — public-safe information only`
-
-## Canonical company strategy
-
-Primary authority: `company/COMPANY-MASTER.md`
-
-## Canonical business model
-
-Primary authority: `company/BUSINESS-MODEL.md`
-
-Supporting business-model authority:
-- `company/REVENUE-ARCHITECTURE.md`
-- `company/PRICING-PRINCIPLES.md`
-- `company/PRODUCT-SERVICE-BOUNDARIES.md`
-- `company/RECURRING-REVENUE-MODEL.md`
-- `company/MONETIZATION-GUARDRAILS.md`
-- `company/ECONOMIC-METRICS-BASELINE.md`
 
 ## Next legal action
 
-`ADMIT_NXL_COMPANY_WO_005`
-
-Admission requires rehydrating this checkpoint and all canonical sources, recompiling WO-005 against the then-current main SHA and creating a fresh Context Lock.
+`VALIDATE_WO_005_GOVERNANCE_AND_OPEN_PR`
 
 ## Stop state
 
-WO-005 remains `PLANNED / NOT_ADMITTED`. No WO-005 execution may begin until its own admission and Context Lock are committed.
+Do not admit or execute WO-006 or any later Work Order until WO-005 is exact-head audited, merged and checkpoint-promoted.

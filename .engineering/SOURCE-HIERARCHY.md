@@ -13,11 +13,12 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 5 | Architecture | `ARCHITECTURE.md` and accepted architecture ADRs |
 | 6 | Requirements | `REQUIREMENTS.md` |
 | 8 | Business model | `company/BUSINESS-MODEL.md` plus the supporting canonical business-model documents |
-| 9 | Security | `SECURITY.md` |
-| 10 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 11 | Deployment | `DEPLOYMENT.md` |
-| 12 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 13 | Conversation | transient context only |
+| 9 | Corporate governance | `company/CORPORATE-GOVERNANCE.md` plus authority/risk/approval supporting documents |
+| 10 | Security | `SECURITY.md` |
+| 11 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 12 | Deployment | `DEPLOYMENT.md` |
+| 13 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 14 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -49,3 +50,19 @@ Supporting canonical business-model documents:
 - `company/ECONOMIC-METRICS-BASELINE.md`
 
 Later Product Factory, Finance, GTM and Investor Work Orders may refine their own domains but may not silently invert the approved company-level revenue priorities or service boundary.
+
+
+## Corporate-governance authority
+
+`company/CORPORATE-GOVERNANCE.md` is the primary company authority for Founder/CEO powers, AI delegation and governance principles.
+
+Supporting canonical governance:
+- `company/AUTHORITY-MATRIX.md`
+- `company/RISK-CLASSIFICATION.md`
+- `company/APPROVAL-POLICY.md`
+- `company/SEGREGATION-OF-DUTIES.md`
+- `company/ESCALATION-AND-INCIDENT-AUTHORITY.md`
+- `company/PROHIBITED-ACTIONS.md`
+- `company/AUDIT-AND-RECEIPTS.md`
+
+Later Workforce, Security, Finance and Company OS Work Orders may refine role/tool-specific policy, but may not silently lower the minimum authority or risk class established here.
