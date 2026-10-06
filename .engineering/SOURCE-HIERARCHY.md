@@ -18,11 +18,12 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 11 | AI employee contract | `company/AI-EMPLOYEE-CONTRACT.md` plus supporting role/memory/permission documents |
 | 12 | Product Factory | `company/PRODUCT-FACTORY.md` plus supporting portfolio/lifecycle documents |
 | 13 | Autonomous software factory | `company/AUTONOMOUS-SOFTWARE-FACTORY.md` plus supporting engineering lifecycle protocols |
-| 14 | Security | `SECURITY.md` |
-| 15 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 16 | Deployment | `DEPLOYMENT.md` |
-| 17 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 18 | Conversation | transient context only |
+| 14 | Research & IP | `company/RESEARCH-INNOVATION-STRATEGY.md` plus supporting research/provenance/disposition documents |
+| 15 | Security | `SECURITY.md` |
+| 16 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 17 | Deployment | `DEPLOYMENT.md` |
+| 18 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 19 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -138,3 +139,21 @@ Supporting canonical engineering-factory sources:
 - `company/AUTONOMOUS-ENGINEERING-MVP.md`
 
 Later Company OS and runtime Work Orders may implement this lifecycle, but may not silently remove admission, Context Lock, exact-head evidence, correction, review or checkpoint-promotion gates.
+
+
+## Research-and-IP authority
+
+`company/RESEARCH-INNOVATION-STRATEGY.md` is the primary authority for research purpose, innovation classification and high-level IP disposition governance.
+
+Supporting canonical Research/IP sources:
+- `company/RESEARCH-LIFECYCLE.md`
+- `company/RESEARCH-EVIDENCE-STANDARDS.md`
+- `company/INNOVATION-LEDGER.md`
+- `company/PROTOTYPE-GATES.md`
+- `company/INVENTION-DISCLOSURE.md`
+- `company/IP-OWNERSHIP-AND-PROVENANCE.md`
+- `company/LICENSING-STRATEGY.md`
+- `company/OPEN-SOURCE-AND-PUBLICATION-POLICY.md`
+- `company/TECHNOLOGY-TRANSFER-TO-PRODUCT.md`
+
+Legal conclusions such as patentability, inventorship, freedom-to-operate, ownership disputes or binding license interpretation require appropriate professional/legal review and are not established merely by these internal documents.
