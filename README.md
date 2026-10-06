@@ -6,28 +6,29 @@ Canonical company and engineering repository for NexLabs Technology.
 
 NexLabs is an **AI-native technology company and product studio** governed through GEF Bootstrap **v1.1.2**.
 
-Canonical authorities now include:
+Canonical authorities:
 - company strategy: `company/COMPANY-MASTER.md`
 - business model: `company/BUSINESS-MODEL.md`
 - corporate governance: `company/CORPORATE-GOVERNANCE.md`
 - AI organization: `company/AI-ORGANIZATION.md`
 - AI employee contract: `company/AI-EMPLOYEE-CONTRACT.md`
 - Product Factory: `company/PRODUCT-FACTORY.md`
+- Autonomous Software Factory: `company/AUTONOMOUS-SOFTWARE-FACTORY.md`
 
-## Product Factory
+## Autonomous Software Factory
 
-Canonical flow:
+Canonical engineering flow:
 
-`IDEA → INTAKE → RESEARCH → VALIDATION → PORTFOLIO DECISION → SPECIFIED → BUILD → RELEASE → OBSERVE → ITERATE / SCALE / PAUSE / PIVOT / KILL`
+`ANALYZE → SOURCE_CHECK → NEXT_NECESSARY_INCREMENT → WORK_ORDER → CONTEXT_LOCK → PREFLIGHT → EXECUTE → TEST_EVIDENCE → REVIEW → CORRECTION_OR_APPROVAL → MERGE → CHECKPOINT_PROMOTION → NEXT`
 
-Founder/CEO retains final portfolio prioritization. Product count is not a success metric, portfolio WIP is finite, and sunk cost is not a reason to continue a weak product.
+Executor adapters are replaceable. Tests and reviews bind to exact candidate heads. Ambiguous mutations enter `RECOVERY_REQUIRED`; blind retry is prohibited. Merge and checkpoint promotion are separate controlled events.
 
 ## Current governed state
 
-`NXL-COMPANY-WO-008` is complete.
+`NXL-COMPANY-WO-009` is complete.
 
-The next legal action is to **admit WO-009: GEF-Native Autonomous Software Factory** against current canonical main and create a fresh Context Lock.
+The next legal action is to **admit WO-010** against current canonical main and create a fresh Context Lock.
 
-WO-009 and later remain non-executable until admitted.
+WO-010 and later remain non-executable until admitted.
 
 > Repository disclosure: this repository is currently public. Commit public-safe information only; never store credentials, secrets or confidential company/customer/investor material here.
