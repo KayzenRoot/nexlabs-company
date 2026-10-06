@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - chore/NXL-COMPANY-001-gef-bootstrap-1.1.2
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -19,6 +22,7 @@ jobs:
       - name: Checkout exact branch
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
 
       - name: Use Node.js 22
@@ -32,8 +36,12 @@ jobs:
         run: |
           set -euo pipefail
           npm install --global --ignore-scripts @gef-bootstrap/cli@1.1.2
-          gef --version | tee "$RUNNER_TEMP/gef-version.txt"
-          grep -Eq '1\\.1\\.2' "$RUNNER_TEMP/gef-version.txt"
+          version="$(gef --version)"
+          printf '%s\n' "$version" | tee "$RUNNER_TEMP/gef-version.txt"
+          case "$version" in
+            *1.1.2*) ;;
+            *) echo "Expected GEF 1.1.2, got: $version" >&2; exit 1 ;;
+          esac
           gef --help > "$RUNNER_TEMP/gef-help.txt"
 
       - name: Preview governed initialization
@@ -66,7 +74,7 @@ jobs:
       - name: Validate initialized state
         shell: bash
         run: |
-          set -uo pipefail
+          set +e
           mkdir -p "$RUNNER_TEMP/gef-validation"
           gef doctor --target "$GITHUB_WORKSPACE" --json > "$RUNNER_TEMP/gef-validation/doctor.json"
           doctor_exit=$?
@@ -99,6 +107,8 @@ jobs:
 
       - name: Push initialized branch
         shell: bash
+        env:
+          TARGET_BRANCH: ${{ github.head_ref || github.ref_name }}
         run: |
           set -euo pipefail
-          git push origin HEAD:chore/NXL-COMPANY-001-gef-bootstrap-1.1.2
+          git push origin "HEAD:$TARGET_BRANCH"
