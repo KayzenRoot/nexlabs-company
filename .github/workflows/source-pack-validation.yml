@@ -71,9 +71,12 @@ jobs:
             }
           }
 
-          const completedMatch = String(cp.completedThroughWorkOrder || '').match(/WO-(\\d+)$/);
-          if (!completedMatch) throw new Error('Checkpoint must declare completedThroughWorkOrder');
-          const completedN = Number(completedMatch[1]);
+          const completedRef = String(cp.completedThroughWorkOrder || '');
+          const completedToken = completedRef.includes('WO-') ? completedRef.split('WO-').pop() : '';
+          const completedN = Number(completedToken);
+          if (!Number.isInteger(completedN) || completedN < 2 || completedN > 22) {
+            throw new Error('Checkpoint must declare a valid completedThroughWorkOrder');
+          }
 
           for (let n=2;n<=22;n++) {
             const id = 'NXL-COMPANY-WO-' + String(n).padStart(3,'0');
