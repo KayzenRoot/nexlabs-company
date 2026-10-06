@@ -1,40 +1,25 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_006_COMPLETE_AI_WORKFORCE_CANONICAL`
+**Status:** `WO_007_ADMITTED_AI_EMPLOYEE_CONTRACT_IN_PROGRESS`
 
 - Project: NexLabs Company
 - Version target: `v0.1`
-- Phase: `AI_EMPLOYEE_CONTRACT_READY_FOR_WO_007_ADMISSION`
+- Phase: `COMPANY_BLUEPRINT`
 - GEF baseline: `1.1.2`
 - Completed through Work Order: `NXL-COMPANY-WO-006`
-- WO-006 audited head: `0b3509499e8b8f01d56be60ca29317065433ee6a`
-- WO-006 workforce merge SHA: `13fe75ebaaf7c77a7f3c9bf65b49e86f493260c8`
-- Active Work Order: `NONE`
-- Active issue: `NONE`
-- Active branch: `NONE`
-- Active Context Lock: `NONE`
-- Known HIGH/CRITICAL blockers: `0 known`
+- Admission base SHA: `3db001f9bba7c6b2349edb4ef83fde77757b60d1`
+- Active Work Order: `NXL-COMPANY-WO-007`
+- Active issue: `#8`
+- Active branch: `planning/NXL-COMPANY-WO-007-ai-employee-contract`
+- Active Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-007.json`
+- Active status: `ADMITTED / IN_PROGRESS`
+- Known HIGH/CRITICAL blockers: `0 known for current contract/documentation scope`
 - Repository disclosure risk: `PUBLIC — public-safe information only`
-
-## Canonical AI organization
-
-Primary authority: `company/AI-ORGANIZATION.md`
-
-Supporting workforce authority:
-- `company/AI-WORKFORCE-ARCHITECTURE.md`
-- `company/EXECUTIVE-AGENTS.md`
-- `company/ROLE-TAXONOMY.md`
-- `company/TEAM-TOPOLOGY.md`
-- `company/SOFTWARE-DELIVERY-CELL.md`
-- `company/MINIMUM-VIABLE-WORKFORCE.md`
-- `company/STAFFING-PHASES.md`
 
 ## Next legal action
 
-`ADMIT_NXL_COMPANY_WO_007`
-
-Admission requires rehydrating this checkpoint and canonical sources, recompiling WO-007 against the current main SHA and creating a fresh Context Lock.
+`VALIDATE_WO_007_AI_EMPLOYEE_CONTRACT_AND_OPEN_PR`
 
 ## Stop state
 
-WO-007 remains `PLANNED / NOT_ADMITTED`. No WO-007 execution may begin until its own admission and Context Lock are committed.
+Do not admit or execute WO-008 or any later Work Order until WO-007 is exact-head audited, merged and checkpoint-promoted.

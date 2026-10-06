@@ -1,45 +1,139 @@
 # NXL-COMPANY-WO-007 — AI Employee Contract, Memory, Permissions & Escalation
 
 **Issue:** #8  
-**Status:** `PLANNED / NOT_ADMITTED`  
+**Status:** `ADMITTED / IN_PROGRESS`  
 **Classification:** `NECESSARY`  
-**Dependencies:** WO-005 and WO-006 APPROVED
+**Risk:** ELEVATED / governance-critical  
+**Base:** `3db001f9bba7c6b2349edb4ef83fde77757b60d1`  
+**Branch:** `planning/NXL-COMPANY-WO-007-ai-employee-contract`  
+**Context Lock:** `.engineering/context-locks/NXL-COMPANY-WO-007.json`
 
 ## OBJECTIVE
-Define the standard governed operating contract for every AI employee.
+
+Define the canonical operating contract every NexLabs AI employee must inherit: stable role identity, mission, responsibilities, inputs/outputs, tool capabilities, permission envelope, memory boundaries, KPIs/evaluation, escalation rules, limitations, failure behavior and audit obligations.
 
 ## CONTEXT
-This Work Order is part of the NexLabs Company v0.1 roadmap created by WO-002. It has no execution authority until explicitly admitted after all listed dependencies are approved and the current canonical checkpoint is rehydrated.
+
+WO-005 defined company authority/risk. WO-006 defined which organizational roles exist and how teams are assembled. WO-007 defines **how one AI employee is instantiated and governed** without binding the contract to Hermes, Codex, OpenAI or any runtime provider.
+
+The contract must allow different models/runtimes to occupy the same logical role while preserving company authority, memory discipline and auditability.
 
 ## SCOPE
-At admission, refine this planned objective into the smallest sufficient increment required by the canonical Scope and Definition of Done.
+
+- Define the standard AI Employee Contract.
+- Define stable role identity and machine-readable role schema.
+- Define mission/responsibility/input/output boundaries.
+- Define tool capability vs permission semantics.
+- Define memory classes and precedence.
+- Define context hydration and stale-context behavior.
+- Define permission envelopes, expiry/revocation and least privilege.
+- Define KPI/evaluation dimensions without rewarding unsafe activity.
+- Define escalation contract and blocked/unknown behavior.
+- Define limitations, failure, retry and replacement behavior.
+- Define audit/receipt obligations for every agent run.
+- Define provider/runtime substitution rules.
+- Define contract-versioning and change control.
+- Update Source Hierarchy and Decisions Ledger.
+- Add deterministic AI Employee Contract validation CI.
 
 ## OUT OF SCOPE
-Implementation or decisions not necessary to this Work Order; unrelated cleanup; bypassing predecessor gates; execution while this file remains NOT_ADMITTED.
+
+- Creating every concrete employee role instance.
+- Product Factory lifecycle (WO-008).
+- Autonomous engineering workflow implementation (WO-009).
+- Company OS database/runtime implementation.
+- Hermes/Codex integration.
+- Secret provisioning or production credentials.
+- Actual employee execution.
+- Final model-routing algorithm.
 
 ## FILES/SOURCES TO READ
-At admission: current Checkpoint; Decisions Ledger/ADRs; Scope; DoD; Architecture; Requirements; applicable prior approved artifacts; this issue; exact Git/provider state.
+
+1. current Checkpoint MD/JSON
+2. Decisions Ledger
+3. Scope / DoD / Requirements / Architecture
+4. `company/CORPORATE-GOVERNANCE.md`
+5. `company/AUTHORITY-MATRIX.md`
+6. `company/AI-ORGANIZATION.md`
+7. `company/AI-WORKFORCE-ARCHITECTURE.md`
+8. `company/ROLE-TAXONOMY.md`
+9. this Work Order and Context Lock
+10. exact Git/GitHub provider state
 
 ## REQUIREMENTS
-Trace every admitted deliverable to canonical requirements. Unknown or conflicting authority must block execution rather than be guessed.
 
-## ARCHITECTURE RULES
-Preserve founder authority, provider independence, auditability, fail-closed high-risk behavior, local-first portability and GEF governance.
+Primary traceability: REQ-002, REQ-005, REQ-007, REQ-011, REQ-012, REQ-013, REQ-016, REQ-017. Preserve founder authority, provider independence, default-deny and auditability.
 
-## CONSTRAINTS
-Exact base SHA, active branch, Context Lock, allowed files, acceptance criteria and tests are intentionally compiled only at admission time.
+## EMPLOYEE-CONTRACT RULES TO FREEZE
+
+- A role is a logical company identity independent of model/provider/session.
+- Capability and authority remain separate.
+- Tools are explicitly allowlisted per role/run.
+- Permission envelopes are scoped, revocable and time/resource/environment bounded where applicable.
+- Memory never outranks canonical company/project authority.
+- Stale or conflicting context fails closed or escalates.
+- Agent-specific private memory may not silently redefine company truth.
+- KPIs may not reward bypassing controls, fabricating success or maximizing action volume.
+- Retries must be bounded; repeated failure escalates instead of looping indefinitely.
+- Agent replacement must preserve role identity and authoritative state, not hidden runtime memory.
+- Material runs produce attributable receipts.
+
+## ALLOWED OUTPUTS
+
+- `company/AI-EMPLOYEE-CONTRACT.md`
+- `company/AI-ROLE-SCHEMA.md`
+- `company/AI-PERMISSIONS-MODEL.md`
+- `company/AI-MEMORY-POLICY.md`
+- `company/AI-TOOLS-AND-CAPABILITIES.md`
+- `company/AI-KPI-AND-EVALUATION.md`
+- `company/AI-ESCALATION-CONTRACT.md`
+- `company/AI-FAILURE-AND-REPLACEMENT.md`
+- `company/AI-RUN-RECEIPT-CONTRACT.md`
+- `.engineering/SOURCE-HIERARCHY.md`
+- `.engineering/DECISIONS-LEDGER.md`
+- `.engineering/CHECKPOINT.md`
+- `.engineering/CHECKPOINT.json`
+- `.engineering/WORK-ORDER-REGISTRY.md`
+- `.engineering/BACKLOG.md`
+- this Work Order, Context Lock, validation workflow and WO-007 evidence
 
 ## ACCEPTANCE CRITERIA
-To be frozen at admission from the then-current canonical sources. Must include objective evidence, source consistency, no unresolved HIGH/CRITICAL finding and a proposed Checkpoint Delta.
+
+1. One canonical employee contract exists.
+2. Role identity is independent of provider/model/session.
+3. Machine-readable role schema fields are defined.
+4. Mission, responsibilities, inputs and outputs have explicit boundaries.
+5. Tools/capabilities are distinct from permissions/authority.
+6. Permission envelopes are scoped, revocable and default-deny.
+7. Memory precedence is explicit and canonical sources outrank agent memory.
+8. Stale/conflicting context behavior is fail-closed/escalate.
+9. KPI/evaluation rewards outcomes, evidence, quality and efficiency without rewarding unsafe activity.
+10. Escalation contract covers BLOCKED, DENIED, UNKNOWN, RECOVERY_REQUIRED and approval-needed states.
+11. Failure/retry/replacement behavior prevents infinite loops and provider lock-in.
+12. Run receipt contract covers exact role, contract version, authority, inputs, tools, outcome and evidence.
+13. Source Hierarchy and Decisions Ledger record employee-contract authority.
+14. WO-008 and later remain NOT_ADMITTED.
+15. Existing persistent validations plus AI Employee Contract validation pass on exact head.
+16. Exact-head audit has no unresolved HIGH/CRITICAL finding.
 
 ## TESTS
-Risk-appropriate tests/evidence are compiled at admission. Documentation work requires structural/consistency validation; software work follows the risk matrix in TEST-BENCHMARK-PLAN.md.
 
-## DELIVERABLES
-Role contract schema; mission; responsibilities; I/O; tools; permissions; memory; KPIs; escalation; limitations; audit requirements.
+- Assert all nine AI employee-contract documents exist.
+- Parse Checkpoint and Context Lock.
+- Assert WO-007 is the only admitted Work Order.
+- Assert WO-008..WO-022 remain NOT_ADMITTED.
+- Assert contract schema contains role_id, contract_version, mission, responsibilities, inputs, outputs, tools, permissions, memory, KPIs, escalation and limitations.
+- Assert memory precedence names canonical Git/policy/project state above agent memory.
+- Assert permission model includes least privilege, expiry/revocation and default deny.
+- Assert KPI policy prohibits fabricated-success or gate-bypass incentives.
+- Assert retry policy is bounded.
+- Assert run receipt includes exact role/contract/action/outcome/evidence references.
+- Run all existing persistent validations plus AI Employee Contract validation.
 
 ## REVIEW FORMAT
-Brazilian Portuguese. Report exact base/head, scope, evidence, findings by severity, risks, verdict and proposed Checkpoint Delta.
+
+Brazilian Portuguese: exact base/head, contract completeness, permission/memory safety, provider independence, KPI incentives, escalation/failure behavior, evidence, findings by severity, risks, verdict and proposed Checkpoint Delta.
 
 ## STOP CONDITION
-Do not execute while status is `PLANNED / NOT_ADMITTED`. At future execution, stop at exact-head audit; do not advance to a successor while correction/block remains.
+
+Stop at exact-head audit for WO-007. Do not admit or execute WO-008 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.

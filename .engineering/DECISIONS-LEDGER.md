@@ -148,3 +148,32 @@
 ## D-0036 — Workforce growth is evidence-driven
 **Status:** APPROVED IN WO-006  
 **Decision:** New persistent agents/functions are added when recurring workload, coordination latency, context continuity, monitoring, segregation-of-duties or economics justify them. Agent count is not a success metric.
+
+
+## D-0037 — AI employee identity is contract-defined, not provider-defined
+**Status:** APPROVED IN WO-007  
+**Decision:** A stable role_id and contract_version define organizational identity. Model/provider/session changes do not redefine the employee role.
+
+## D-0038 — Effective authority is an intersection
+**Status:** APPROVED IN WO-007  
+**Decision:** Effective action authority is the strictest intersection of company governance, role contract, task/Work Order scope, environment policy and tool permission. No layer may grant what another forbids.
+
+## D-0039 — Canonical state outranks agent memory
+**Status:** APPROVED IN WO-007  
+**Decision:** Exact observable state, canonical checkpoint/sources, decisions and active Work Order outrank role/session/conversation/provider memory. Stale or conflicting critical memory fails closed.
+
+## D-0040 — Permission envelopes are scoped and revocable
+**Status:** APPROVED IN WO-007  
+**Decision:** Permissions should be task/resource/environment/time/value scoped where applicable, default-deny and revocable. Possessing a capability or credential is not authorization.
+
+## D-0041 — AI KPIs measure outcomes and governance, not activity
+**Status:** APPROVED IN WO-007  
+**Decision:** Evaluation prioritizes correctness, evidence, reliability, governance compliance and efficiency. Message count, tool calls, commits, agent count or raw token use are not success metrics.
+
+## D-0042 — AI retries are bounded and replacement is first-class
+**Status:** APPROVED IN WO-007  
+**Decision:** Infinite retries are prohibited. Ambiguous mutation enters recovery/reconciliation. Providers/models can be replaced by rehydrating the stable contract and canonical state.
+
+## D-0043 — Material AI runs produce receipts
+**Status:** APPROVED IN WO-007  
+**Decision:** Material runs record role/contract/runtime/task/authority/action-risk classes/tools/outcome/evidence and exact state references without embedding raw secrets.

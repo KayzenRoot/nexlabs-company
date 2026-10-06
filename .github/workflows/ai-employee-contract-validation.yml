@@ -1,0 +1,90 @@
+name: Validate NexLabs AI Employee Contract
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ai-employee-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-007 AI employee contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const required=[
+            'company/AI-EMPLOYEE-CONTRACT.md',
+            'company/AI-ROLE-SCHEMA.md',
+            'company/AI-PERMISSIONS-MODEL.md',
+            'company/AI-MEMORY-POLICY.md',
+            'company/AI-TOOLS-AND-CAPABILITIES.md',
+            'company/AI-KPI-AND-EVALUATION.md',
+            'company/AI-ESCALATION-CONTRACT.md',
+            'company/AI-FAILURE-AND-REPLACEMENT.md',
+            'company/AI-RUN-RECEIPT-CONTRACT.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-007.json'
+          ];
+          for(const p of required){
+            if(!fs.existsSync(p)) throw new Error('Missing WO-007 output: '+p);
+          }
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-007') throw new Error('WO-007 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') {
+            throw new Error('Unexpected active status: '+cp.activeStatus);
+          }
+
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-007.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-007') throw new Error('WO-007 Context Lock mismatch');
+
+          for(let n=8;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const contract=fs.readFileSync('company/AI-EMPLOYEE-CONTRACT.md','utf8');
+          const schema=fs.readFileSync('company/AI-ROLE-SCHEMA.md','utf8');
+          const perm=fs.readFileSync('company/AI-PERMISSIONS-MODEL.md','utf8');
+          const memory=fs.readFileSync('company/AI-MEMORY-POLICY.md','utf8');
+          const tools=fs.readFileSync('company/AI-TOOLS-AND-CAPABILITIES.md','utf8');
+          const kpi=fs.readFileSync('company/AI-KPI-AND-EVALUATION.md','utf8');
+          const esc=fs.readFileSync('company/AI-ESCALATION-CONTRACT.md','utf8');
+          const fail=fs.readFileSync('company/AI-FAILURE-AND-REPLACEMENT.md','utf8');
+          const receipt=fs.readFileSync('company/AI-RUN-RECEIPT-CONTRACT.md','utf8');
+
+          const fields=['role_id','contract_version','mission','responsibilities','inputs','outputs','tools','permissions','memory','kpis','escalation','limitations'];
+          for(const f of fields){
+            if(!contract.includes(f) || !schema.includes(f)) throw new Error('Missing contract/schema field: '+f);
+          }
+          if(!perm.includes('Default deny') || !perm.includes('Revocation') || !perm.includes('Expiry')) throw new Error('Permission safety incomplete');
+          if(!memory.includes('canonical Checkpoint') || !memory.includes('conversation recall')) throw new Error('Memory precedence incomplete');
+          if(!tools.includes('Tool ≠ authority')) throw new Error('Tool/authority boundary missing');
+          if(!kpi.includes('Anti-metrics') || !kpi.includes('fabricated evidence')) throw new Error('KPI safety incomplete');
+          for(const state of ['BLOCKED','DENIED','UNKNOWN','RECOVERY_REQUIRED','PROHIBITED']){
+            if(!esc.includes(state)) throw new Error('Escalation state missing: '+state);
+          }
+          if(!fail.includes('Infinite retry loops are prohibited')) throw new Error('Bounded retry rule missing');
+          for(const f of ['role_id','contract_version','runtime_provider','action_class','risk_class','outcome','evidence_refs']){
+            if(!receipt.includes(f)) throw new Error('Run receipt field missing: '+f);
+          }
+
+          const combined=[contract,schema,perm,memory,tools,kpi,esc,fail,receipt].join('\n').toLowerCase();
+          if(combined.includes('conversation memory outranks')) throw new Error('Unsafe memory precedence detected');
+          if(combined.includes('unlimited retries')) throw new Error('Unsafe retry policy detected');
+
+          console.log('WO-007 AI employee contract validation passed.');
+          NODE

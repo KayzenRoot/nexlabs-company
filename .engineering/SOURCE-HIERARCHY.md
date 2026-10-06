@@ -15,11 +15,12 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 8 | Business model | `company/BUSINESS-MODEL.md` plus the supporting canonical business-model documents |
 | 9 | Corporate governance | `company/CORPORATE-GOVERNANCE.md` plus authority/risk/approval supporting documents |
 | 10 | AI workforce | `company/AI-ORGANIZATION.md` plus supporting workforce architecture documents |
-| 11 | Security | `SECURITY.md` |
-| 12 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 13 | Deployment | `DEPLOYMENT.md` |
-| 14 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 15 | Conversation | transient context only |
+| 11 | AI employee contract | `company/AI-EMPLOYEE-CONTRACT.md` plus supporting role/memory/permission documents |
+| 12 | Security | `SECURITY.md` |
+| 13 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 14 | Deployment | `DEPLOYMENT.md` |
+| 15 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 16 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -83,3 +84,20 @@ Supporting canonical workforce documents:
 - `company/STAFFING-PHASES.md`
 
 WO-007 may define the per-agent employee contract, memory, permissions and KPIs, but it may not silently change the approved organization or founder authority.
+
+
+## AI-employee-contract authority
+
+`company/AI-EMPLOYEE-CONTRACT.md` is the primary authority for how a NexLabs AI employee is instantiated and governed.
+
+Supporting canonical employee-contract sources:
+- `company/AI-ROLE-SCHEMA.md`
+- `company/AI-PERMISSIONS-MODEL.md`
+- `company/AI-MEMORY-POLICY.md`
+- `company/AI-TOOLS-AND-CAPABILITIES.md`
+- `company/AI-KPI-AND-EVALUATION.md`
+- `company/AI-ESCALATION-CONTRACT.md`
+- `company/AI-FAILURE-AND-REPLACEMENT.md`
+- `company/AI-RUN-RECEIPT-CONTRACT.md`
+
+Later runtime/Hermes/Company OS implementation may instantiate this contract but may not silently weaken its memory precedence, permission or audit semantics.
