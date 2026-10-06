@@ -11,7 +11,7 @@
 | NXL-COMPANY-WO-008 | #9 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-008-product-factory` |
 | NXL-COMPANY-WO-009 | #10 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-009-autonomous-software-factory` |
 | NXL-COMPANY-WO-010 | #11 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-010-research-innovation-ip` |
-| NXL-COMPANY-WO-011 | #12 | NOT_ADMITTED | TBD at admission |
+| NXL-COMPANY-WO-011 | #12 | ADMITTED / IN_PROGRESS | `planning/NXL-COMPANY-WO-011-security-privacy-web3-financial-risk` |
 | NXL-COMPANY-WO-012 | #13 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-013 | #14 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-014 | #15 | NOT_ADMITTED | TBD at admission |

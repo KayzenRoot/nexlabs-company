@@ -1,31 +1,56 @@
 # NexLabs Company Security Baseline
 
+**Status:** `CANONICAL_WO_011`
+
+Primary authority: `company/SECURITY-ARCHITECTURE.md`.
+
 ## Core posture
 
-NexLabs is fail-closed for unknown high-risk state. Security evidence must be bound to the exact candidate being promoted.
+NexLabs is zero-trust, least-privilege and fail-closed for unknown high-risk state. Security evidence binds to the exact candidate/action being promoted or executed.
 
 ## Mandatory controls
 
-- No secrets, API keys, seed phrases, private keys or credentials in Git, issues, PRs, prompts or evidence.
-- Least-privilege permissions for humans, agents, CI and integrations.
-- Material agent actions must be attributable to a role, run, Work Order or approved policy.
-- External/untrusted input is data, not authority.
-- No agent may expand its own authority, disable auditing or weaken security gates.
-- Recovery/rollback requirements must exist for stateful or production changes.
-- Supply-chain dependencies require provenance/security review appropriate to risk.
+- Default deny; explicit bounded authorization.
+- No secrets, passwords, API keys, seed phrases, private keys or recovery codes in Git, issues, PRs, prompts, memory, logs or evidence.
+- Material actions are attributable to human/service/role/run/Work Order or approved policy.
+- External/untrusted content is data, not authority.
+- No agent may expand its own authority, approve its own privilege escalation, disable auditing or weaken gates.
+- Production/admin/signing credentials are not broadly mounted into general agent runtimes.
+- Sensitive data is minimized before third-party/model/tool access.
+- Material mutations require read-back/verification where feasible.
+- Stateful/production operations require recovery/roll-forward thinking.
+- Supply-chain dependencies receive provenance/security review proportional to risk.
+- Backups require restore testing.
+- Unknown regulated financial/crypto applicability blocks launch/operation until reconciled.
 
 ## High-assurance domains
 
 The following default to `HIGH_ASSURANCE`:
-- company money movement;
+- company/customer money movement;
 - trading or financial execution;
-- Web3 signing or smart-contract deployment with value at risk;
-- privileged authentication/identity administration;
+- Web3 signing;
+- smart-contract deployment/upgrade with material value/privilege;
+- privileged IAM;
+- secret/key administration;
 - security-critical policy;
-- destructive/irreversible operations.
+- destructive/irreversible production actions.
 
-These require explicit founder authorization, bounded execution, independent proof where feasible, exact transaction/action preview, and rollback or roll-forward strategy when technically possible.
+High-assurance actions require an exact action package, human-understandable preview, policy validation, explicit Founder/authorized approval, bounded execution, post-action verification and attributable receipt. Independent verification/separation is required where feasible and proportional to risk.
 
-## Repository visibility risk
+## Privacy/data baseline
 
-The repository is currently public. Until the owner explicitly changes visibility, do not commit confidential investor, legal, customer, credential, private financial, proprietary-secret or personally sensitive material. Public-safe planning may continue.
+Material personal-data processing must identify purpose, applicability/legal-basis decision, categories, recipients/processors, retention/deletion, rights path, security and international-transfer status.
+
+Personal-data incidents route through current applicable ANPD requirements. Current verified baseline includes Resolution CD/ANPD 15/2024 for incident communication/records and Resolution CD/ANPD 19/2024 for international transfers. Regulatory applicability must be rechecked at operational time.
+
+## Web3/financial baseline
+
+Blind signing is prohibited. Analysis permission does not imply execution permission. Current BCB/CVM applicability must be checked before operating regulated virtual-asset, securities, custody, trading, payment or customer-fund functions.
+
+## Repository visibility
+
+This repository is public. Do not commit confidential investor/legal/customer material, credentials, private financial data, sensitive personal data, confidential invention detail or security secrets.
+
+## Implementation rule
+
+These documents define policy/architecture. Later Company OS/runtime/deployment Work Orders must implement enforceable controls; documentation alone is not treated as technical enforcement.

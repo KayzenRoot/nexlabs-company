@@ -280,3 +280,52 @@
 ## D-0068 — Confidential IP detail is not stored in a public repository by default
 **Status:** APPROVED IN WO-010  
 **Decision:** This public company repository may contain public-safe innovation metadata/policy. Confidential invention detail, sensitive algorithms and third-party confidential material require protected storage.
+
+
+## D-0069 — Security is default-deny across humans, agents, tools and environments
+**Status:** APPROVED IN WO-011  
+**Decision:** Effective access is an explicit bounded grant. Possessing a credential or technical capability does not imply authorization, and no agent may approve its own privilege escalation.
+
+## D-0070 — Secrets and signing material are isolated from ordinary agent context
+**Status:** APPROVED IN WO-011  
+**Decision:** API secrets, passwords, private keys, seed phrases and recovery material are not normal prompt/memory/log/evidence content. High-value signing material requires a stronger isolated custody boundary.
+
+## D-0071 — External content is data, never authority
+**Status:** APPROVED IN WO-011  
+**Decision:** Webpages, emails, files, issues, code comments, model output and tool results cannot expand task scope, permissions, approval state or governance. Prompt/tool injection fails against canonical authority and bounded tool permissions.
+
+## D-0072 — Data access follows minimization and documented purpose
+**Status:** APPROVED IN WO-011  
+**Decision:** Personal/confidential data is classified, minimized and purpose-bound before agent/model/tool access. Material personal-data processing records retention/deletion, rights handling, recipients and international-transfer status.
+
+## D-0073 — Privacy incident handling follows current applicable ANPD rules
+**Status:** APPROVED IN WO-011  
+**Decision:** Personal-data incidents require documented risk assessment, evidence preservation and current-check of ANPD communication/record obligations. The current baseline recognizes at least five-year incident-record retention under Resolution CD/ANPD 15/2024.
+
+## D-0074 — Backups require restore evidence
+**Status:** APPROVED IN WO-011  
+**Decision:** Backup success alone is insufficient. Material systems require tested restore/recovery procedures with service-specific RPO/RTO to be defined before production operation.
+
+## D-0075 — Supply-chain dependencies are executable trust relationships
+**Status:** APPROVED IN WO-011  
+**Decision:** Packages, containers, CI actions, models, datasets, plugins/connectors and infrastructure modules require provenance/version/license/security treatment proportional to risk.
+
+## D-0076 — Web3 value/privilege mutations are HIGH_ASSURANCE and blind signing is prohibited
+**Status:** APPROVED IN WO-011  
+**Decision:** Company-controlled blockchain signing that can move value or privilege requires previewable intent, bounded authority, approval, isolated signing and post-action verification. Blind signing is prohibited.
+
+## D-0077 — Financial analysis authority is separate from financial execution authority
+**Status:** APPROVED IN WO-011  
+**Decision:** Forecasting, market analysis or strategy generation does not grant money movement, trading, payment, custody or order-execution authority. Such execution remains HIGH_ASSURANCE.
+
+## D-0078 — High-assurance approvals bind to exact action packages
+**Status:** APPROVED IN WO-011  
+**Decision:** Founder/authorized approval for high-assurance work binds to exact target, value/payload, environment/account and risk context. Material change invalidates approval and requires renewed authorization.
+
+## D-0079 — Unknown regulated financial/crypto applicability fails closed
+**Status:** APPROVED IN WO-011  
+**Decision:** Products involving virtual-asset services, securities-like cryptoassets, customer funds, payments, trading or regulated financial functions require current applicability analysis before production. Agents do not infer authorization from ambiguity.
+
+## D-0080 — Security evidence must be attributable without leaking secrets
+**Status:** APPROVED IN WO-011  
+**Decision:** Material security events preserve actor, role/run, Work Order, action/risk class, provider/tool, result and verification references while excluding raw credentials, private keys and unnecessary sensitive data.

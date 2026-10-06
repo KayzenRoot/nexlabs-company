@@ -1,0 +1,110 @@
+name: Validate NexLabs Security Architecture
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  security-architecture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-011 security architecture
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+
+          const required=[
+            'company/SECURITY-ARCHITECTURE.md',
+            'company/IDENTITY-AND-ACCESS-CONTROL.md',
+            'company/SECRETS-KEYS-AND-CREDENTIALS.md',
+            'company/DATA-GOVERNANCE-AND-PRIVACY.md',
+            'company/SECURITY-INCIDENT-RESPONSE.md',
+            'company/BACKUP-RECOVERY-AND-BCP.md',
+            'company/SUPPLY-CHAIN-SECURITY.md',
+            'company/AGENT-AND-TOOL-SECURITY.md',
+            'company/WEB3-SIGNING-AND-CUSTODY-POLICY.md',
+            'company/FINANCIAL-ACTION-SAFETY.md',
+            'company/HIGH-ASSURANCE-ACTION-PROTOCOL.md',
+            'company/SECURITY-LOGGING-AND-AUDIT.md',
+            'company/THREAT-MODEL-BASELINE.md',
+            'company/REGULATORY-APPLICABILITY-REGISTER.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-011.json'
+          ];
+          for(const p of required){
+            if(!fs.existsSync(p)) throw new Error('Missing WO-011 output: '+p);
+          }
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-011') throw new Error('WO-011 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION'){
+            throw new Error('Unexpected active status: '+cp.activeStatus);
+          }
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-011.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-011') throw new Error('WO-011 Context Lock mismatch');
+
+          for(let n=12;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const arch=fs.readFileSync('company/SECURITY-ARCHITECTURE.md','utf8');
+          const iam=fs.readFileSync('company/IDENTITY-AND-ACCESS-CONTROL.md','utf8');
+          const secrets=fs.readFileSync('company/SECRETS-KEYS-AND-CREDENTIALS.md','utf8');
+          const data=fs.readFileSync('company/DATA-GOVERNANCE-AND-PRIVACY.md','utf8');
+          const incident=fs.readFileSync('company/SECURITY-INCIDENT-RESPONSE.md','utf8');
+          const backup=fs.readFileSync('company/BACKUP-RECOVERY-AND-BCP.md','utf8');
+          const supply=fs.readFileSync('company/SUPPLY-CHAIN-SECURITY.md','utf8');
+          const agents=fs.readFileSync('company/AGENT-AND-TOOL-SECURITY.md','utf8');
+          const web3=fs.readFileSync('company/WEB3-SIGNING-AND-CUSTODY-POLICY.md','utf8');
+          const financial=fs.readFileSync('company/FINANCIAL-ACTION-SAFETY.md','utf8');
+          const high=fs.readFileSync('company/HIGH-ASSURANCE-ACTION-PROTOCOL.md','utf8');
+          const logs=fs.readFileSync('company/SECURITY-LOGGING-AND-AUDIT.md','utf8');
+          const threat=fs.readFileSync('company/THREAT-MODEL-BASELINE.md','utf8');
+          const reg=fs.readFileSync('company/REGULATORY-APPLICABILITY-REGISTER.md','utf8');
+          const baseline=fs.readFileSync('.engineering/SECURITY.md','utf8');
+
+          const archLower=arch.toLowerCase();
+          if(!archLower.includes('default deny') || !archLower.includes('least privilege') || !archLower.includes('trust boundaries')) throw new Error('Core security posture incomplete');
+          if(!iam.toLowerCase().includes('default deny') || !iam.includes('Effective authority')) throw new Error('IAM authority model incomplete');
+          for(const marker of ['private keys','seed phrases','agent context','rotation']){
+            if(!secrets.toLowerCase().includes(marker.toLowerCase())) throw new Error('Secrets policy missing: '+marker);
+          }
+          for(const marker of ['purpose','retention','deletion','rights','international transfer']){
+            if(!data.toLowerCase().includes(marker.toLowerCase())) throw new Error('Data governance missing: '+marker);
+          }
+          for(const marker of ['DETECT','CONTAIN','PRESERVE_EVIDENCE','ASSESS','RECOVER','five years']){
+            if(!incident.includes(marker)) throw new Error('Incident response missing: '+marker);
+          }
+          if(!backup.toLowerCase().includes('restore') || !backup.includes('RPO') || !backup.includes('RTO')) throw new Error('Backup/recovery proof incomplete');
+          if(!supply.toLowerCase().includes('provenance') || !supply.toLowerCase().includes('lockfiles')) throw new Error('Supply-chain controls incomplete');
+          if(!agents.toLowerCase().includes('untrusted') || !agents.toLowerCase().includes('docker socket') || !agents.includes('RECOVERY') && !agents.toLowerCase().includes('recovery')) throw new Error('Agent/tool security incomplete');
+          if(!web3.toLowerCase().includes('blind signing is prohibited') || !web3.includes('HIGH_ASSURANCE')) throw new Error('Web3 signing controls incomplete');
+          if(!financial.includes('Separation of analysis and execution') || !financial.includes('HIGH_ASSURANCE')) throw new Error('Financial safety boundary incomplete');
+          for(const marker of ['Preview','Approve','Execute once','Verify','Receipt','Reconcile']){
+            if(!high.includes(marker)) throw new Error('High-assurance protocol missing: '+marker);
+          }
+          if(!logs.toLowerCase().includes('never log') || !logs.toLowerCase().includes('private keys')) throw new Error('Security logging secret-redaction rule missing');
+          for(const marker of ['Founder account','GitHub','Prompt/tool injection','Web3 key','Financial automation','Backup failure']){
+            if(!threat.includes(marker)) throw new Error('Threat model missing: '+marker);
+          }
+          for(const marker of ['LGPD','ANPD','BCB','CVM','BLOCKED_PENDING_REGULATORY_PATH']){
+            if(!reg.includes(marker)) throw new Error('Regulatory applicability register missing: '+marker);
+          }
+          if(!baseline.includes('Primary authority: `company/SECURITY-ARCHITECTURE.md`')) throw new Error('Engineering security baseline authority missing');
+
+          console.log('WO-011 Security Architecture validation passed.');
+          NODE
