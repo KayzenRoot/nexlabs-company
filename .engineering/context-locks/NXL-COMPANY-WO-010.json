@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-010",
+  "issue": 11,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "planning/NXL-COMPANY-WO-010-research-innovation-ip",
+  "baseSha": "fa48d515eeaf9b045b3a2ab13d6c3fe056a522ff",
+  "compiledDate": "2026-10-06",
+  "authorityModel": "GEF_1_1_2",
+  "criticalSourceFingerprints": {
+    ".engineering/CHECKPOINT.json": "blob:b05e553c18e26ed18d24be7d31ff7541415317fd",
+    ".engineering/DECISIONS-LEDGER.md": "blob:4c8a31a356c8d10fc9280c3c8f5babf3fe418062",
+    ".engineering/SCOPE.md": "blob:d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "blob:a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/ARCHITECTURE.md": "blob:77289da4b7fc7161a5f45d3acfdb8d81deb328bf",
+    ".engineering/REQUIREMENTS.md": "blob:2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/work-orders/NXL-COMPANY-WO-010.md": "blob:ad408a6bf093807950244c91b2087934e132c240",
+    "company/COMPANY-MASTER.md": "blob:51b7de15a3e6aaa9812d0040db5e4cc9da578955",
+    "company/PRODUCT-FACTORY.md": "blob:4a1d8965bed1278c9d111878b958e19074351039",
+    "company/AUTONOMOUS-SOFTWARE-FACTORY.md": "blob:a6827d17696dd6a4d8cfb675d8ec3a58a132198b",
+    "company/AI-EMPLOYEE-CONTRACT.md": "blob:e0da3acc80833410cf6712cbf2c48d67bc1aaed8"
+  },
+  "admittedOutputs": [
+    "company/RESEARCH-INNOVATION-STRATEGY.md",
+    "company/RESEARCH-LIFECYCLE.md",
+    "company/RESEARCH-EVIDENCE-STANDARDS.md",
+    "company/INNOVATION-LEDGER.md",
+    "company/PROTOTYPE-GATES.md",
+    "company/INVENTION-DISCLOSURE.md",
+    "company/IP-OWNERSHIP-AND-PROVENANCE.md",
+    "company/LICENSING-STRATEGY.md",
+    "company/OPEN-SOURCE-AND-PUBLICATION-POLICY.md",
+    "company/TECHNOLOGY-TRANSFER-TO-PRODUCT.md",
+    ".engineering/SOURCE-HIERARCHY.md",
+    ".engineering/DECISIONS-LEDGER.md",
+    ".engineering/CHECKPOINT.md",
+    ".engineering/CHECKPOINT.json",
+    ".engineering/WORK-ORDER-REGISTRY.md",
+    ".engineering/BACKLOG.md",
+    ".engineering/work-orders/NXL-COMPANY-WO-010.md",
+    ".engineering/context-locks/NXL-COMPANY-WO-010.json",
+    ".github/workflows/research-ip-validation.yml"
+  ],
+  "refreshTriggers": [
+    "main changes before WO-010 implementation audit",
+    "locked critical source changes outside admitted WO-010 delta",
+    "research/IP scope or disclosure policy changes",
+    "company/product/software-factory authority changes",
+    "GEF baseline changes"
+  ],
+  "state": "LOCKED_FOR_WO_010"
+}
