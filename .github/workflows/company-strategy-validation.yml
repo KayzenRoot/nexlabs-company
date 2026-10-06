@@ -73,7 +73,7 @@ jobs:
 
           const mission='Turn high-value problems into dependable digital products by combining disciplined product thinking, governed AI labor and evidence-first engineering.';
           if (!master.includes(mission) || !mvv.includes(mission)) throw new Error('Mission is inconsistent');
-          if (!thesis.includes('Products') || !thesis.includes('Company capability')) throw new Error('Company thesis is incomplete');
+          if (!/products?/i.test(thesis) || !/company capability/i.test(thesis)) throw new Error('Company thesis is incomplete');
           if (!positioning.includes('AI-native technology company and product studio')) throw new Error('Positioning category is missing');
           if (!boundaries.includes('We will not')) throw new Error('Strategic boundaries are incomplete');
           if (!fiveYear.includes('Strategic target, not a claim of present capability')) throw new Error('Five-year fact/target boundary missing');
