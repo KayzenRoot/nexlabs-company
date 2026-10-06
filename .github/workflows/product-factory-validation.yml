@@ -1,0 +1,90 @@
+name: Validate NexLabs Product Factory
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  product-factory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-008 Product Factory
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const required=[
+            'company/PRODUCT-PORTFOLIO-STRATEGY.md',
+            'company/PRODUCT-FACTORY.md',
+            'company/PRODUCT-INTAKE.md',
+            'company/PRODUCT-VALIDATION-GATES.md',
+            'company/PORTFOLIO-SCORING.md',
+            'company/PRODUCT-LIFECYCLE.md',
+            'company/PRODUCT-CASE-CONTRACT.md',
+            'company/ITERATE-SCALE-PAUSE-KILL.md',
+            'company/PORTFOLIO-CAPACITY-POLICY.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-008.json'
+          ];
+          for(const p of required){
+            if(!fs.existsSync(p)) throw new Error('Missing WO-008 output: '+p);
+          }
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-008') throw new Error('WO-008 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION'){
+            throw new Error('Unexpected active status: '+cp.activeStatus);
+          }
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-008.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-008') throw new Error('WO-008 Context Lock mismatch');
+
+          for(let n=9;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const portfolio=fs.readFileSync('company/PRODUCT-PORTFOLIO-STRATEGY.md','utf8');
+          const factory=fs.readFileSync('company/PRODUCT-FACTORY.md','utf8');
+          const intake=fs.readFileSync('company/PRODUCT-INTAKE.md','utf8');
+          const gates=fs.readFileSync('company/PRODUCT-VALIDATION-GATES.md','utf8');
+          const score=fs.readFileSync('company/PORTFOLIO-SCORING.md','utf8');
+          const lifecycle=fs.readFileSync('company/PRODUCT-LIFECYCLE.md','utf8');
+          const productCase=fs.readFileSync('company/PRODUCT-CASE-CONTRACT.md','utf8');
+          const actions=fs.readFileSync('company/ITERATE-SCALE-PAUSE-KILL.md','utf8');
+          const capacity=fs.readFileSync('company/PORTFOLIO-CAPACITY-POLICY.md','utf8');
+
+          for(const stage of ['IDEA','RESEARCH','VALIDATION','SPECIFIED','BUILD','OBSERVE']){
+            if(!lifecycle.includes(stage) || !factory.includes(stage)) throw new Error('Lifecycle stage missing: '+stage);
+          }
+          if(!lifecycle.includes('RELEASED')) throw new Error('Lifecycle state RELEASED missing');
+          if(!factory.includes('RELEASE')) throw new Error('Product Factory RELEASE stage missing');
+          for(const dim of ['Strategic Fit','Problem / User Value','Market / Distribution','Technical Feasibility','Economic Potential','Reuse / Compounding','Risk']){
+            if(!score.includes(dim)) throw new Error('Portfolio scoring dimension missing: '+dim);
+          }
+          if(!intake.includes('ASSUMPTION') || !intake.includes('UNKNOWN')) throw new Error('Intake assumption labeling missing');
+          if(!gates.includes('Founder/CEO')) {
+            // Product Factory itself must carry the explicit founder portfolio gate.
+            if(!factory.includes('Founder/CEO')) throw new Error('Founder portfolio decision gate missing');
+          }
+          for(const field of ['target_user','problem_statement','evidence_summary','mvp_scope','primary_revenue_hypothesis','distribution_hypothesis','success_metrics','founder_decision']){
+            if(!productCase.includes(field)) throw new Error('Product Case field missing: '+field);
+          }
+          if(!actions.includes('Sunk cost')) throw new Error('Sunk-cost rule missing');
+          const capacityLower=capacity.toLowerCase();
+          if(!capacityLower.includes('work-in-progress') || !capacityLower.includes('idle code executor')) throw new Error('Portfolio capacity/WIP rule missing');
+          if(!portfolio.includes('does not exist to maximize project count')) throw new Error('Anti-sprawl portfolio rule missing');
+
+          console.log('WO-008 Product Factory validation passed.');
+          NODE
