@@ -65,3 +65,28 @@
 ## D-0016 — Aspirational direction must remain distinguishable from current fact
 **Status:** APPROVED IN WO-003  
 **Decision:** Five-year direction and north-star capability are strategic targets. NexLabs must not convert targets into claims of current autonomy, traction, revenue, customers, IP or market position without canonical evidence.
+
+
+## D-0017 — Owned recurring product revenue is the primary economic orientation
+**Status:** APPROVED IN WO-004  
+**Decision:** NexLabs prioritizes owned product revenue that can recur or repeat without proportional manual labor. Subscription product revenue is preferred where value genuinely recurs.
+
+## D-0018 — Revenue models have a priority architecture
+**Status:** APPROVED IN WO-004  
+**Decision:** Default preference is owned recurring product revenue, then usage/API/hybrid revenue, then applicable platform/transaction revenue, licensing and enterprise agreements, with bounded strategic services last. Products should normally have one primary model and few supporting models.
+
+## D-0019 — Services are strategically bounded
+**Status:** APPROVED IN WO-004  
+**Decision:** Generic outsourced development is not the default NexLabs business. Services require explicit strategic rationale, measurable economics, bounded manual burden and reusable product/market learning or product adoption value.
+
+## D-0020 — Pricing is product-specific and evidence-driven
+**Status:** APPROVED IN WO-004  
+**Decision:** WO-004 establishes pricing principles but no universal or product-specific price. Prices must later be validated from value, willingness-to-pay, alternatives, cost-to-serve, retention and acquisition evidence.
+
+## D-0021 — Monetization cannot override trust, security or compliance
+**Status:** APPROVED IN WO-004  
+**Decision:** Deceptive billing, hidden overage, undisclosed affiliate conflicts, unsafe data monetization, speculative treasury/trading and unauthorized high-risk Web3/financial execution are not accepted default revenue strategies.
+
+## D-0022 — Product economics require explicit unknown states
+**Status:** APPROVED IN WO-004  
+**Decision:** Revenue, retention, cost-to-serve, margin and acquisition metrics may be MEASURED, ESTIMATED, UNAVAILABLE or NOT_APPLICABLE. Missing evidence must never be coerced to zero or treated as proof of scalability.
