@@ -206,3 +206,44 @@
 ## D-0050 — Product count is not a company success metric
 **Status:** APPROVED IN WO-008  
 **Decision:** The portfolio is judged by validated value, economics, retention, reliability, learning and reusable capability, not the number of applications/repos launched.
+
+
+## D-0051 — Autonomous engineering preserves the GEF gate sequence
+**Status:** APPROVED IN WO-009  
+**Decision:** NexLabs autonomous software delivery preserves ANALYZE → SOURCE_CHECK → Work Order admission → Context Lock → PREFLIGHT → EXECUTE → TEST/EVIDENCE → REVIEW → CORRECTION/APPROVAL → MERGE → CHECKPOINT PROMOTION → NEXT. Automation may remove manual coordination, not gates.
+
+## D-0052 — Work Order admission is a compile step against exact canonical state
+**Status:** APPROVED IN WO-009  
+**Decision:** A Work Order becomes executable only after dependencies, exact base, bounded scope, tests, allowed outputs and a fresh Context Lock are compiled from current authoritative state.
+
+## D-0053 — Context Lock drift invalidates execution authority
+**Status:** APPROVED IN WO-009  
+**Decision:** Material drift in base, critical sources, authority, risk or target environment requires reconciliation/recompile before execution continues. Stale Context Locks never imply permission.
+
+## D-0054 — Evidence belongs to an exact candidate head
+**Status:** APPROVED IN WO-009  
+**Decision:** Required tests and review evidence approve an immutable candidate identity. Any head-changing correction invalidates prior approval evidence for the new head and requires the applicable checks to rerun.
+
+## D-0055 — Review has three primary verdicts
+**Status:** APPROVED IN WO-009  
+**Decision:** Engineering review returns APPROVED, CORRECTION_REQUIRED or BLOCKED. No unresolved CRITICAL/HIGH finding passes ordinary approval.
+
+## D-0056 — Bounded causal corrections remain in the same Work Order
+**Status:** APPROVED IN WO-009  
+**Decision:** A correction remains inside the current Work Order only when causal to a finding, bounded, architecture-compatible, within admitted outputs and objectively verifiable. Material redesign or scope expansion requires recompile/re-admission.
+
+## D-0057 — Merge and checkpoint promotion are separate state transitions
+**Status:** APPROVED IN WO-009  
+**Decision:** An approved implementation merge does not itself close the Work Order. A separate bounded promotion delta records evidence/merge identity, clears active state and names the sole next legal action.
+
+## D-0058 — Ambiguous mutations require reconciliation before retry
+**Status:** APPROVED IN WO-009  
+**Decision:** Mutating timeouts or unknown completion transition to RECOVERY_REQUIRED. The factory performs read-only state reconciliation and completes only confirmed missing work rather than blindly replaying the mutation.
+
+## D-0059 — Executors are replaceable adapters, not engineering authority
+**Status:** APPROVED IN WO-009  
+**Decision:** ChatGPT/GitHub, Codex, local agents, CI or future executors implement bounded capabilities behind an adapter contract. They cannot widen scope, lower risk or self-approve high-risk changes.
+
+## D-0060 — v0.1 must prove one full governed autonomous engineering loop
+**Status:** APPROVED IN WO-009  
+**Decision:** The MVP must demonstrate approved intent/product case → Work Order → Context Lock → preflight → execution → tests/evidence → review → correction path → approval/merge → separate checkpoint promotion, with Founder visibility and provider-replaceable execution.
