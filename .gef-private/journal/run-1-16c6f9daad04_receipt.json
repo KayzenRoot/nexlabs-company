@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "gef.cli.transaction-journal",
+  "transactionId": "run-1-16c6f9daad04:receipt",
+  "phase": "APPLY_FINISH",
+  "snapshot": {
+    "schemaVersion": 1,
+    "transactionId": "run-1-16c6f9daad04:receipt",
+    "runId": "run-1-16c6f9daad04",
+    "planDigest": "9bbc84a9b7cd635d386616d3cf8fdf6bac6465e6bf76179439b15bb4b6da8b71",
+    "targetBinding": {
+      "targetRef": "target:/home/runner/work/nexlabs-company/nexlabs-company",
+      "bindingStrength": "OPERATIONAL_ONLY"
+    },
+    "securityClass": "S1_MANAGED_WRITE",
+    "phase": "RECEIPTING",
+    "preStateBindings": [
+      {
+        "key": ".gef/receipts/run-1-16c6f9daad04.json",
+        "owner": "cli.transport",
+        "predicate": "EXACT",
+        "value": "absent",
+        "contractVersion": "cli-tx-v1"
+      }
+    ],
+    "intentResults": [
+      {
+        "intentId": "i1",
+        "targetRef": ".gef/receipts/run-1-16c6f9daad04.json",
+        "progress": "VERIFIED",
+        "postFingerprint": "91641eb50065455618763347c366ff1faa5a33f07f18fbf66c5b5ea142aaa28d",
+        "recoveryRef": "cli-absent:i1:run-1-16c6f9daad04:receipt"
+      }
+    ],
+    "terminalOutcome": "APPLIED"
+  }
+}
