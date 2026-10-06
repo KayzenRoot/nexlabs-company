@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-011 — Security, Privacy, Web3 & Financial Risk Architecture
 
 **Issue:** #12  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** `HIGH_ASSURANCE / SECURITY_ARCHITECTURE`  
 **Base:** `51d21ccc61ec6469118319eac5796c6fafc94d3d`  
@@ -177,3 +177,15 @@ Brazilian Portuguese: exact base/head, trust boundaries, IAM, secrets, privacy/d
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-011. Do not admit or execute WO-012 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `da885a11d4082d669500e2c950249f7859188a75`
+- All eleven required validations: `SUCCESS`
+- Security Architecture merge SHA: `99a733fa14cea9665aa249d31aa5f24393e35c31`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Corrections: raw secrets explicitly excluded from ordinary agent context; financial execution explicitly bound to `HIGH_ASSURANCE`.
+- Regulatory boundary: applicability for privacy, crypto, securities, financial services and customer-fund activity must be current-checked per product/activity.
+- Successor execution authority: `NONE`; WO-012 remains NOT_ADMITTED until separately compiled and locked.

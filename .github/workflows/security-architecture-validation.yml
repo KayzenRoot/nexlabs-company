@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-011 security architecture
+      - name: Validate canonical security architecture
         shell: bash
         run: |
           set -euo pipefail
@@ -40,25 +40,10 @@ jobs:
             'company/HIGH-ASSURANCE-ACTION-PROTOCOL.md',
             'company/SECURITY-LOGGING-AND-AUDIT.md',
             'company/THREAT-MODEL-BASELINE.md',
-            'company/REGULATORY-APPLICABILITY-REGISTER.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-011.json'
+            'company/REGULATORY-APPLICABILITY-REGISTER.md'
           ];
           for(const p of required){
             if(!fs.existsSync(p)) throw new Error('Missing WO-011 output: '+p);
-          }
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-011') throw new Error('WO-011 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION'){
-            throw new Error('Unexpected active status: '+cp.activeStatus);
-          }
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-011.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-011') throw new Error('WO-011 Context Lock mismatch');
-
-          for(let n=12;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
           }
 
           const arch=fs.readFileSync('company/SECURITY-ARCHITECTURE.md','utf8');
@@ -106,5 +91,11 @@ jobs:
           }
           if(!baseline.includes('Primary authority: `company/SECURITY-ARCHITECTURE.md`')) throw new Error('Engineering security baseline authority missing');
 
-          console.log('WO-011 Security Architecture validation passed.');
+          const wo11=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-011.md','utf8');
+          if(!wo11.includes('Status:** `APPROVED / MERGED`') &&
+             !wo11.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-011 Security Architecture authority is not in an accepted lifecycle state');
+          }
+
+          console.log('Canonical NexLabs Security Architecture validation passed.');
           NODE
