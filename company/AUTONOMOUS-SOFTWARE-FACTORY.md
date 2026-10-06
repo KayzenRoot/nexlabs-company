@@ -103,4 +103,4 @@ High-risk actions remain governed by the authority/risk system and may require F
 
 Unknown authority, stale critical context, ambiguous mutation or unresolved blocking finding does not transition forward.
 
-The factory stops, reconciles or escalates.
+A mutating action with unknown completion enters `RECOVERY_REQUIRED`. The factory performs read-only reconciliation, completes only confirmed missing work, or remains blocked/escalates. It never blindly replays an ambiguous mutation.
