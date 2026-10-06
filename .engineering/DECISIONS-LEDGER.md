@@ -40,3 +40,28 @@
 ## D-0010 — Public repository disclosure boundary
 **Status:** PROVISIONAL_BASELINE  
 **Decision:** While this repository remains public, only public-safe planning and engineering information may be committed. Confidential company/investor/customer/credential material is blocked from Git until repository visibility or data placement is explicitly governed.
+
+
+## D-0011 — NexLabs primary category
+**Status:** APPROVED IN WO-003  
+**Decision:** NexLabs Technology is positioned as an **AI-native technology company and product studio**. It is not positioned as a generic development agency and is not defined as a single-product company.
+
+## D-0012 — Company compounding thesis
+**Status:** APPROVED IN WO-003  
+**Decision:** NexLabs intentionally builds two compounding assets: external products and internal company capability. Products should improve reusable engineering, AI-workforce, tooling, product, market, data or distribution capability when possible.
+
+## D-0013 — Multi-domain strategy is opportunity-driven
+**Status:** APPROVED IN WO-003  
+**Decision:** AI, SaaS/Web2, Web3/crypto infrastructure, financial intelligence, data/APIs, developer tools and games are permitted opportunity domains, not simultaneous execution obligations. Portfolio admission determines which domains receive resources.
+
+## D-0014 — Owned-product orientation
+**Status:** APPROVED IN WO-003  
+**Decision:** NexLabs prioritizes owned products, reusable technology and long-term portfolio value. Generic client services are not the default company identity; any future services model must be explicitly admitted through the Business Model Work Order.
+
+## D-0015 — Provider independence is part of company identity
+**Status:** APPROVED IN WO-003  
+**Decision:** NexLabs must not define its company capability around Hermes, Codex, OpenAI or another single provider. Important company capability is designed for replacement at explicit integration boundaries.
+
+## D-0016 — Aspirational direction must remain distinguishable from current fact
+**Status:** APPROVED IN WO-003  
+**Decision:** Five-year direction and north-star capability are strategic targets. NexLabs must not convert targets into claims of current autonomy, traction, revenue, customers, IP or market position without canonical evidence.

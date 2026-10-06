@@ -1,27 +1,25 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_002_COMPLETE_SOURCE_PACK_CANONICAL`
+**Status:** `WO_003_ADMITTED_COMPANY_STRATEGY_IN_PROGRESS`
 
 - Project: NexLabs Company
 - Version target: `v0.1`
-- Phase: `COMPANY_BLUEPRINT_READY_FOR_WO_003_ADMISSION`
+- Phase: `COMPANY_BLUEPRINT`
 - GEF baseline: `1.1.2`
 - Completed through Work Order: `NXL-COMPANY-WO-002`
-- WO-002 audited head: `63ac51059f45a53b9b55387f29cba5b32da16ca4`
-- WO-002 Source Pack merge SHA: `097a2872c1c603b10d4307ef04f04675e1500809`
-- Active Work Order: `NONE`
-- Active issue: `NONE`
-- Active branch: `NONE`
-- Active Context Lock: `NONE`
-- Known HIGH/CRITICAL blockers: `0 known`
+- Admission base SHA: `a0d3650183ee30ff9ca8aefaff936abd699e4fae`
+- Active Work Order: `NXL-COMPANY-WO-003`
+- Active issue: `#4`
+- Active branch: `planning/NXL-COMPANY-WO-003-company-master`
+- Active Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-003.json`
+- Active status: `ADMITTED / IN_PROGRESS`
+- Known HIGH/CRITICAL blockers: `0 known for current strategy/documentation scope`
 - Repository disclosure risk: `PUBLIC — public-safe information only`
 
 ## Next legal action
 
-`ADMIT_NXL_COMPANY_WO_003`
-
-Admission requires rehydrating this checkpoint, current Decisions Ledger, Scope, DoD, Architecture and Requirements; recompiling WO-003 against the then-current main SHA; and creating a fresh Context Lock.
+`VALIDATE_WO_003_COMPANY_STRATEGY_AND_OPEN_PR`
 
 ## Stop state
 
-WO-003 remains `PLANNED / NOT_ADMITTED`. No WO-003 execution may begin until its own admission and Context Lock are committed.
+Do not admit or execute WO-004 or any later Work Order until WO-003 is exact-head audited, merged and checkpoint-promoted.

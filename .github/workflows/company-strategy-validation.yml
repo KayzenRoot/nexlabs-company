@@ -1,0 +1,93 @@
+name: Validate NexLabs Company Strategy
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  company-strategy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-003 company strategy
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+
+          const required = [
+            'company/COMPANY-MASTER.md',
+            'company/MISSION-VISION-VALUES.md',
+            'company/COMPANY-THESIS.md',
+            'company/POSITIONING.md',
+            'company/STRATEGIC-BOUNDARIES.md',
+            'company/FIVE-YEAR-DIRECTION.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-003.json'
+          ];
+          for (const p of required) {
+            if (!fs.existsSync(p)) throw new Error('Missing WO-003 output: ' + p);
+          }
+
+          const cp = JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if (cp.activeWorkOrder !== 'NXL-COMPANY-WO-003') throw new Error('WO-003 must be active on implementation candidate');
+          if (cp.activeStatus !== 'ADMITTED_IN_PROGRESS' && cp.activeStatus !== 'APPROVED_READY_FOR_PROMOTION') {
+            throw new Error('Unexpected active status: ' + cp.activeStatus);
+          }
+
+          const lock = JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-003.json','utf8'));
+          if (lock.workOrderId !== 'NXL-COMPANY-WO-003') throw new Error('WO-003 Context Lock mismatch');
+
+          const wo3 = fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-003.md','utf8');
+          if (!wo3.includes('Status:** `ADMITTED / IN_PROGRESS`') &&
+              !wo3.includes('Status:** `APPROVED / MERGED`')) {
+            throw new Error('Unexpected WO-003 status');
+          }
+
+          for (let n=4;n<=22;n++) {
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if (!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const master=fs.readFileSync('company/COMPANY-MASTER.md','utf8');
+          const mvv=fs.readFileSync('company/MISSION-VISION-VALUES.md','utf8');
+          const thesis=fs.readFileSync('company/COMPANY-THESIS.md','utf8');
+          const positioning=fs.readFileSync('company/POSITIONING.md','utf8');
+          const boundaries=fs.readFileSync('company/STRATEGIC-BOUNDARIES.md','utf8');
+          const fiveYear=fs.readFileSync('company/FIVE-YEAR-DIRECTION.md','utf8');
+
+          for (const marker of ['## 3. Mission','## 4. Vision','## 5. Company thesis','## 6. Positioning','## 10. What NexLabs is not']) {
+            if (!master.includes(marker)) throw new Error('Company Master missing marker: '+marker);
+          }
+
+          const mission='Turn high-value problems into dependable digital products by combining disciplined product thinking, governed AI labor and evidence-first engineering.';
+          if (!master.includes(mission) || !mvv.includes(mission)) throw new Error('Mission is inconsistent');
+          if (!/products?/i.test(thesis) || !/company capability/i.test(thesis)) throw new Error('Company thesis is incomplete');
+          if (!positioning.includes('AI-native technology company and product studio')) throw new Error('Positioning category is missing');
+          if (!boundaries.includes('We will not')) throw new Error('Strategic boundaries are incomplete');
+          if (!fiveYear.includes('Strategic target, not a claim of present capability')) throw new Error('Five-year fact/target boundary missing');
+
+          const combined=[master,mvv,thesis,positioning,boundaries,fiveYear].join('\n');
+          const prohibitedClaims=[
+            /we have \d+[+,]? customers/i,
+            /annual recurring revenue.*\d/i,
+            /nexlabs(?: technology)?\s+(?:is|is the|has become)\s+(?:a|the)?\s*market leader/i,
+            /nexlabs(?: technology)?\s+(?:is|operates as)\s+(?:a\s+)?fully autonomous company/i
+          ];
+          for (const rx of prohibitedClaims) {
+            if (rx.test(combined)) throw new Error('Unsupported/prohibited factual claim pattern: '+rx);
+          }
+
+          console.log('WO-003 company strategy validation passed.');
+          NODE
