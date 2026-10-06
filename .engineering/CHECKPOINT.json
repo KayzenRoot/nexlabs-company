@@ -14,7 +14,7 @@
   "activeStatus": "ADMITTED_IN_PROGRESS",
   "knownCritical": 0,
   "knownHigh": 0,
-  "nextLegalAction": "EXECUTE_WO_003_COMPANY_MASTER_AND_STRATEGY_DOCUMENTS",
+  "nextLegalAction": "VALIDATE_WO_003_COMPANY_STRATEGY_AND_OPEN_PR",
   "stopState": "NO_WO_004_OR_LATER_EXECUTION_BEFORE_WO_003_APPROVAL_MERGE_AND_CHECKPOINT_PROMOTION",
   "repositoryDisclosure": "PUBLIC_SAFE_ONLY"
 }
