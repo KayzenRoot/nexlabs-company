@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "project": "NexLabs Company",
+  "versionTarget": "v0.1",
+  "status": "WO_002_ADMITTED_SOURCE_PACK_IN_PROGRESS",
+  "phase": "COMPANY_FOUNDATION",
+  "gefVersion": "1.1.2",
+  "lastApprovedIncrement": "NXL-COMPANY-001",
+  "lastMergedMainSha": "096223e902a37fd96639d7d292e4f9b0d2c5724b",
+  "activeWorkOrder": "NXL-COMPANY-WO-002",
+  "activeIssue": 3,
+  "activeBranch": "planning/NXL-COMPANY-WO-002-source-pack",
+  "activeContextLock": ".engineering/context-locks/NXL-COMPANY-WO-002.json",
+  "activeStatus": "ADMITTED_IN_PROGRESS",
+  "knownCritical": 0,
+  "knownHigh": 0,
+  "nextLegalAction": "COMPLETE_WO_002_SOURCE_PACK_VALIDATE_PR_AND_EXACT_HEAD_AUDIT",
+  "stopState": "NO_WO_003_OR_LATER_EXECUTION_BEFORE_WO_002_APPROVAL_CHECKPOINT_PROMOTION_AND_MERGE",
+  "repositoryDisclosure": "PUBLIC_SAFE_ONLY"
+}
