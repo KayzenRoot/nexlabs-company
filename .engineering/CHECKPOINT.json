@@ -14,7 +14,7 @@
   "activeStatus": "ADMITTED_IN_PROGRESS",
   "knownCritical": 0,
   "knownHigh": 0,
-  "nextLegalAction": "EXECUTE_WO_004_BUSINESS_MODEL_AND_REVENUE_ARCHITECTURE",
+  "nextLegalAction": "VALIDATE_WO_004_BUSINESS_MODEL_AND_OPEN_PR",
   "stopState": "NO_WO_005_OR_LATER_EXECUTION_BEFORE_WO_004_APPROVAL_MERGE_AND_CHECKPOINT_PROMOTION",
   "repositoryDisclosure": "PUBLIC_SAFE_ONLY",
   "companyStrategyAuthority": "company/COMPANY-MASTER.md"
