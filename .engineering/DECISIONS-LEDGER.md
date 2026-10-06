@@ -247,3 +247,36 @@
 ## D-0060 — v0.1 must prove one full governed autonomous engineering loop
 **Status:** APPROVED IN WO-009  
 **Decision:** The MVP must demonstrate approved intent/product case → Work Order → Context Lock → preflight → execution → tests/evidence → review → correction path → approval/merge → separate checkpoint promotion, with Founder visibility and provider-replaceable execution.
+
+
+## D-0061 — Research claims use explicit evidence taxonomy
+**Status:** APPROVED IN WO-010  
+**Decision:** NexLabs distinguishes source evidence, experiment result, observation, inference, assumption, unknown and judgment. AI synthesis is not primary evidence by itself.
+
+## D-0062 — Prototype and product validation are separate
+**Status:** APPROVED IN WO-010  
+**Decision:** A prototype demonstrates only the scoped technical hypothesis actually tested. It does not by itself prove demand, product-market fit, economics, security, production readiness or legal protectability.
+
+## D-0063 — Reusable innovations enter an Innovation Ledger
+**Status:** APPROVED IN WO-010  
+**Decision:** Potentially reusable/differentiated technologies receive attributable innovation records with evidence, contributors, dependencies, disclosure state and disposition. Ledger status does not assert patent/legal protection.
+
+## D-0064 — Potential inventions require provenance before strong IP claims
+**Status:** APPROVED IN WO-010  
+**Decision:** Invention/IP candidates record human/AI contribution, source/experiment/commit refs, third-party code/models/data, license terms and public disclosure state. Unknown provenance blocks strong proprietary/public/outbound licensing claims until reconciled.
+
+## D-0065 — AI agents do not make formal IP/legal determinations
+**Status:** APPROVED IN WO-010  
+**Decision:** Agents may analyze and flag patent/trademark/trade-secret/copyright/license issues but may not independently conclude patentability, inventorship, freedom-to-operate, legal ownership or accept/sign binding rights where Founder/legal authority is required.
+
+## D-0066 — Public/open-source release is an explicit disposition gate
+**Status:** APPROVED IN WO-010  
+**Decision:** Open-source or publication requires provenance, license, secrets, security, confidentiality and unresolved-IP checks plus Founder approval when strategically material.
+
+## D-0067 — Research transfers through Product Factory and GEF
+**Status:** APPROVED IN WO-010  
+**Decision:** Research/prototypes do not silently become production code. Technology transfer preserves evidence/provenance and then follows Product Factory prioritization and GEF engineering admission.
+
+## D-0068 — Confidential IP detail is not stored in a public repository by default
+**Status:** APPROVED IN WO-010  
+**Decision:** This public company repository may contain public-safe innovation metadata/policy. Confidential invention detail, sensitive algorithms and third-party confidential material require protected storage.
