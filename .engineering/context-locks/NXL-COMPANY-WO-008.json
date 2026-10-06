@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-008",
+  "issue": 9,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "planning/NXL-COMPANY-WO-008-product-factory",
+  "baseSha": "543aa91977d14d51c9984632ef0d2debe0e10b13",
+  "compiledDate": "2026-10-06",
+  "authorityModel": "GEF_1_1_2",
+  "criticalSourceFingerprints": {
+    ".engineering/CHECKPOINT.json": "blob:529f431981c91d591163d952661788472bf06044",
+    ".engineering/DECISIONS-LEDGER.md": "blob:2b86fde1d1ac5402f4e3e9988f9b5c6ab2a1556e",
+    ".engineering/SCOPE.md": "blob:d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "blob:a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/REQUIREMENTS.md": "blob:2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/work-orders/NXL-COMPANY-WO-008.md": "blob:a955593c2898e91933b0b2ff266061459254bb50",
+    "company/COMPANY-MASTER.md": "blob:51b7de15a3e6aaa9812d0040db5e4cc9da578955",
+    "company/BUSINESS-MODEL.md": "blob:a75d12f95489d1164768d79ff92f73ee3a1377be",
+    "company/AI-ORGANIZATION.md": "blob:fdefa607713ddccdcef761c0fb85dffa60a86bb6",
+    "company/AI-EMPLOYEE-CONTRACT.md": "blob:e0da3acc80833410cf6712cbf2c48d67bc1aaed8"
+  },
+  "admittedOutputs": [
+    "company/PRODUCT-PORTFOLIO-STRATEGY.md",
+    "company/PRODUCT-FACTORY.md",
+    "company/PRODUCT-INTAKE.md",
+    "company/PRODUCT-VALIDATION-GATES.md",
+    "company/PORTFOLIO-SCORING.md",
+    "company/PRODUCT-LIFECYCLE.md",
+    "company/PRODUCT-CASE-CONTRACT.md",
+    "company/ITERATE-SCALE-PAUSE-KILL.md",
+    "company/PORTFOLIO-CAPACITY-POLICY.md",
+    ".engineering/SOURCE-HIERARCHY.md",
+    ".engineering/DECISIONS-LEDGER.md",
+    ".engineering/CHECKPOINT.md",
+    ".engineering/CHECKPOINT.json",
+    ".engineering/WORK-ORDER-REGISTRY.md",
+    ".engineering/BACKLOG.md",
+    ".engineering/work-orders/NXL-COMPANY-WO-008.md",
+    ".engineering/context-locks/NXL-COMPANY-WO-008.json",
+    ".github/workflows/product-factory-validation.yml"
+  ],
+  "refreshTriggers": [
+    "main changes before WO-008 implementation audit",
+    "any locked critical source changes outside admitted WO-008 delta",
+    "WO-008 portfolio/product-factory scope changes",
+    "company strategy or business-model authority changes",
+    "GEF baseline changes"
+  ],
+  "state": "LOCKED_FOR_WO_008"
+}
