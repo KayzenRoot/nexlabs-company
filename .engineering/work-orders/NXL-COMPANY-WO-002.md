@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-002 — Canonical Source Pack & Project Governance
 
 **Issue:** #3  
-**Status:** `ADMITTED`  
+**Status:** `APPROVED / MERGED`  
 **Risk:** LOW / governance-critical  
 **Base:** `096223e902a37fd96639d7d292e4f9b0d2c5724b`  
 **Branch:** `planning/NXL-COMPANY-WO-002-source-pack`
@@ -112,3 +112,14 @@ Brazilian Portuguese:
 ## STOP CONDITION
 
 Stop after exact-head evidence and audit. Do not start WO-003 in this PR. WO-003 may only be admitted after WO-002 approval, checkpoint promotion and merge.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `63ac51059f45a53b9b55387f29cba5b32da16ca4`
+- Validate NexLabs Source Pack: `SUCCESS`
+- Validate GEF 1.1.2: `SUCCESS`
+- Source Pack merge SHA: `097a2872c1c603b10d4307ef04f04675e1500809`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Successor execution authority: `NONE`; WO-003 remains NOT_ADMITTED until separately compiled and locked.
