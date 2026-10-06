@@ -20,10 +20,11 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 13 | Autonomous software factory | `company/AUTONOMOUS-SOFTWARE-FACTORY.md` plus supporting engineering lifecycle protocols |
 | 14 | Research & IP | `company/RESEARCH-INNOVATION-STRATEGY.md` plus supporting research/provenance/disposition documents |
 | 15 | Security | `company/SECURITY-ARCHITECTURE.md` plus supporting security/privacy/Web3/financial controls; `.engineering/SECURITY.md` is the engineering baseline |
-| 16 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 17 | Deployment | `DEPLOYMENT.md` |
-| 18 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 19 | Conversation | transient context only |
+| 16 | Finance | `company/FINANCE-OPERATING-MODEL.md` plus supporting budget/economics/funding documents |
+| 17 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 18 | Deployment | `DEPLOYMENT.md` |
+| 19 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 20 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -181,3 +182,23 @@ Supporting canonical security sources:
 `.engineering/SECURITY.md` is the concise engineering baseline and may not weaken these company-wide controls.
 
 Later Company OS, runtime, finance, Web3 and deployment Work Orders must implement or refine controls without silently reducing Founder authority, segregation of duties, privacy obligations, signing safety or high-assurance requirements.
+
+
+## Finance authority
+
+`company/FINANCE-OPERATING-MODEL.md` is the primary authority for internal management finance and financial truth states.
+
+Supporting canonical finance sources:
+- `company/BUDGET-AND-FORECASTING.md`
+- `company/CASH-FLOW-BURN-RUNWAY.md`
+- `company/REVENUE-METRICS.md`
+- `company/UNIT-ECONOMICS.md`
+- `company/COST-ALLOCATION-AI-CLOUD.md`
+- `company/TREASURY-AND-SPEND-CONTROLS.md`
+- `company/FUNDING-AND-INVESTMENT-MODEL.md`
+- `company/USE-OF-FUNDS.md`
+- `company/MILESTONE-TRANCHE-MODEL.md`
+- `company/FINANCIAL-SCENARIO-PLANNING.md`
+- `company/MANAGEMENT-FINANCIAL-REPORTING.md`
+
+Management-finance policy does not replace statutory accounting, tax, legal financing documents or bank/investment execution controls.
