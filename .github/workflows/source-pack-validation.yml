@@ -71,13 +71,29 @@ jobs:
             }
           }
 
-          for (let n=3;n<=22;n++) {
+          const completedMatch = String(cp.completedThroughWorkOrder || '').match(/WO-(\\d+)$/);
+          if (!completedMatch) throw new Error('Checkpoint must declare completedThroughWorkOrder');
+          const completedN = Number(completedMatch[1]);
+
+          for (let n=2;n<=22;n++) {
             const id = 'NXL-COMPANY-WO-' + String(n).padStart(3,'0');
             const status = statuses.get(id);
-            if (cp.activeWorkOrder !== id && !status.includes('NOT_ADMITTED')) {
-              throw new Error(id + ' is not active and must remain NOT_ADMITTED');
+
+            if (n <= completedN) {
+              if (!status.includes('APPROVED / MERGED')) {
+                throw new Error(id + ' is at/below completedThroughWorkOrder but is not APPROVED / MERGED');
+              }
+              continue;
+            }
+
+            if (cp.activeWorkOrder === id) {
+              if (!/^ADMITTED(?:\\s|\\/|$)/.test(status)) {
+                throw new Error(id + ' is active but not ADMITTED');
+              }
+            } else if (!status.includes('NOT_ADMITTED')) {
+              throw new Error(id + ' is future/non-active and must remain NOT_ADMITTED');
             }
           }
 
-          console.log('Canonical Source Pack validation passed.');
+          console.log('Canonical Source Pack lifecycle validation passed.');
           NODE
