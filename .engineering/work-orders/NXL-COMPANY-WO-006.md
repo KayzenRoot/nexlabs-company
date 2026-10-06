@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-006 — AI Workforce & Organizational Architecture
 
 **Issue:** #7  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** ELEVATED / organization-critical  
 **Base:** `e67ecc6e14af6e0ebfa3bd627281bc241d5c4d37`  
@@ -126,3 +126,18 @@ Brazilian Portuguese: exact base/head, organizational coherence, authority consi
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-006. Do not admit or execute WO-007 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `0b3509499e8b8f01d56be60ca29317065433ee6a`
+- Validate GEF 1.1.2: `SUCCESS`
+- Validate NexLabs Source Pack: `SUCCESS`
+- Validate NexLabs Company Strategy: `SUCCESS`
+- Validate NexLabs Business Model: `SUCCESS`
+- Validate NexLabs Governance: `SUCCESS`
+- Validate NexLabs AI Workforce: `SUCCESS`
+- Workforce merge SHA: `13fe75ebaaf7c77a7f3c9bf65b49e86f493260c8`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Successor execution authority: `NONE`; WO-007 remains NOT_ADMITTED until separately compiled and locked.
