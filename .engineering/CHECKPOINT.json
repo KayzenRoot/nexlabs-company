@@ -14,7 +14,7 @@
   "activeStatus": "ADMITTED_IN_PROGRESS",
   "knownCritical": 0,
   "knownHigh": 0,
-  "nextLegalAction": "EXECUTE_WO_008_PRODUCT_PORTFOLIO_AND_FACTORY",
+  "nextLegalAction": "VALIDATE_WO_008_PRODUCT_FACTORY_AND_OPEN_PR",
   "stopState": "NO_WO_009_OR_LATER_EXECUTION_BEFORE_WO_008_APPROVAL_MERGE_AND_CHECKPOINT_PROMOTION",
   "repositoryDisclosure": "PUBLIC_SAFE_ONLY",
   "companyStrategyAuthority": "company/COMPANY-MASTER.md",
