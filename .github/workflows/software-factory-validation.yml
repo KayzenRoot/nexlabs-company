@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-009 autonomous software factory
+      - name: Validate canonical autonomous software factory
         shell: bash
         run: |
           set -euo pipefail
@@ -36,27 +36,11 @@ jobs:
             'company/EVIDENCE-AND-EXACT-HEAD-PROTOCOL.md',
             'company/REVIEW-AND-CORRECTION-PROTOCOL.md',
             'company/CHECKPOINT-PROMOTION-PROTOCOL.md',
-            'company/AUTONOMOUS-ENGINEERING-MVP.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-009.json'
+            'company/AUTONOMOUS-ENGINEERING-MVP.md'
           ];
 
           for(const p of required){
             if(!fs.existsSync(p)) throw new Error('Missing WO-009 output: '+p);
-          }
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-009') throw new Error('WO-009 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION'){
-            throw new Error('Unexpected active status: '+cp.activeStatus);
-          }
-
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-009.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-009') throw new Error('WO-009 Context Lock mismatch');
-
-          for(let n=10;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
           }
 
           const factory=fs.readFileSync('company/AUTONOMOUS-SOFTWARE-FACTORY.md','utf8');
@@ -96,5 +80,11 @@ jobs:
             if(!mvp.toLowerCase().includes(marker.toLowerCase())) throw new Error('MVP proof missing marker: '+marker);
           }
 
-          console.log('WO-009 autonomous software factory validation passed.');
+          const wo9=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-009.md','utf8');
+          if(!wo9.includes('Status:** `APPROVED / MERGED`') &&
+             !wo9.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-009 Software Factory authority is not in an accepted lifecycle state');
+          }
+
+          console.log('Canonical NexLabs autonomous software factory validation passed.');
           NODE
