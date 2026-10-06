@@ -1,25 +1,41 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_008_ADMITTED_PRODUCT_FACTORY_IN_PROGRESS`
+**Status:** `WO_008_COMPLETE_PRODUCT_FACTORY_CANONICAL`
 
 - Project: NexLabs Company
 - Version target: `v0.1`
-- Phase: `COMPANY_BLUEPRINT`
+- Phase: `AUTONOMOUS_SOFTWARE_FACTORY_READY_FOR_WO_009_ADMISSION`
 - GEF baseline: `1.1.2`
-- Completed through Work Order: `NXL-COMPANY-WO-007`
-- Admission base SHA: `543aa91977d14d51c9984632ef0d2debe0e10b13`
-- Active Work Order: `NXL-COMPANY-WO-008`
-- Active issue: `#9`
-- Active branch: `planning/NXL-COMPANY-WO-008-product-factory`
-- Active Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-008.json`
-- Active status: `ADMITTED / IN_PROGRESS`
-- Known HIGH/CRITICAL blockers: `0 known for current Product Factory/documentation scope`
+- Completed through Work Order: `NXL-COMPANY-WO-008`
+- WO-008 audited head: `0a4f112be5b49708f09656ac42740b3b1d2491f8`
+- WO-008 Product Factory merge SHA: `38c2bbb088a010a3e1267311f53030a254e38160`
+- Active Work Order: `NONE`
+- Active issue: `NONE`
+- Active branch: `NONE`
+- Active Context Lock: `NONE`
+- Known HIGH/CRITICAL blockers: `0 known`
 - Repository disclosure risk: `PUBLIC — public-safe information only`
+
+## Canonical Product Factory
+
+Primary authority: `company/PRODUCT-FACTORY.md`
+
+Supporting portfolio/product authority:
+- `company/PRODUCT-PORTFOLIO-STRATEGY.md`
+- `company/PRODUCT-INTAKE.md`
+- `company/PRODUCT-VALIDATION-GATES.md`
+- `company/PORTFOLIO-SCORING.md`
+- `company/PRODUCT-LIFECYCLE.md`
+- `company/PRODUCT-CASE-CONTRACT.md`
+- `company/ITERATE-SCALE-PAUSE-KILL.md`
+- `company/PORTFOLIO-CAPACITY-POLICY.md`
 
 ## Next legal action
 
-`VALIDATE_WO_008_PRODUCT_FACTORY_AND_OPEN_PR`
+`ADMIT_NXL_COMPANY_WO_009`
+
+Admission requires rehydrating this checkpoint and canonical sources, recompiling WO-009 against the current main SHA and creating a fresh Context Lock.
 
 ## Stop state
 
-Do not admit or execute WO-009 or any later Work Order until WO-008 is exact-head audited, merged and checkpoint-promoted.
+WO-009 remains `PLANNED / NOT_ADMITTED`. No WO-009 execution may begin until its own admission and Context Lock are committed.
