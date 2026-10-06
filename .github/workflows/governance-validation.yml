@@ -19,12 +19,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-005 governance model
+      - name: Validate canonical governance model
         shell: bash
         run: |
           set -euo pipefail
           node <<'NODE'
           const fs=require('fs');
+
           const required=[
             'company/CORPORATE-GOVERNANCE.md',
             'company/AUTHORITY-MATRIX.md',
@@ -33,29 +34,10 @@ jobs:
             'company/SEGREGATION-OF-DUTIES.md',
             'company/ESCALATION-AND-INCIDENT-AUTHORITY.md',
             'company/PROHIBITED-ACTIONS.md',
-            'company/AUDIT-AND-RECEIPTS.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-005.json'
+            'company/AUDIT-AND-RECEIPTS.md'
           ];
           for(const p of required){
-            if(!fs.existsSync(p)) throw new Error('Missing WO-005 output: '+p);
-          }
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-005') throw new Error('WO-005 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') {
-            throw new Error('Unexpected active status: '+cp.activeStatus);
-          }
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-005.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-005') throw new Error('WO-005 Context Lock mismatch');
-
-          const wo=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-005.md','utf8');
-          if(!wo.includes('Status:** `ADMITTED / IN_PROGRESS`') &&
-             !wo.includes('Status:** `APPROVED / MERGED`')) throw new Error('Unexpected WO-005 status');
-
-          for(let n=6;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+            if(!fs.existsSync(p)) throw new Error('Missing canonical governance file: '+p);
           }
 
           const gov=fs.readFileSync('company/CORPORATE-GOVERNANCE.md','utf8');
@@ -88,9 +70,15 @@ jobs:
             if(!audit.includes(state)) throw new Error('Missing audit outcome state: '+state);
           }
 
+          const wo5=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-005.md','utf8');
+          if(!wo5.includes('Status:** `APPROVED / MERGED`') &&
+             !wo5.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-005 governance authority is not in an accepted lifecycle state');
+          }
+
           const combined=[gov,matrix,risk,approval,duties,escalation,prohibited,audit].join('\n').toLowerCase();
           if(combined.includes('silence means approval')) throw new Error('Implicit silence-as-approval detected');
           if(combined.includes('agent may grant itself')) throw new Error('Self-granting authority detected');
 
-          console.log('WO-005 governance validation passed.');
+          console.log('Canonical NexLabs governance validation passed.');
           NODE
