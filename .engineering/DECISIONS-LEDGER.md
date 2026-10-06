@@ -123,3 +123,28 @@
 ## D-0030 — Material actions require attributable receipts
 **Status:** APPROVED IN WO-005  
 **Decision:** Material company actions must be reconstructable from role/action/risk/authorization/target/outcome/evidence records without embedding raw secrets.
+
+
+## D-0031 — NexLabs uses a minimal persistent AI core plus elastic specialists
+**Status:** APPROVED IN WO-006  
+**Decision:** v0.1 uses Founder/CEO plus a small logical coordination core centered on Chief of Staff, Product/Strategy and Technology/Engineering. Specialist capabilities are activated on demand unless recurring workload, risk or coordination evidence justifies persistence.
+
+## D-0032 — Executive AI titles are operating roles, not legal offices
+**Status:** APPROVED IN WO-006  
+**Decision:** AI CTO/CPO/CFO/COO/CMO/CISO-style titles describe internal coordination responsibility only. Titles do not grant legal status, tool permissions, spending authority, signing authority or governance override.
+
+## D-0033 — Workforce roles are provider-independent logical identities
+**Status:** APPROVED IN WO-006  
+**Decision:** Hermes, Codex, OpenAI, local models and other runtimes may instantiate roles, but provider/model names do not define the organizational role itself.
+
+## D-0034 — Software delivery reproduces the founder's governed working method
+**Status:** APPROVED IN WO-006  
+**Decision:** The canonical software cell is Founder Intent → Planner/Architect → Work Order → Executor → Tests/Evidence → Reviewer/Auditor → Correction/Approval → Checkpoint → Merge/Next.
+
+## D-0035 — Role processes are elastic; canonical state is persistent
+**Status:** APPROVED IN WO-006  
+**Decision:** NexLabs prefers persistent role definitions, company/project state and audit evidence with bounded agent sessions/runs. A role does not need a continuously running agent merely because it exists in the org chart.
+
+## D-0036 — Workforce growth is evidence-driven
+**Status:** APPROVED IN WO-006  
+**Decision:** New persistent agents/functions are added when recurring workload, coordination latency, context continuity, monitoring, segregation-of-duties or economics justify them. Agent count is not a success metric.

@@ -14,11 +14,12 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 6 | Requirements | `REQUIREMENTS.md` |
 | 8 | Business model | `company/BUSINESS-MODEL.md` plus the supporting canonical business-model documents |
 | 9 | Corporate governance | `company/CORPORATE-GOVERNANCE.md` plus authority/risk/approval supporting documents |
-| 10 | Security | `SECURITY.md` |
-| 11 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 12 | Deployment | `DEPLOYMENT.md` |
-| 13 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 14 | Conversation | transient context only |
+| 10 | AI workforce | `company/AI-ORGANIZATION.md` plus supporting workforce architecture documents |
+| 11 | Security | `SECURITY.md` |
+| 12 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 13 | Deployment | `DEPLOYMENT.md` |
+| 14 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 15 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -66,3 +67,19 @@ Supporting canonical governance:
 - `company/AUDIT-AND-RECEIPTS.md`
 
 Later Workforce, Security, Finance and Company OS Work Orders may refine role/tool-specific policy, but may not silently lower the minimum authority or risk class established here.
+
+
+## AI-workforce authority
+
+`company/AI-ORGANIZATION.md` is the primary authority for organizational structure, executive/functional topology and the one-founder AI-native organization.
+
+Supporting canonical workforce documents:
+- `company/AI-WORKFORCE-ARCHITECTURE.md`
+- `company/EXECUTIVE-AGENTS.md`
+- `company/ROLE-TAXONOMY.md`
+- `company/TEAM-TOPOLOGY.md`
+- `company/SOFTWARE-DELIVERY-CELL.md`
+- `company/MINIMUM-VIABLE-WORKFORCE.md`
+- `company/STAFFING-PHASES.md`
+
+WO-007 may define the per-agent employee contract, memory, permissions and KPIs, but it may not silently change the approved organization or founder authority.

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-006",
+  "issue": 7,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "planning/NXL-COMPANY-WO-006-ai-workforce",
+  "baseSha": "e67ecc6e14af6e0ebfa3bd627281bc241d5c4d37",
+  "compiledDate": "2026-10-06",
+  "authorityModel": "GEF_1_1_2",
+  "criticalSourceFingerprints": {
+    ".engineering/CHECKPOINT.json": "blob:edae4d7bef9875a79500dc441fc7e9f79c6f9ad1",
+    ".engineering/DECISIONS-LEDGER.md": "blob:99146c75cb72a2386acaae7d51dc3c424b5a8cc5",
+    ".engineering/SCOPE.md": "blob:d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "blob:a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/ARCHITECTURE.md": "blob:77289da4b7fc7161a5f45d3acfdb8d81deb328bf",
+    ".engineering/REQUIREMENTS.md": "blob:2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/work-orders/NXL-COMPANY-WO-006.md": "blob:276e2f05b205da388e7fec3c2f386e47a1b6016f",
+    "company/COMPANY-MASTER.md": "blob:51b7de15a3e6aaa9812d0040db5e4cc9da578955",
+    "company/CORPORATE-GOVERNANCE.md": "blob:06effa50c2a1eecd751d55d212f38b63c884c04c",
+    "company/AUTHORITY-MATRIX.md": "blob:52f627c7ba72c4f39f9bf50f8889caa914fe48f5",
+    "company/RISK-CLASSIFICATION.md": "blob:97cf6b8501326d611e79f90d13a49fa77388a7db"
+  },
+  "admittedOutputs": [
+    "company/AI-ORGANIZATION.md",
+    "company/AI-WORKFORCE-ARCHITECTURE.md",
+    "company/EXECUTIVE-AGENTS.md",
+    "company/ROLE-TAXONOMY.md",
+    "company/TEAM-TOPOLOGY.md",
+    "company/SOFTWARE-DELIVERY-CELL.md",
+    "company/MINIMUM-VIABLE-WORKFORCE.md",
+    "company/STAFFING-PHASES.md",
+    ".engineering/SOURCE-HIERARCHY.md",
+    ".engineering/DECISIONS-LEDGER.md",
+    ".engineering/CHECKPOINT.md",
+    ".engineering/CHECKPOINT.json",
+    ".engineering/WORK-ORDER-REGISTRY.md",
+    ".engineering/BACKLOG.md",
+    ".engineering/work-orders/NXL-COMPANY-WO-006.md",
+    ".engineering/context-locks/NXL-COMPANY-WO-006.json",
+    ".github/workflows/ai-workforce-validation.yml"
+  ],
+  "refreshTriggers": [
+    "main changes before WO-006 implementation audit",
+    "any locked critical source changes outside admitted WO-006 delta",
+    "WO-006 organizational scope changes",
+    "governance authority changes",
+    "GEF baseline changes"
+  ],
+  "state": "LOCKED_FOR_WO_006"
+}

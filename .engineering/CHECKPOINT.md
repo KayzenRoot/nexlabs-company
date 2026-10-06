@@ -1,48 +1,25 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_005_COMPLETE_CORPORATE_GOVERNANCE_CANONICAL`
+**Status:** `WO_006_ADMITTED_AI_WORKFORCE_IN_PROGRESS`
 
 - Project: NexLabs Company
 - Version target: `v0.1`
-- Phase: `AI_WORKFORCE_READY_FOR_WO_006_ADMISSION`
+- Phase: `COMPANY_BLUEPRINT`
 - GEF baseline: `1.1.2`
 - Completed through Work Order: `NXL-COMPANY-WO-005`
-- WO-005 audited head: `26f93f3ac2be1454b170cfa2672bad6a1400ccee`
-- WO-005 governance merge SHA: `61b182dc8f94a462dcdd7e15537b81cecc8e3857`
-- Active Work Order: `NONE`
-- Active issue: `NONE`
-- Active branch: `NONE`
-- Active Context Lock: `NONE`
-- Known HIGH/CRITICAL blockers: `0 known`
+- Admission base SHA: `e67ecc6e14af6e0ebfa3bd627281bc241d5c4d37`
+- Active Work Order: `NXL-COMPANY-WO-006`
+- Active issue: `#7`
+- Active branch: `planning/NXL-COMPANY-WO-006-ai-workforce`
+- Active Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-006.json`
+- Active status: `ADMITTED / IN_PROGRESS`
+- Known HIGH/CRITICAL blockers: `0 known for current organization/documentation scope`
 - Repository disclosure risk: `PUBLIC — public-safe information only`
-
-## Canonical company strategy
-
-Primary authority: `company/COMPANY-MASTER.md`
-
-## Canonical business model
-
-Primary authority: `company/BUSINESS-MODEL.md`
-
-## Canonical corporate governance
-
-Primary authority: `company/CORPORATE-GOVERNANCE.md`
-
-Supporting governance:
-- `company/AUTHORITY-MATRIX.md`
-- `company/RISK-CLASSIFICATION.md`
-- `company/APPROVAL-POLICY.md`
-- `company/SEGREGATION-OF-DUTIES.md`
-- `company/ESCALATION-AND-INCIDENT-AUTHORITY.md`
-- `company/PROHIBITED-ACTIONS.md`
-- `company/AUDIT-AND-RECEIPTS.md`
 
 ## Next legal action
 
-`ADMIT_NXL_COMPANY_WO_006`
-
-Admission requires rehydrating this checkpoint and canonical sources, recompiling WO-006 against the current main SHA and creating a fresh Context Lock.
+`VALIDATE_WO_006_AI_WORKFORCE_AND_OPEN_PR`
 
 ## Stop state
 
-WO-006 remains `PLANNED / NOT_ADMITTED`. No WO-006 execution may begin until its own admission and Context Lock are committed.
+Do not admit or execute WO-007 or any later Work Order until WO-006 is exact-head audited, merged and checkpoint-promoted.
