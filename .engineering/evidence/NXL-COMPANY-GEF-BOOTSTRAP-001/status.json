@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "commandId": "gef.status.show",
+  "contractVersion": "1.0",
+  "terminal": "SUCCEEDED",
+  "value": {
+    "commandId": "gef.status.show",
+    "effect": "NONE",
+    "status": {
+      "verb": "status",
+      "readOnly": true,
+      "target": {
+        "targetRef": "/home/runner/work/nexlabs-company/nexlabs-company",
+        "exists": true,
+        "isDirectory": true
+      },
+      "repository": {
+        "verdict": {
+          "state": "CLEAN",
+          "dirty": false,
+          "conflict": false,
+          "digest": "b41db9e38bfa130b5255e3d525fa919e8690f1b6b746b7420105e283ee967c9a"
+        },
+        "dirtiness": "OBSERVED",
+        "observationLimits": []
+      },
+      "release": {
+        "source": ".engineering/CHECKPOINT.json",
+        "present": false,
+        "readable": false,
+        "valid": false,
+        "production": null,
+        "development": null
+      },
+      "operator": {
+        "state": "CLEAN",
+        "progress": null,
+        "evidence": [
+          "README.md"
+        ],
+        "stale": false,
+        "optional": false
+      },
+      "documentation": {
+        "entries": [
+          {
+            "id": "README.md",
+            "source": "README.md",
+            "version": null,
+            "digest": "29313042c61c22938b24e2a908d8d9bbdd386a3b8950fe137953cb3dfec07e58"
+          }
+        ],
+        "digest": "e73b1152dc8e362b663cc33b63b6f33bba7fe6fc1714ee6e5ef6f5e06f6fc02c"
+      },
+      "navigation": {
+        "files": [
+          "README.md"
+        ],
+        "ioBudget": 1,
+        "digest": "f19ba0a922107343e81f0586343fb436847037ae7f7f7fd1b8a23560ae404c6b"
+      },
+      "drift": {
+        "before": "93fa941e0d2a28b104aa58d09ff06bc0e0c24d80aee0ea55c03c46d72ed30f62",
+        "after": "93fa941e0d2a28b104aa58d09ff06bc0e0c24d80aee0ea55c03c46d72ed30f62",
+        "changed": false,
+        "class": "NONE",
+        "digest": "0e1e57f915747d74335f36e7326f7badaceca10f1477d3df1d411a66e10d4f4f"
+      },
+      "driftBaseline": {
+        "state": "RECORDED",
+        "ref": ".gef/init-state.json"
+      },
+      "observationLimits": [
+        "GOVERNANCE_SOURCE_ABSENT"
+      ],
+      "integrity": {
+        "root": "f3b8d3c95c6efffcf04104a9b99f6d1c089537e12e7719398b650c57818e186d",
+        "schema": 1,
+        "digest": "3e90efa37dcbff22283679ce0dc66f76a5afbd91b8dc489c32f07e900a152062"
+      }
+    },
+    "statusDigest": "1de216528071a01cf285f0f4fba509dc03804f6b0a02a55694b007c33d141db6"
+  }
+}
