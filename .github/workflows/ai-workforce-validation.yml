@@ -1,0 +1,89 @@
+name: Validate NexLabs AI Workforce
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ai-workforce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-006 AI workforce architecture
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const required=[
+            'company/AI-ORGANIZATION.md',
+            'company/AI-WORKFORCE-ARCHITECTURE.md',
+            'company/EXECUTIVE-AGENTS.md',
+            'company/ROLE-TAXONOMY.md',
+            'company/TEAM-TOPOLOGY.md',
+            'company/SOFTWARE-DELIVERY-CELL.md',
+            'company/MINIMUM-VIABLE-WORKFORCE.md',
+            'company/STAFFING-PHASES.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-006.json'
+          ];
+          for(const p of required){
+            if(!fs.existsSync(p)) throw new Error('Missing WO-006 output: '+p);
+          }
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-006') throw new Error('WO-006 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') {
+            throw new Error('Unexpected active status: '+cp.activeStatus);
+          }
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-006.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-006') throw new Error('WO-006 Context Lock mismatch');
+
+          const wo=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-006.md','utf8');
+          if(!wo.includes('Status:** `ADMITTED / IN_PROGRESS`') &&
+             !wo.includes('Status:** `APPROVED / MERGED`')) throw new Error('Unexpected WO-006 status');
+
+          for(let n=7;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const org=fs.readFileSync('company/AI-ORGANIZATION.md','utf8');
+          const arch=fs.readFileSync('company/AI-WORKFORCE-ARCHITECTURE.md','utf8');
+          const exec=fs.readFileSync('company/EXECUTIVE-AGENTS.md','utf8');
+          const roles=fs.readFileSync('company/ROLE-TAXONOMY.md','utf8');
+          const teams=fs.readFileSync('company/TEAM-TOPOLOGY.md','utf8');
+          const cell=fs.readFileSync('company/SOFTWARE-DELIVERY-CELL.md','utf8');
+          const min=fs.readFileSync('company/MINIMUM-VIABLE-WORKFORCE.md','utf8');
+          const phases=fs.readFileSync('company/STAFFING-PHASES.md','utf8');
+
+          for(const marker of ['Founder / CEO','AI Chief of Staff','AI Product & Strategy','AI Technology & Engineering']){
+            if(!org.includes(marker)) throw new Error('Organization missing core role: '+marker);
+          }
+          for(const family of ['Product','Engineering','Research & Data','Security & Risk','Operations','Finance','Commercial']){
+            if(!roles.includes(family)) throw new Error('Role taxonomy missing family: '+family);
+          }
+          for(const stage of ['Planner / Architect','Executor','QA / Test Engineer','Reviewer / Auditor']){
+            if(!cell.includes(stage)) throw new Error('Software delivery cell missing stage: '+stage);
+          }
+          if(!arch.toLowerCase().includes('elastic')) throw new Error('Elastic workforce principle missing');
+          if(!min.includes('~3 persistent logical AI coordination capabilities')) throw new Error('Minimum viable workforce baseline missing');
+          if(!phases.includes('Phase 0') || !phases.includes('Phase 4')) throw new Error('Staffing phases incomplete');
+          if(!exec.includes('do not') && !exec.includes('does not')) throw new Error('Executive authority boundary missing');
+
+          const combined=[org,arch,exec,roles,teams,cell,min,phases].join('\n').toLowerCase();
+          if(combined.includes('title grants authority')) throw new Error('Role-title authority escalation detected');
+          if(combined.includes('hermes is the organization')) throw new Error('Provider-coupled organization detected');
+
+          console.log('WO-006 AI workforce validation passed.');
+          NODE
