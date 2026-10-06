@@ -4,6 +4,8 @@
 
 ## Never-store locations
 
+Secrets must not enter ordinary agent context. Agents may receive a secret reference or narrowly brokered capability, but not the raw secret unless an explicitly isolated high-assurance execution boundary requires it.
+
 Secrets must not be committed or pasted into:
 - Git;
 - issues/PRs;
