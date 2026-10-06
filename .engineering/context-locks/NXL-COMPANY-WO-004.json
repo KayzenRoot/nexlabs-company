@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-004",
+  "issue": 5,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "planning/NXL-COMPANY-WO-004-business-model",
+  "baseSha": "e3b56c9a48f2ae68412acb92f26c956108a16be4",
+  "compiledDate": "2026-10-06",
+  "authorityModel": "GEF_1_1_2",
+  "criticalSourceFingerprints": {
+    ".engineering/CHECKPOINT.json": "blob:2c3b881f6661b479ccb5a6fa388be6227bf3edb9",
+    ".engineering/DECISIONS-LEDGER.md": "blob:570869bfc03c878174d2547ad77ebab8d1e7b1e6",
+    ".engineering/SCOPE.md": "blob:d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "blob:a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/REQUIREMENTS.md": "blob:2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/work-orders/NXL-COMPANY-WO-004.md": "blob:467e6cee3acb8fb7554dc1774049671b1a098eeb",
+    "company/COMPANY-MASTER.md": "blob:51b7de15a3e6aaa9812d0040db5e4cc9da578955",
+    "company/COMPANY-THESIS.md": "blob:86e9021fbe88966910c06dbb6765cd52e8587651",
+    "company/POSITIONING.md": "blob:c7bc1bb56e03aabaa57cf3d07fa6409f4d413815",
+    "company/STRATEGIC-BOUNDARIES.md": "blob:02b0897765392dbd999a130972893c2485a58961"
+  },
+  "admittedOutputs": [
+    "company/BUSINESS-MODEL.md",
+    "company/REVENUE-ARCHITECTURE.md",
+    "company/PRICING-PRINCIPLES.md",
+    "company/PRODUCT-SERVICE-BOUNDARIES.md",
+    "company/RECURRING-REVENUE-MODEL.md",
+    "company/MONETIZATION-GUARDRAILS.md",
+    "company/ECONOMIC-METRICS-BASELINE.md",
+    ".engineering/SOURCE-HIERARCHY.md",
+    ".engineering/DECISIONS-LEDGER.md",
+    ".engineering/CHECKPOINT.md",
+    ".engineering/CHECKPOINT.json",
+    ".engineering/WORK-ORDER-REGISTRY.md",
+    ".engineering/BACKLOG.md",
+    ".engineering/work-orders/NXL-COMPANY-WO-004.md",
+    ".engineering/context-locks/NXL-COMPANY-WO-004.json",
+    ".github/workflows/business-model-validation.yml"
+  ],
+  "refreshTriggers": [
+    "main changes before WO-004 implementation audit",
+    "any locked critical source changes outside admitted WO-004 delta",
+    "WO-004 scope/business-model authority changes",
+    "GEF baseline changes"
+  ],
+  "state": "LOCKED_FOR_WO_004"
+}
