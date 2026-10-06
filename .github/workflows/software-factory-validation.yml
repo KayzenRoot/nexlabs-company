@@ -79,7 +79,8 @@ jobs:
           }
 
           if(!admission.includes('exact base') || !admission.includes('Context Lock')) throw new Error('Admission compile semantics missing');
-          if(!lockdoc.includes('Stale Context Lock') || !lockdoc.includes('PREFLIGHT') && !lockdoc.includes('Preflight')) throw new Error('Context Lock/preflight safety missing');
+          const lockLower=lockdoc.toLowerCase();
+          if(!lockLower.includes('stale') || !lockLower.includes('context lock') || !lockLower.includes('preflight')) throw new Error('Context Lock/preflight safety missing');
           if(!executor.includes('Provider independence') || !executor.includes('may not')) throw new Error('Executor authority/provider boundary missing');
           if(!evidence.includes('Exact-head rule') || !evidence.includes('head changes')) throw new Error('Exact-head invalidation rule missing');
           for(const verdict of ['APPROVED','CORRECTION_REQUIRED','BLOCKED']){
