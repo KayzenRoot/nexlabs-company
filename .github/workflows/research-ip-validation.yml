@@ -1,0 +1,98 @@
+name: Validate NexLabs Research and IP
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research-ip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-010 research innovation IP strategy
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+
+          const required=[
+            'company/RESEARCH-INNOVATION-STRATEGY.md',
+            'company/RESEARCH-LIFECYCLE.md',
+            'company/RESEARCH-EVIDENCE-STANDARDS.md',
+            'company/INNOVATION-LEDGER.md',
+            'company/PROTOTYPE-GATES.md',
+            'company/INVENTION-DISCLOSURE.md',
+            'company/IP-OWNERSHIP-AND-PROVENANCE.md',
+            'company/LICENSING-STRATEGY.md',
+            'company/OPEN-SOURCE-AND-PUBLICATION-POLICY.md',
+            'company/TECHNOLOGY-TRANSFER-TO-PRODUCT.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-010.json'
+          ];
+          for(const p of required){
+            if(!fs.existsSync(p)) throw new Error('Missing WO-010 output: '+p);
+          }
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-010') throw new Error('WO-010 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION'){
+            throw new Error('Unexpected active status: '+cp.activeStatus);
+          }
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-010.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-010') throw new Error('WO-010 Context Lock mismatch');
+
+          for(let n=11;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const strategy=fs.readFileSync('company/RESEARCH-INNOVATION-STRATEGY.md','utf8');
+          const lifecycle=fs.readFileSync('company/RESEARCH-LIFECYCLE.md','utf8');
+          const evidence=fs.readFileSync('company/RESEARCH-EVIDENCE-STANDARDS.md','utf8');
+          const ledger=fs.readFileSync('company/INNOVATION-LEDGER.md','utf8');
+          const proto=fs.readFileSync('company/PROTOTYPE-GATES.md','utf8');
+          const disclosure=fs.readFileSync('company/INVENTION-DISCLOSURE.md','utf8');
+          const provenance=fs.readFileSync('company/IP-OWNERSHIP-AND-PROVENANCE.md','utf8');
+          const licensing=fs.readFileSync('company/LICENSING-STRATEGY.md','utf8');
+          const publicPolicy=fs.readFileSync('company/OPEN-SOURCE-AND-PUBLICATION-POLICY.md','utf8');
+          const transfer=fs.readFileSync('company/TECHNOLOGY-TRANSFER-TO-PRODUCT.md','utf8');
+
+          for(const state of ['QUESTION','INTAKE','RESEARCH','EVIDENCE','HYPOTHESIS','EXPERIMENT','PROTOTYPE','REVIEW','DISPOSITION','TRANSFER']){
+            if(!lifecycle.includes(state)) throw new Error('Research lifecycle missing: '+state);
+          }
+          for(const kind of ['SOURCE_EVIDENCE','EXPERIMENT_RESULT','INFERENCE','ASSUMPTION','UNKNOWN']){
+            if(!evidence.includes(kind)) throw new Error('Evidence taxonomy missing: '+kind);
+          }
+          if(!proto.includes('Prototype ≠ product validation')) throw new Error('Prototype/product boundary missing');
+          for(const field of ['innovation_id','contributors','evidence_refs','third_party_dependencies','public_disclosure_status','ip_disposition']){
+            if(!ledger.includes(field)) throw new Error('Innovation Ledger field missing: '+field);
+          }
+          for(const field of ['contributors','claimed_novel_elements','third_party_code_model_data','licenses/terms_refs','first_public_disclosure_date','legal_review_ref']){
+            if(!disclosure.includes(field)) throw new Error('Invention disclosure field missing: '+field);
+          }
+
+          const provLower=provenance.toLowerCase();
+          if(!provLower.includes('third-party') || !provLower.includes('ai-assisted') || !provLower.includes('unknown ownership')) throw new Error('Provenance safety incomplete');
+          if(!licensing.includes('No agent signing authority')) throw new Error('Licensing authority boundary missing');
+          for(const gate of ['Provenance','Licenses','Secrets','Security','Confidentiality','IP disposition','Founder approval']){
+            if(!publicPolicy.includes(gate)) throw new Error('Public release gate missing: '+gate);
+          }
+          if(!transfer.includes('Product Factory') || !transfer.includes('GEF')) throw new Error('Research-to-product handoff missing');
+          if(!strategy.includes('not legal conclusions') && !strategy.includes('not legal conclusions')) {
+            // Legal limitation may live in the more specific provenance/disclosure documents.
+            if(!disclosure.includes('not a patent filing') && !provenance.includes('does not replace formal legal analysis')) throw new Error('Legal/IP boundary missing');
+          }
+
+          console.log('WO-010 Research/IP validation passed.');
+          NODE
