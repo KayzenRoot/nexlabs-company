@@ -1,0 +1,96 @@
+name: Validate NexLabs Governance
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-005 governance model
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const required=[
+            'company/CORPORATE-GOVERNANCE.md',
+            'company/AUTHORITY-MATRIX.md',
+            'company/RISK-CLASSIFICATION.md',
+            'company/APPROVAL-POLICY.md',
+            'company/SEGREGATION-OF-DUTIES.md',
+            'company/ESCALATION-AND-INCIDENT-AUTHORITY.md',
+            'company/PROHIBITED-ACTIONS.md',
+            'company/AUDIT-AND-RECEIPTS.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-005.json'
+          ];
+          for(const p of required){
+            if(!fs.existsSync(p)) throw new Error('Missing WO-005 output: '+p);
+          }
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-005') throw new Error('WO-005 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') {
+            throw new Error('Unexpected active status: '+cp.activeStatus);
+          }
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-005.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-005') throw new Error('WO-005 Context Lock mismatch');
+
+          const wo=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-005.md','utf8');
+          if(!wo.includes('Status:** `ADMITTED / IN_PROGRESS`') &&
+             !wo.includes('Status:** `APPROVED / MERGED`')) throw new Error('Unexpected WO-005 status');
+
+          for(let n=6;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const gov=fs.readFileSync('company/CORPORATE-GOVERNANCE.md','utf8');
+          const matrix=fs.readFileSync('company/AUTHORITY-MATRIX.md','utf8');
+          const risk=fs.readFileSync('company/RISK-CLASSIFICATION.md','utf8');
+          const approval=fs.readFileSync('company/APPROVAL-POLICY.md','utf8');
+          const duties=fs.readFileSync('company/SEGREGATION-OF-DUTIES.md','utf8');
+          const escalation=fs.readFileSync('company/ESCALATION-AND-INCIDENT-AUTHORITY.md','utf8');
+          const prohibited=fs.readFileSync('company/PROHIBITED-ACTIONS.md','utf8');
+          const audit=fs.readFileSync('company/AUDIT-AND-RECEIPTS.md','utf8');
+
+          for(const cls of ['AUTO','AUTO+AUDIT','REVIEW_REQUIRED','CEO_APPROVAL','PROHIBITED']){
+            if(!matrix.includes(cls)) throw new Error('Missing action class: '+cls);
+          }
+          for(const level of ['R0','R1','R2','R3','R4']){
+            if(!risk.includes(level)) throw new Error('Missing risk class: '+level);
+          }
+          for(const term of ['funds','credential','legal','signing']){
+            if(!matrix.toLowerCase().includes(term)) throw new Error('Missing high-risk authority category: '+term);
+          }
+          if(!gov.includes('Default deny')) throw new Error('Default-deny governance missing');
+          if(!gov.includes('No self-expansion')) throw new Error('Self-expansion prohibition missing');
+          if(!duties.includes('High-risk self-approval prohibition')) throw new Error('High-risk self-approval control missing');
+          if(!approval.includes('Capability and authority are distinct')) throw new Error('Capability/authority separation missing');
+          if(!escalation.includes('No timeout-to-approval')) throw new Error('Timeout-to-approval guard missing');
+          for(const marker of ['grant itself new permissions','unrestricted autonomous movement','force-push/history rewrite','fabricate a review']){
+            if(!prohibited.includes(marker)) throw new Error('Missing prohibited-action marker: '+marker);
+          }
+          for(const state of ['SUCCEEDED','FAILED','BLOCKED','DENIED','RECOVERY_REQUIRED']){
+            if(!audit.includes(state)) throw new Error('Missing audit outcome state: '+state);
+          }
+
+          const combined=[gov,matrix,risk,approval,duties,escalation,prohibited,audit].join('\n').toLowerCase();
+          if(combined.includes('silence means approval')) throw new Error('Implicit silence-as-approval detected');
+          if(combined.includes('agent may grant itself')) throw new Error('Self-granting authority detected');
+
+          console.log('WO-005 governance validation passed.');
+          NODE
