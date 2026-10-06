@@ -329,3 +329,52 @@
 ## D-0080 — Security evidence must be attributable without leaking secrets
 **Status:** APPROVED IN WO-011  
 **Decision:** Material security events preserve actor, role/run, Work Order, action/risk class, provider/tool, result and verification references while excluding raw credentials, private keys and unnecessary sensitive data.
+
+
+## D-0081 — Financial truth has explicit state
+**Status:** APPROVED IN WO-012  
+**Decision:** Material financial figures are labeled ACTUAL, COMMITTED, FORECAST, SCENARIO, ASSUMPTION, UNAVAILABLE or NOT_APPLICABLE. Unknown is never coerced to zero.
+
+## D-0082 — Cash, revenue, bookings and ARR are distinct
+**Status:** APPROVED IN WO-012  
+**Decision:** NexLabs does not treat cash collection, recognized/management revenue, bookings, MRR and ARR as interchangeable measures. Each uses a documented definition and source.
+
+## D-0083 — Burn and runway use explicit formulas and assumptions
+**Status:** APPROVED IN WO-012  
+**Decision:** Gross burn, net burn and runway are calculated with explicit period/convention. Simple runway ratios are used only when net burn is positive and sufficiently stable; monthly cash forecasting is preferred when timing matters.
+
+## D-0084 — Unit economics are product/cohort specific
+**Status:** APPROVED IN WO-012  
+**Decision:** Gross margin, contribution margin, CAC, LTV and payback are evaluated with disclosed cost/allocation/attribution assumptions. A universal LTV:CAC formula is not forced when cohort maturity or business model makes it invalid.
+
+## D-0085 — AI/cloud cost is a first-class product economic input
+**Status:** APPROVED IN WO-012  
+**Decision:** Model, compute, data, provider, retry and failed-run costs are allocated to products/workflows where practical and included in cost-to-serve decisions rather than hidden as generic overhead.
+
+## D-0086 — Budget allocation is not payment authority
+**Status:** APPROVED IN WO-012  
+**Decision:** Approved budget or forecast does not itself authorize money movement. Treasury/payment execution remains governed by financial safety and HIGH_ASSURANCE controls.
+
+## D-0087 — Funding scenarios separate operational plan from legal terms
+**Status:** APPROVED IN WO-012  
+**Decision:** NexLabs may model funding amount, runway, dilution scenarios and use-of-funds, but valuation/equity/debt/convertible rights become canonical only through Founder and appropriate legal/investor agreement.
+
+## D-0088 — Investment tranches are milestone-evidence driven
+**Status:** APPROVED IN WO-012  
+**Decision:** Tranche release should be tied to measurable product, commercial, engineering, company or economic milestones. Calendar passage alone is not evidence of milestone completion.
+
+## D-0089 — Missed milestones trigger review/replan, not fictional completion
+**Status:** APPROVED IN WO-012  
+**Decision:** A missed tranche milestone leads to root-cause review, reforecast and an explicit extend/modify/reduce/pause/stop decision. Evidence is never retroactively relabeled to make the milestone appear met.
+
+## D-0090 — Scenario planning includes downside action
+**Status:** APPROVED IN WO-012  
+**Decision:** Financial plans maintain at least downside/base/upside views and identify action triggers. Runway pressure should reduce optional work before critical security/reliability controls.
+
+## D-0091 — Founder retains budget, funding and material-spend authority
+**Status:** APPROVED IN WO-012  
+**Decision:** AI finance roles may forecast, optimize and prepare decision packages. Founder/CEO retains final authority for budgets, fundraising, treasury and material capital allocation.
+
+## D-0092 — Finance reporting optimizes Founder decisions, not spreadsheet workload
+**Status:** APPROVED IN WO-012  
+**Decision:** The future Company OS surfaces cash/runway, anomalies, economics, milestones and decisions with drill-down evidence rather than requiring the Founder to manually operate raw finance spreadsheets.
