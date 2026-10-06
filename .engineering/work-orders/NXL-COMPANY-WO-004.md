@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-004 — Business Model & Revenue Architecture
 
 **Issue:** #5  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** LOW / business-critical  
 **Base:** `e3b56c9a48f2ae68412acb92f26c956108a16be4`  
@@ -117,3 +117,16 @@ Brazilian Portuguese: exact base/head, source consistency, scope compliance, bus
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-004. Do not admit or execute WO-005 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `1f77eb68054beb7f0e5e423842c696e029a49e05`
+- Validate GEF 1.1.2: `SUCCESS`
+- Validate NexLabs Source Pack: `SUCCESS`
+- Validate NexLabs Company Strategy: `SUCCESS`
+- Validate NexLabs Business Model: `SUCCESS`
+- Business-model merge SHA: `93af709929eea3a5df9d4abdabccaf3c33a76973`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Successor execution authority: `NONE`; WO-005 remains NOT_ADMITTED until separately compiled and locked.
