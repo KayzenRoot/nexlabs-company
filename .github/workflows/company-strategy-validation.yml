@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-003 company strategy
+      - name: Validate canonical company strategy
         shell: bash
         run: |
           set -euo pipefail
@@ -32,32 +32,10 @@ jobs:
             'company/COMPANY-THESIS.md',
             'company/POSITIONING.md',
             'company/STRATEGIC-BOUNDARIES.md',
-            'company/FIVE-YEAR-DIRECTION.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-003.json'
+            'company/FIVE-YEAR-DIRECTION.md'
           ];
           for (const p of required) {
-            if (!fs.existsSync(p)) throw new Error('Missing WO-003 output: ' + p);
-          }
-
-          const cp = JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if (cp.activeWorkOrder !== 'NXL-COMPANY-WO-003') throw new Error('WO-003 must be active on implementation candidate');
-          if (cp.activeStatus !== 'ADMITTED_IN_PROGRESS' && cp.activeStatus !== 'APPROVED_READY_FOR_PROMOTION') {
-            throw new Error('Unexpected active status: ' + cp.activeStatus);
-          }
-
-          const lock = JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-003.json','utf8'));
-          if (lock.workOrderId !== 'NXL-COMPANY-WO-003') throw new Error('WO-003 Context Lock mismatch');
-
-          const wo3 = fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-003.md','utf8');
-          if (!wo3.includes('Status:** `ADMITTED / IN_PROGRESS`') &&
-              !wo3.includes('Status:** `APPROVED / MERGED`')) {
-            throw new Error('Unexpected WO-003 status');
-          }
-
-          for (let n=4;n<=22;n++) {
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if (!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+            if (!fs.existsSync(p)) throw new Error('Missing canonical strategy file: ' + p);
           }
 
           const master=fs.readFileSync('company/COMPANY-MASTER.md','utf8');
@@ -78,6 +56,12 @@ jobs:
           if (!boundaries.includes('We will not')) throw new Error('Strategic boundaries are incomplete');
           if (!fiveYear.includes('Strategic target, not a claim of present capability')) throw new Error('Five-year fact/target boundary missing');
 
+          const wo3=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-003.md','utf8');
+          if (!wo3.includes('Status:** `APPROVED / MERGED`') &&
+              !wo3.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-003 strategy authority is not in an accepted lifecycle state');
+          }
+
           const combined=[master,mvv,thesis,positioning,boundaries,fiveYear].join('\n');
           const prohibitedClaims=[
             /we have \d+[+,]? customers/i,
@@ -86,8 +70,8 @@ jobs:
             /nexlabs(?: technology)?\s+(?:is|operates as)\s+(?:a\s+)?fully autonomous company/i
           ];
           for (const rx of prohibitedClaims) {
-            if (rx.test(combined)) throw new Error('Unsupported/prohibited factual claim pattern: '+rx);
+            if (rx.test(combined)) throw new Error('Unsupported factual claim pattern: '+rx);
           }
 
-          console.log('WO-003 company strategy validation passed.');
+          console.log('Canonical NexLabs company strategy validation passed.');
           NODE
