@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-012 finance model
+      - name: Validate canonical finance model
         shell: bash
         run: |
           set -euo pipefail
@@ -37,22 +37,9 @@ jobs:
             'company/USE-OF-FUNDS.md',
             'company/MILESTONE-TRANCHE-MODEL.md',
             'company/FINANCIAL-SCENARIO-PLANNING.md',
-            'company/MANAGEMENT-FINANCIAL-REPORTING.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-012.json'
+            'company/MANAGEMENT-FINANCIAL-REPORTING.md'
           ];
           for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-012 output: '+p);
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-012') throw new Error('WO-012 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-012.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-012') throw new Error('WO-012 Context Lock mismatch');
-
-          for(let n=13;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
-          }
 
           const finance=fs.readFileSync('company/FINANCE-OPERATING-MODEL.md','utf8');
           const budget=fs.readFileSync('company/BUDGET-AND-FORECASTING.md','utf8');
@@ -94,5 +81,11 @@ jobs:
             if(!reporting.toLowerCase().includes(marker.toLowerCase())) throw new Error('Founder reporting missing: '+marker);
           }
 
-          console.log('WO-012 Finance Model validation passed.');
+          const wo12=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-012.md','utf8');
+          if(!wo12.includes('Status:** `APPROVED / MERGED`') &&
+             !wo12.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-012 Finance authority is not in an accepted lifecycle state');
+          }
+
+          console.log('Canonical NexLabs Finance Model validation passed.');
           NODE

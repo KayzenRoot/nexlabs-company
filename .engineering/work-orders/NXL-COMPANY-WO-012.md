@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-012 — Finance, Budget, Unit Economics & Investment Model
 
 **Issue:** #13  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** `ELEVATED / FINANCIAL_GOVERNANCE`  
 **Base:** `2b5da9f3448b3c0cdb72ce63576cb213c2141c83`  
@@ -158,3 +158,14 @@ Brazilian Portuguese: exact base/head, metric truthfulness, budget integrity, bu
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-012. Do not admit or execute WO-013 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `da5635ac70f5c205a26dd985287d795766e73804`
+- All twelve required validations: `SUCCESS`
+- Finance Model merge SHA: `0b0e58f8867b4d45c1bbad1ef2f53aa976a7366f`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Current financial truth claims: no fabricated revenue, customers, valuation, investor commitment or cost data introduced.
+- Successor execution authority: `NONE`; WO-013 remains NOT_ADMITTED until separately compiled and locked.

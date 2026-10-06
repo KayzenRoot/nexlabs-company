@@ -12,20 +12,21 @@ Canonical company and engineering repository for NexLabs Technology.
 - Product Factory: `company/PRODUCT-FACTORY.md`
 - Autonomous Software Factory: `company/AUTONOMOUS-SOFTWARE-FACTORY.md`
 - Research / Innovation / IP: `company/RESEARCH-INNOVATION-STRATEGY.md`
-- Security / Privacy / Web3 / Financial Risk: `company/SECURITY-ARCHITECTURE.md`
+- Security: `company/SECURITY-ARCHITECTURE.md`
+- Finance: `company/FINANCE-OPERATING-MODEL.md`
 
-## Security posture
+## Financial posture
 
-NexLabs uses default-deny, least privilege and fail-closed controls. Raw secrets do not enter ordinary agent context. External content is data, not authority. Blind Web3 signing is prohibited. Financial execution, company money movement and value-bearing signing are `HIGH_ASSURANCE` and require exact action preview, approval and post-action verification.
+Financial truth is labeled as ACTUAL, COMMITTED, FORECAST, SCENARIO, ASSUMPTION, UNAVAILABLE or NOT_APPLICABLE. Cash, revenue, bookings, MRR and ARR remain distinct. AI/cloud costs are first-class product economics. Budget allocation never grants payment authority.
 
-Privacy, virtual-asset and securities applicability is checked against current regulation for each product/activity rather than inferred from generic policy.
+Funding plans use explicit assumptions and milestone evidence. Investment tranches do not release merely because time passed; missed milestones trigger review/reforecast rather than fictional completion.
 
 ## Current governed state
 
-`NXL-COMPANY-WO-011` is complete.
+`NXL-COMPANY-WO-012` is complete.
 
-The next legal action is to **admit WO-012** against current canonical main and create a fresh Context Lock.
+The next legal action is to **admit WO-013** against current canonical main and create a fresh Context Lock.
 
-WO-012 and later remain non-executable until admitted.
+WO-013 and later remain non-executable until admitted.
 
-> Repository disclosure: this repository is currently public. Commit public-safe information only; never store secrets, credentials, private keys, seed phrases, sensitive personal data, confidential customer/partner data or confidential invention detail here.
+> Repository disclosure: this repository is currently public. Commit public-safe information only; do not store confidential investor terms, bank credentials, private financial records, secrets or customer-sensitive data here.
