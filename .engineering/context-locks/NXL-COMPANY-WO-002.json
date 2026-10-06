@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-002",
+  "issue": 3,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "planning/NXL-COMPANY-WO-002-source-pack",
+  "baseSha": "096223e902a37fd96639d7d292e4f9b0d2c5724b",
+  "compiledDate": "2026-10-06",
+  "authorityModel": "GEF_1_1_2",
+  "baseSourceFingerprints": {
+    "README.md": "blob:c6735cdf215bcc866067488136959601631a51a9",
+    ".gef/init-state.json": "blob:a46bc0192a6c9e3cb3b81370783cf79de1a1fb6c",
+    ".github/workflows/gef-validation.yml": "blob:deafbb1047517d1808c7398e236d5aadc7082165",
+    ".gitignore": "blob:227b683f08a6d79b7a93ddbd254d2727b62d7c99"
+  },
+  "admittedOutputs": [
+    "AGENTS.md",
+    ".engineering/SOURCE-HIERARCHY.md",
+    ".engineering/PROJECT-OVERVIEW.md",
+    ".engineering/REQUIREMENTS.md",
+    ".engineering/SCOPE.md",
+    ".engineering/ARCHITECTURE.md",
+    ".engineering/SECURITY.md",
+    ".engineering/TEST-BENCHMARK-PLAN.md",
+    ".engineering/DEPLOYMENT.md",
+    ".engineering/BACKLOG.md",
+    ".engineering/DEFINITION-OF-DONE.md",
+    ".engineering/DECISIONS-LEDGER.md",
+    ".engineering/CHECKPOINT.md",
+    ".engineering/CHECKPOINT.json",
+    ".engineering/WORK-ORDER-REGISTRY.md",
+    ".engineering/work-orders/",
+    ".github/workflows/source-pack-validation.yml"
+  ],
+  "refreshTriggers": [
+    "base branch main moves before admission is completed",
+    "GEF init state changes",
+    "scope or active Work Order changes outside admitted WO-002 correction",
+    "a critical source fingerprint differs from the locked base"
+  ],
+  "state": "LOCKED_FOR_WO_002"
+}
