@@ -87,7 +87,7 @@ jobs:
             }
 
             if (cp.activeWorkOrder === id) {
-              if (!/^ADMITTED(?:\\s|\\/|$)/.test(status)) {
+              if (!status.startsWith('ADMITTED')) {
                 throw new Error(id + ' is active but not ADMITTED');
               }
             } else if (!status.includes('NOT_ADMITTED')) {
