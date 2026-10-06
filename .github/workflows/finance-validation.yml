@@ -1,0 +1,98 @@
+name: Validate NexLabs Finance Model
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  finance-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-012 finance model
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const required=[
+            'company/FINANCE-OPERATING-MODEL.md',
+            'company/BUDGET-AND-FORECASTING.md',
+            'company/CASH-FLOW-BURN-RUNWAY.md',
+            'company/REVENUE-METRICS.md',
+            'company/UNIT-ECONOMICS.md',
+            'company/COST-ALLOCATION-AI-CLOUD.md',
+            'company/TREASURY-AND-SPEND-CONTROLS.md',
+            'company/FUNDING-AND-INVESTMENT-MODEL.md',
+            'company/USE-OF-FUNDS.md',
+            'company/MILESTONE-TRANCHE-MODEL.md',
+            'company/FINANCIAL-SCENARIO-PLANNING.md',
+            'company/MANAGEMENT-FINANCIAL-REPORTING.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-012.json'
+          ];
+          for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-012 output: '+p);
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-012') throw new Error('WO-012 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-012.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-012') throw new Error('WO-012 Context Lock mismatch');
+
+          for(let n=13;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const finance=fs.readFileSync('company/FINANCE-OPERATING-MODEL.md','utf8');
+          const budget=fs.readFileSync('company/BUDGET-AND-FORECASTING.md','utf8');
+          const cash=fs.readFileSync('company/CASH-FLOW-BURN-RUNWAY.md','utf8');
+          const rev=fs.readFileSync('company/REVENUE-METRICS.md','utf8');
+          const unit=fs.readFileSync('company/UNIT-ECONOMICS.md','utf8');
+          const cost=fs.readFileSync('company/COST-ALLOCATION-AI-CLOUD.md','utf8');
+          const treasury=fs.readFileSync('company/TREASURY-AND-SPEND-CONTROLS.md','utf8');
+          const funding=fs.readFileSync('company/FUNDING-AND-INVESTMENT-MODEL.md','utf8');
+          const use=fs.readFileSync('company/USE-OF-FUNDS.md','utf8');
+          const tranche=fs.readFileSync('company/MILESTONE-TRANCHE-MODEL.md','utf8');
+          const scenarios=fs.readFileSync('company/FINANCIAL-SCENARIO-PLANNING.md','utf8');
+          const reporting=fs.readFileSync('company/MANAGEMENT-FINANCIAL-REPORTING.md','utf8');
+
+          for(const s of ['ACTUAL','COMMITTED','FORECAST','SCENARIO','ASSUMPTION','UNAVAILABLE','NOT_APPLICABLE']){
+            if(!finance.includes(s)) throw new Error('Financial truth state missing: '+s);
+          }
+          for(const marker of ['plan','actual','committed','forecast','variance']){
+            if(!budget.toLowerCase().includes(marker)) throw new Error('Budget field missing: '+marker);
+          }
+          for(const marker of ['GROSS_BURN','NET_BURN','RUNWAY_MONTHS']){
+            if(!cash.includes(marker)) throw new Error('Burn/runway formula missing: '+marker);
+          }
+          if(!rev.includes('MRR') || !rev.includes('ARR') || !rev.toLowerCase().includes('exclude')) throw new Error('MRR/ARR inclusion/exclusion policy missing');
+          for(const marker of ['GROSS_MARGIN','CAC','CAC_PAYBACK_MONTHS','LTV']){
+            if(!unit.includes(marker)) throw new Error('Unit economics missing: '+marker);
+          }
+          if(!cost.includes('COST_PER_SUCCESSFUL_TASK') || !cost.toLowerCase().includes('model routing')) throw new Error('AI/cloud cost economics incomplete');
+          if(!treasury.includes('HIGH_ASSURANCE')) throw new Error('Treasury HIGH_ASSURANCE boundary missing');
+          if(!funding.toLowerCase().includes('legal') || !funding.toLowerCase().includes('valuation')) throw new Error('Funding legal/valuation boundary missing');
+          if(!use.toLowerCase().includes('variance') || !use.toLowerCase().includes('milestone')) throw new Error('Use-of-funds evidence model missing');
+          for(const marker of ['MILESTONE_MET','REPLAN_REQUIRED','BLOCKED','RELEASE_APPROVED']){
+            if(!tranche.includes(marker)) throw new Error('Tranche state missing: '+marker);
+          }
+          for(const marker of ['DOWNSIDE','BASE','UPSIDE']){
+            if(!scenarios.includes(marker)) throw new Error('Scenario missing: '+marker);
+          }
+          for(const marker of ['available cash','runway','MRR/ARR','AI/model','plan vs actual','milestones/tranches']){
+            if(!reporting.toLowerCase().includes(marker.toLowerCase())) throw new Error('Founder reporting missing: '+marker);
+          }
+
+          console.log('WO-012 Finance Model validation passed.');
+          NODE
