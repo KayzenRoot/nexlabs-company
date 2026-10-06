@@ -177,3 +177,32 @@
 ## D-0043 — Material AI runs produce receipts
 **Status:** APPROVED IN WO-007  
 **Decision:** Material runs record role/contract/runtime/task/authority/action-risk classes/tools/outcome/evidence and exact state references without embedding raw secrets.
+
+
+## D-0044 — Idea, prototype, product and validated business are distinct states
+**Status:** APPROVED IN WO-008  
+**Decision:** NexLabs does not treat ideas as products, prototypes as validated businesses, or merged code as released/validated products. Lifecycle transitions require explicit evidence and decisions.
+
+## D-0045 — Product Factory precedes expensive build
+**Status:** APPROVED IN WO-008  
+**Decision:** Product opportunities move through intake, research, validation and Founder/CEO portfolio decision before meaningful build admission. Engineering begins from an approved Product Case/specification and GEF Work Orders.
+
+## D-0046 — Founder/CEO retains final portfolio prioritization
+**Status:** APPROVED IN WO-008  
+**Decision:** AI systems may research, score and recommend product opportunities. Founder/CEO decides active build admission, strategic priority, material scaling, pivot and significant retirement decisions.
+
+## D-0047 — Portfolio scoring is evidence-weighted, not mathematically absolute
+**Status:** APPROVED IN WO-008  
+**Decision:** Scoring covers strategic fit, user/problem value, evidence, distribution, feasibility, economics, reuse, differentiation and risk, with confidence. Blocking risks/capacity may override aggregate scores.
+
+## D-0048 — Portfolio capacity is finite and WIP-limited
+**Status:** APPROVED IN WO-008  
+**Decision:** NexLabs limits active build WIP. Idle executor capacity does not imply product capacity because Founder attention, review, security, launch, distribution, support and maintenance also consume capacity.
+
+## D-0049 — Sunk cost is not a continue criterion
+**Status:** APPROVED IN WO-008  
+**Decision:** Iterate/scale/pause/pivot/kill decisions depend on future expected value, evidence, obligations and strategic learning. Past effort alone is not a positive reason to continue a product.
+
+## D-0050 — Product count is not a company success metric
+**Status:** APPROVED IN WO-008  
+**Decision:** The portfolio is judged by validated value, economics, retention, reliability, learning and reusable capability, not the number of applications/repos launched.
