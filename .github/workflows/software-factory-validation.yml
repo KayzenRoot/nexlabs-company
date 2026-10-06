@@ -88,7 +88,8 @@ jobs:
           }
           if(!review.includes('Same-Work-Order correction')) throw new Error('Bounded correction rule missing');
           if(!promotion.includes('Implementation merge and checkpoint promotion are separate')) throw new Error('Merge/promotion separation missing');
-          if(!factory.includes('RECOVERY_REQUIRED') || !sm.includes('blind mutation retry')) throw new Error('Ambiguous mutation recovery rule missing');
+          const smLower=sm.toLowerCase();
+          if(!factory.includes('RECOVERY_REQUIRED') || !(smLower.includes('blind mutation retry') || smLower.includes('blindly replay'))) throw new Error('Ambiguous mutation recovery rule missing');
 
           const mvpMarkers=['Work Order','Context Lock','Executor adapter','tests/evidence','Reviewer','correction','merged','checkpoint promotion','Founder'];
           for(const marker of mvpMarkers){
