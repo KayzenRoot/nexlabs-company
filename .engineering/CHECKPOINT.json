@@ -14,7 +14,7 @@
   "activeStatus": "ADMITTED_IN_PROGRESS",
   "knownCritical": 0,
   "knownHigh": 0,
-  "nextLegalAction": "EXECUTE_WO_011_SECURITY_PRIVACY_WEB3_FINANCIAL_RISK_ARCHITECTURE",
+  "nextLegalAction": "VALIDATE_WO_011_SECURITY_ARCHITECTURE_AND_OPEN_PR",
   "stopState": "NO_WO_012_OR_LATER_EXECUTION_BEFORE_WO_011_APPROVAL_MERGE_AND_CHECKPOINT_PROMOTION",
   "repositoryDisclosure": "PUBLIC_SAFE_ONLY",
   "companyStrategyAuthority": "company/COMPANY-MASTER.md",
