@@ -1,0 +1,67 @@
+name: Validate GEF 1.1.2
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gef-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install exact GEF release
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --global --ignore-scripts @gef-bootstrap/cli@1.1.2
+          version="$(gef --version)"
+          printf '%s\n' "$version"
+          case "$version" in
+            *1.1.2*) ;;
+            *) echo "Expected GEF 1.1.2, got: $version" >&2; exit 1 ;;
+          esac
+
+      - name: Verify initialized GEF state
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require('fs');
+          const state = JSON.parse(fs.readFileSync('.gef/init-state.json', 'utf8'));
+          if (state.productVersion !== '1.1.2') throw new Error('GEF productVersion is not 1.1.2');
+          if (state.transaction?.outcome !== 'APPLIED') throw new Error('GEF init transaction is not APPLIED');
+          NODE
+
+      - name: GEF doctor
+        shell: bash
+        run: |
+          set -euo pipefail
+          gef doctor --target "$GITHUB_WORKSPACE" --json | tee "$RUNNER_TEMP/doctor.json"
+          node -e "const x=JSON.parse(require('fs').readFileSync(process.env.RUNNER_TEMP+'/doctor.json','utf8')); if(!x.ok || x.terminal!=='SUCCEEDED') process.exit(1)"
+
+      - name: GEF status
+        shell: bash
+        run: |
+          set -euo pipefail
+          gef status --target "$GITHUB_WORKSPACE" --json | tee "$RUNNER_TEMP/status.json"
+          node -e "const x=JSON.parse(require('fs').readFileSync(process.env.RUNNER_TEMP+'/status.json','utf8')); if(!x.ok || x.terminal!=='SUCCEEDED') process.exit(1)"
