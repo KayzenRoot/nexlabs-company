@@ -40,29 +40,44 @@ jobs:
             '.engineering/DECISIONS-LEDGER.md',
             '.engineering/CHECKPOINT.md',
             '.engineering/CHECKPOINT.json',
-            '.engineering/WORK-ORDER-REGISTRY.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-002.json'
+            '.engineering/WORK-ORDER-REGISTRY.md'
           ];
           for (const path of required) {
             if (!fs.existsSync(path)) throw new Error('Missing canonical file: ' + path);
           }
+
           const cp = JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if (cp.activeWorkOrder !== 'NXL-COMPANY-WO-002') throw new Error('WO-002 must be active');
-          if (cp.activeStatus !== 'ADMITTED_IN_PROGRESS' && cp.activeStatus !== 'APPROVED_READY_FOR_PROMOTION') {
-            throw new Error('Unexpected active status: ' + cp.activeStatus);
-          }
-          const lock = JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-002.json','utf8'));
-          if (lock.workOrderId !== 'NXL-COMPANY-WO-002') throw new Error('Context Lock mismatch');
+          const statuses = new Map();
+
           for (let n=2;n<=22;n++) {
             const id = 'NXL-COMPANY-WO-' + String(n).padStart(3,'0');
             const path = '.engineering/work-orders/' + id + '.md';
             if (!fs.existsSync(path)) throw new Error('Missing Work Order: ' + id);
             const body = fs.readFileSync(path,'utf8');
-            if (n === 2) {
-              if (!body.includes('Status:** `ADMITTED`')) throw new Error('WO-002 not admitted');
-            } else if (!body.includes('NOT_ADMITTED')) {
-              throw new Error(id + ' must remain NOT_ADMITTED');
+            const match = body.match(/\*\*Status:\*\* \`([^\`]+)\`/);
+            if (!match) throw new Error('Missing status in ' + id);
+            statuses.set(id, match[1]);
+          }
+
+          const admitted = [...statuses.entries()]
+            .filter(([,s]) => /^ADMITTED(?:\s|\/|$)/.test(s))
+            .map(([id]) => id);
+
+          if (cp.activeWorkOrder === null) {
+            if (admitted.length !== 0) throw new Error('Checkpoint has no active WO but admitted WOs exist: ' + admitted.join(','));
+          } else {
+            if (admitted.length !== 1 || admitted[0] !== cp.activeWorkOrder) {
+              throw new Error('Active/admitted Work Order mismatch');
             }
           }
-          console.log('Source Pack structural validation passed.');
+
+          for (let n=3;n<=22;n++) {
+            const id = 'NXL-COMPANY-WO-' + String(n).padStart(3,'0');
+            const status = statuses.get(id);
+            if (cp.activeWorkOrder !== id && !status.includes('NOT_ADMITTED')) {
+              throw new Error(id + ' is not active and must remain NOT_ADMITTED');
+            }
+          }
+
+          console.log('Canonical Source Pack validation passed.');
           NODE

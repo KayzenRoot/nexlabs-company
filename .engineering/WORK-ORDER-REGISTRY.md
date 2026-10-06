@@ -2,7 +2,7 @@
 
 | Work Order | GitHub issue | Admission | Intended branch |
 | --- | ---: | --- | --- |
-| NXL-COMPANY-WO-002 | #3 | ADMITTED | `planning/NXL-COMPANY-WO-002-source-pack` |
+| NXL-COMPANY-WO-002 | #3 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-002-source-pack` |
 | NXL-COMPANY-WO-003 | #4 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-004 | #5 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-005 | #6 | NOT_ADMITTED | TBD at admission |
