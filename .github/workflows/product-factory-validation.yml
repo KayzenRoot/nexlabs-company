@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-008 Product Factory
+      - name: Validate canonical Product Factory
         shell: bash
         run: |
           set -euo pipefail
@@ -34,25 +34,10 @@ jobs:
             'company/PRODUCT-LIFECYCLE.md',
             'company/PRODUCT-CASE-CONTRACT.md',
             'company/ITERATE-SCALE-PAUSE-KILL.md',
-            'company/PORTFOLIO-CAPACITY-POLICY.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-008.json'
+            'company/PORTFOLIO-CAPACITY-POLICY.md'
           ];
           for(const p of required){
             if(!fs.existsSync(p)) throw new Error('Missing WO-008 output: '+p);
-          }
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-008') throw new Error('WO-008 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION'){
-            throw new Error('Unexpected active status: '+cp.activeStatus);
-          }
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-008.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-008') throw new Error('WO-008 Context Lock mismatch');
-
-          for(let n=9;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
           }
 
           const portfolio=fs.readFileSync('company/PRODUCT-PORTFOLIO-STRATEGY.md','utf8');
@@ -86,5 +71,11 @@ jobs:
           if(!capacityLower.includes('work-in-progress') || !capacityLower.includes('idle code executor')) throw new Error('Portfolio capacity/WIP rule missing');
           if(!portfolio.includes('does not exist to maximize project count')) throw new Error('Anti-sprawl portfolio rule missing');
 
-          console.log('WO-008 Product Factory validation passed.');
+          const wo8=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-008.md','utf8');
+          if(!wo8.includes('Status:** `APPROVED / MERGED`') &&
+             !wo8.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-008 Product Factory authority is not in an accepted lifecycle state');
+          }
+
+          console.log('Canonical NexLabs Product Factory validation passed.');
           NODE
