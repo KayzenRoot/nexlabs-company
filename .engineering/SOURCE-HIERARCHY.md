@@ -19,7 +19,7 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 12 | Product Factory | `company/PRODUCT-FACTORY.md` plus supporting portfolio/lifecycle documents |
 | 13 | Autonomous software factory | `company/AUTONOMOUS-SOFTWARE-FACTORY.md` plus supporting engineering lifecycle protocols |
 | 14 | Research & IP | `company/RESEARCH-INNOVATION-STRATEGY.md` plus supporting research/provenance/disposition documents |
-| 15 | Security | `SECURITY.md` |
+| 15 | Security | `company/SECURITY-ARCHITECTURE.md` plus supporting security/privacy/Web3/financial controls; `.engineering/SECURITY.md` is the engineering baseline |
 | 16 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
 | 17 | Deployment | `DEPLOYMENT.md` |
 | 18 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
@@ -157,3 +157,27 @@ Supporting canonical Research/IP sources:
 - `company/TECHNOLOGY-TRANSFER-TO-PRODUCT.md`
 
 Legal conclusions such as patentability, inventorship, freedom-to-operate, ownership disputes or binding license interpretation require appropriate professional/legal review and are not established merely by these internal documents.
+
+
+## Security-architecture authority
+
+`company/SECURITY-ARCHITECTURE.md` is the primary authority for company-wide security trust boundaries and security posture.
+
+Supporting canonical security sources:
+- `company/IDENTITY-AND-ACCESS-CONTROL.md`
+- `company/SECRETS-KEYS-AND-CREDENTIALS.md`
+- `company/DATA-GOVERNANCE-AND-PRIVACY.md`
+- `company/SECURITY-INCIDENT-RESPONSE.md`
+- `company/BACKUP-RECOVERY-AND-BCP.md`
+- `company/SUPPLY-CHAIN-SECURITY.md`
+- `company/AGENT-AND-TOOL-SECURITY.md`
+- `company/WEB3-SIGNING-AND-CUSTODY-POLICY.md`
+- `company/FINANCIAL-ACTION-SAFETY.md`
+- `company/HIGH-ASSURANCE-ACTION-PROTOCOL.md`
+- `company/SECURITY-LOGGING-AND-AUDIT.md`
+- `company/THREAT-MODEL-BASELINE.md`
+- `company/REGULATORY-APPLICABILITY-REGISTER.md`
+
+`.engineering/SECURITY.md` is the concise engineering baseline and may not weaken these company-wide controls.
+
+Later Company OS, runtime, finance, Web3 and deployment Work Orders must implement or refine controls without silently reducing Founder authority, segregation of duties, privacy obligations, signing safety or high-assurance requirements.
