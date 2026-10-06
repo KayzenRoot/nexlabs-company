@@ -1,0 +1,97 @@
+name: Validate NexLabs Business Model
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  business-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-004 business model
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+
+          const required = [
+            'company/BUSINESS-MODEL.md',
+            'company/REVENUE-ARCHITECTURE.md',
+            'company/PRICING-PRINCIPLES.md',
+            'company/PRODUCT-SERVICE-BOUNDARIES.md',
+            'company/RECURRING-REVENUE-MODEL.md',
+            'company/MONETIZATION-GUARDRAILS.md',
+            'company/ECONOMIC-METRICS-BASELINE.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-004.json'
+          ];
+          for (const p of required) {
+            if (!fs.existsSync(p)) throw new Error('Missing WO-004 output: ' + p);
+          }
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if (cp.activeWorkOrder !== 'NXL-COMPANY-WO-004') throw new Error('WO-004 must be active on implementation candidate');
+          if (cp.activeStatus !== 'ADMITTED_IN_PROGRESS' && cp.activeStatus !== 'APPROVED_READY_FOR_PROMOTION') {
+            throw new Error('Unexpected active status: '+cp.activeStatus);
+          }
+
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-004.json','utf8'));
+          if (lock.workOrderId !== 'NXL-COMPANY-WO-004') throw new Error('WO-004 Context Lock mismatch');
+
+          const wo4=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-004.md','utf8');
+          if (!wo4.includes('Status:** `ADMITTED / IN_PROGRESS`') &&
+              !wo4.includes('Status:** `APPROVED / MERGED`')) {
+            throw new Error('Unexpected WO-004 status');
+          }
+
+          for (let n=5;n<=22;n++) {
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if (!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const business=fs.readFileSync('company/BUSINESS-MODEL.md','utf8');
+          const revenue=fs.readFileSync('company/REVENUE-ARCHITECTURE.md','utf8');
+          const pricing=fs.readFileSync('company/PRICING-PRINCIPLES.md','utf8');
+          const services=fs.readFileSync('company/PRODUCT-SERVICE-BOUNDARIES.md','utf8');
+          const recurring=fs.readFileSync('company/RECURRING-REVENUE-MODEL.md','utf8');
+          const guards=fs.readFileSync('company/MONETIZATION-GUARDRAILS.md','utf8');
+          const metrics=fs.readFileSync('company/ECONOMIC-METRICS-BASELINE.md','utf8');
+
+          for(const marker of ['Owned recurring product revenue','Usage-based / metered software','Bounded strategic services']) {
+            if(!business.includes(marker)) throw new Error('Business Model missing marker: '+marker);
+          }
+          if(!revenue.includes('Core recurring product revenue')) throw new Error('Revenue priority missing');
+          if(!pricing.includes('No universal NexLabs price')) throw new Error('Pricing evidence boundary missing');
+          if(!services.includes('NexLabs is a product company')) throw new Error('Product/service default missing');
+          if(!recurring.includes('Recurring billing alone is not recurring value')) throw new Error('Recurring-value distinction missing');
+          if(!guards.includes('Unlimited usage is never assumed to be economically safe')) throw new Error('AI cost guardrail missing');
+          for(const state of ['MEASURED','ESTIMATED','UNAVAILABLE','NOT_APPLICABLE']) {
+            if(!metrics.includes(state)) throw new Error('Economic metric state missing: '+state);
+          }
+
+          const combined=[business,revenue,pricing,services,recurring,guards,metrics].join('\n');
+          const fixedPrice=/\b(?:R\$|US\$|USD|BRL|EUR|€|\$)\s*\d+(?:[.,]\d+)?/i;
+          if(fixedPrice.test(combined)) throw new Error('WO-004 must not freeze a product-specific fixed price');
+          const unsupported=[
+            /we have \d+[+,]? customers/i,
+            /our (?:mrr|arr) is/i,
+            /nexlabs generates \d/i
+          ];
+          for(const rx of unsupported){
+            if(rx.test(combined)) throw new Error('Unsupported business claim: '+rx);
+          }
+
+          console.log('WO-004 business model validation passed.');
+          NODE
