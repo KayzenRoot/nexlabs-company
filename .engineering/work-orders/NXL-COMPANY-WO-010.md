@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-010 — Research, Innovation & Intellectual Property Strategy
 
 **Issue:** #11  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `IMPORTANT`  
 **Risk:** STANDARD / strategic-IP sensitive  
 **Base:** `fa48d515eeaf9b045b3a2ab13d6c3fe056a522ff`  
@@ -137,3 +137,14 @@ Brazilian Portuguese: exact base/head, research rigor, provenance completeness, 
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-010. Do not admit or execute WO-011 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `cf211ff07f2cf4b9dad93407461801716fcf862c`
+- All ten required validations: `SUCCESS`
+- Research/IP merge SHA: `c4617a0eaa3839e4e0ad0225f8ed3e7442d5197e`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Legal/IP boundary: internal governance only; formal patentability, inventorship, FTO, ownership disputes and filings remain outside this Work Order.
+- Successor execution authority: `NONE`; WO-011 remains NOT_ADMITTED until separately compiled and locked.
