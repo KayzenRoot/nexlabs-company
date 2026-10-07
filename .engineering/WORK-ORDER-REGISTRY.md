@@ -16,7 +16,7 @@
 | NXL-COMPANY-WO-013 | #14 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-013-sales-gtm-marketing-customer-success` |
 | NXL-COMPANY-WO-014 | #15 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-014-brand-website-portfolio` |
 | NXL-COMPANY-WO-015 | #16 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-015-investor-readiness-pitch-data-room` |
-| NXL-COMPANY-WO-016 | #17 | ADMITTED / IN_PROGRESS | `planning/NXL-COMPANY-WO-016-company-os-functional-architecture` |
+| NXL-COMPANY-WO-016 | #17 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-016-company-os-functional-architecture` |
 | NXL-COMPANY-WO-017 | #18 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-018 | #19 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-019 | #20 | NOT_ADMITTED | TBD at admission |
