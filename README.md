@@ -17,21 +17,24 @@ Canonical company and engineering repository for NexLabs Technology.
 - GTM: `company/GO-TO-MARKET-OPERATING-MODEL.md`
 - Brand / Public Presence: `company/BRAND-SYSTEM.md`
 - Investor System: `company/INVESTOR-READINESS-OPERATING-MODEL.md`
+- Company OS Architecture: `company-os/ARCHITECTURE.md`
 
-## Investor posture
+## Company OS architecture posture
 
-Investor materials are a governed view over canonical company truth. ACTUAL, FORECAST, SCENARIO, TARGET and UNAVAILABLE are not blended. Pipeline is not revenue; product interest is not a customer; cap-table scenarios do not create ownership or valuation.
+NexLabs Company OS v0.1 begins as a **modular monolith** with explicit bounded contexts. PostgreSQL is canonical transactional truth. Redis/cache/queues are optional acceleration and never authoritative state. Domain events use a transactional outbox with at-least-once delivery and idempotent consumers.
 
-The data-room architecture is defined here, but confidential diligence content does not belong in this public repository. Protected records are referenced through controlled locations.
+Authorization is capability/policy based. High-assurance actions use action-bound approval envelopes and post-action verification. Agent runtimes such as Hermes, OpenAI, Codex and local models sit behind replaceable adapters.
 
-Fundraising readiness is blocker-driven rather than a vanity score, and Founder/CEO retains authority over fundraising strategy, disclosure, investors, negotiation and binding terms.
+Ambiguous external mutations enter `RECOVERY_REQUIRED`; blind replay is prohibited. GitHub and other providers remain authoritative for their provider-native objects, referenced by exact IDs/SHAs.
+
+The first environment is local Docker, but the architecture is explicitly portable to staging and production.
 
 ## Current governed state
 
-`NXL-COMPANY-WO-015` is complete.
+`NXL-COMPANY-WO-016` is complete.
 
-The next legal action is to **admit WO-016** against current canonical main and create a fresh Context Lock.
+The next legal action is to **admit WO-017** against current canonical main and create a fresh Context Lock.
 
-WO-016 and later remain non-executable until admitted.
+WO-017 and later remain non-executable until admitted.
 
-> Repository disclosure: this repository is public. Never commit confidential cap tables, shareholder personal data, private financing documents, customer contracts, investor-restricted material, credentials, secrets or other protected diligence records here.
+> Repository disclosure: this repository is public. Do not commit raw secrets, private keys, customer-confidential data, private financing documents or other protected operational material here.

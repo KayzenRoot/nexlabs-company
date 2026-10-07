@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-016 — Company OS Functional Architecture & Data Model
 
 **Issue:** #17  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** `ELEVATED / CORE_ARCHITECTURE`  
 **Base:** `0f202eec5fc7ac3bec141038c2591bde64d44288`  
@@ -150,3 +150,14 @@ Brazilian Portuguese: exact base/head, bounded contexts, storage/data model, sta
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-016. Do not admit or execute WO-017 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `9647faf1753fb7342318b1eb1d255bb285793a8d`
+- All sixteen required validations: `SUCCESS`
+- Company OS Architecture merge SHA: `6c94394517d6a744643324150e6aada4264969a7`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Architecture locks: modular monolith, PostgreSQL canonical state, non-authoritative Redis/cache, transactional outbox, capability/policy authorization, provider-independent runtime adapters, RECOVERY_REQUIRED for ambiguous mutations, local-first portable topology.
+- Successor execution authority: `NONE`; WO-017 remains NOT_ADMITTED until separately compiled and locked.
