@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-016 Company OS architecture
+      - name: Validate canonical Company OS architecture
         shell: bash
         run: |
           set -euo pipefail
@@ -31,22 +31,9 @@ jobs:
             'company-os/API-CONTRACTS.md','company-os/DOMAIN-EVENTS.md','company-os/AUDIT-EVIDENCE-MODEL.md',
             'company-os/AUTHORIZATION-AND-APPROVAL-MODEL.md','company-os/AGENT-RUNTIME-CONTRACT.md',
             'company-os/INTEGRATION-CONTRACTS.md','company-os/IDEMPOTENCY-RECOVERY.md',
-            'company-os/OBSERVABILITY-CONTRACT.md','company-os/LOCAL-FIRST-TOPOLOGY.md','company-os/ADR-INDEX.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-016.json'
+            'company-os/OBSERVABILITY-CONTRACT.md','company-os/LOCAL-FIRST-TOPOLOGY.md','company-os/ADR-INDEX.md'
           ];
           for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-016 output: '+p);
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-016') throw new Error('WO-016 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-016.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-016') throw new Error('WO-016 Context Lock mismatch');
-
-          for(let n=17;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
-          }
 
           const arch=fs.readFileSync('company-os/ARCHITECTURE.md','utf8');
           const contexts=fs.readFileSync('company-os/BOUNDED-CONTEXTS.md','utf8');
@@ -104,5 +91,11 @@ jobs:
             if(!adrs.includes(adr)) throw new Error('Architecture decision missing: '+adr);
           }
 
-          console.log('WO-016 Company OS Architecture validation passed.');
+          const wo16=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-016.md','utf8');
+          if(!wo16.includes('Status:** `APPROVED / MERGED`') &&
+             !wo16.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-016 Company OS Architecture authority is not in an accepted lifecycle state');
+          }
+
+          console.log('Canonical NexLabs Company OS Architecture validation passed.');
           NODE
