@@ -25,10 +25,11 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 18 | Brand / Public presence | `company/BRAND-SYSTEM.md` plus supporting website/portfolio/public-proof documents |
 | 19 | Investor system | `company/INVESTOR-READINESS-OPERATING-MODEL.md` plus supporting pitch/data-room/investor documents |
 | 20 | Company OS architecture | `company-os/ARCHITECTURE.md` plus functional architecture contracts |
-| 21 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 22 | Deployment | `DEPLOYMENT.md` |
-| 23 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 24 | Conversation | transient context only |
+| 21 | Local Docker runtime | `company-os/LOCAL-DOCKER-RUNTIME.md` plus `infra/docker/` executable contracts |
+| 22 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 23 | Deployment | `DEPLOYMENT.md` |
+| 24 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 25 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -279,3 +280,18 @@ Investor materials summarize canonical strategy/product/finance/proof sources an
 Supporting sources define bounded contexts, data model, state machines, APIs, events, audit/evidence, authorization, agent/runtime adapters, integrations, recovery, observability and local-first topology.
 
 Canonical operating policy in `company/` outranks implementation convenience. Company OS architecture translates policy into software contracts; it does not rewrite business/governance truth.
+
+
+## Local Docker runtime authority
+
+`company-os/LOCAL-DOCKER-RUNTIME.md` is the primary authority for the NexLabs Company OS local infrastructure runtime.
+
+Supporting canonical sources:
+- `company-os/SECRETS-AND-CONFIGURATION.md`
+- `company-os/BACKUP-RESTORE-LOCAL.md`
+- `company-os/HEALTH-AND-READINESS.md`
+- `company-os/LOCAL-OBSERVABILITY.md`
+- `company-os/DEVELOPER-RUNBOOK.md`
+- executable Compose/config/scripts under `infra/docker/`
+
+The local runtime implements WO-016 architecture. It may not redefine PostgreSQL canonical truth, Redis non-authoritative semantics, provider independence, secret boundaries or high-assurance controls.

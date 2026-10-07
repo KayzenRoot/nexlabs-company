@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-017",
+  "issue": 18,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "infra/NXL-COMPANY-WO-017-local-docker-runtime",
+  "baseSha": "7625ca43d79c9ec92d309d9b59b198bee04e3897",
+  "compiledDate": "2026-10-07",
+  "authorityModel": "GEF_1_1_2",
+  "criticalSourceFingerprints": {
+    ".engineering/CHECKPOINT.json": "blob:7f1f9811e3243c216c2c049f3016f58fd04af258",
+    ".engineering/DECISIONS-LEDGER.md": "blob:ecb3ab1c24a5655279891c7067b8b734503d9eb8",
+    ".engineering/ARCHITECTURE.md": "blob:38797d6b4c1423083afe6e3251bad9ae5668eb8c",
+    ".engineering/REQUIREMENTS.md": "blob:2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/DEFINITION-OF-DONE.md": "blob:a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/TEST-BENCHMARK-PLAN.md": "blob:2a2945ded79bfa50397d7c16a8eca51db6919d4b",
+    ".engineering/work-orders/NXL-COMPANY-WO-017.md": "blob:f14ec85e08ab128208e5a1edb9333cc33ac727f0",
+    "company-os/ARCHITECTURE.md": "blob:41a9bfeebb070418e8a014027e5765229e327c6d",
+    "company-os/LOCAL-FIRST-TOPOLOGY.md": "blob:7f0f7eb5a12de075d0b8528d1856e6412519d8db",
+    "company-os/OBSERVABILITY-CONTRACT.md": "blob:9f1c3fe58981a3647865874121a2c742fbbb6ae9",
+    "company-os/IDEMPOTENCY-RECOVERY.md": "blob:caabbe5f50e1b02891f0e762da2afb736f5afb14",
+    "company/SECURITY-ARCHITECTURE.md": "blob:a46e90261c98de0b85695527ccaec93eae1a67f2"
+  },
+  "state": "LOCKED_FOR_WO_017"
+}

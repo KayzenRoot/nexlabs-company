@@ -1,0 +1,60 @@
+name: ${COMPOSE_PROJECT_NAME:-nexlabs-company-local}
+
+services:
+  postgres:
+    image: postgres:${POSTGRES_IMAGE_TAG:-17-alpine}
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-nexlabs_company}
+      POSTGRES_USER: ${POSTGRES_USER:-nexlabs}
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - data_plane
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 30s
+
+  redis:
+    image: redis:${REDIS_IMAGE_TAG:-7.4-alpine}
+    profiles: ["cache"]
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "no", "--save", ""]
+    tmpfs:
+      - /data
+    networks:
+      - data_plane
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  postgres_data:
+    name: ${POSTGRES_VOLUME_NAME:-nexlabs_company_postgres}
+  artifacts:
+    name: ${ARTIFACT_VOLUME_NAME:-nexlabs_company_artifacts}
+
+networks:
+  data_plane:
+    name: ${DATA_NETWORK_NAME:-nexlabs_company_data}
+    internal: true
+  observability:
+    name: ${OBSERVABILITY_NETWORK_NAME:-nexlabs_company_observability}
+    internal: true
+
+secrets:
+  postgres_password:
+    file: ${NEXLABS_SECRET_DIR:-./secrets/local}/postgres_password.txt

@@ -5,3 +5,9 @@ node_modules/
 !.env.example
 .DS_Store
 Thumbs.db
+
+# NexLabs Company OS local runtime
+infra/docker/.env
+infra/docker/secrets/local/
+infra/docker/runtime/*
+!infra/docker/runtime/.gitkeep
