@@ -15,21 +15,22 @@ Canonical company and engineering repository for NexLabs Technology.
 - Security: `company/SECURITY-ARCHITECTURE.md`
 - Finance: `company/FINANCE-OPERATING-MODEL.md`
 - GTM / Sales / Marketing / Customer Success: `company/GO-TO-MARKET-OPERATING-MODEL.md`
+- Brand / Public Presence: `company/BRAND-SYSTEM.md`
 
-## Commercial posture
+## Brand posture
 
-GTM starts from validated Product Factory evidence. ICPs are evidence-backed and product-specific. Channels are experiments measured through qualified downstream outcomes, activation, retention and economics rather than traffic alone.
+The canonical company name is **NexLabs Technology**. Approved visual lockups include **NEX LABS** and **NEX LABS / TECHNOLOGY**. The selected corporate symbol direction is **Precision Blades N** (`NEX-N-A-PRECISION-BLADES`).
 
-Sales stages represent evidence, CRM remains an operational system rather than canonical strategy, and activation means first meaningful product value. Customer Success tracks value realization and returns churn, objection and expansion evidence to Product Factory.
+The public visual system uses near-black/graphite, cold white, blue-gray, ice cyan/electric blue, restrained violet and silver/chrome material roles. Motion should make digital surfaces feel like a living technological organism while remaining reduced-motion safe and semantically usable without 3D/animation.
 
-Commercial persuasion never overrides truth: fabricated testimonials, customer logos, traction, ROI, fake scarcity and unsupported security/compliance claims are prohibited.
+Public portfolio and case studies are evidence-backed. Internal work cannot masquerade as client work; fabricated customers, partners, patents, awards, metrics, testimonials and implied social proof are prohibited.
 
 ## Current governed state
 
-`NXL-COMPANY-WO-013` is complete.
+`NXL-COMPANY-WO-014` is complete.
 
-The next legal action is to **admit WO-014** against current canonical main and create a fresh Context Lock.
+The next legal action is to **admit WO-015** against current canonical main and create a fresh Context Lock.
 
-WO-014 and later remain non-executable until admitted.
+WO-015 and later remain non-executable until admitted.
 
-> Repository disclosure: this repository is currently public. Commit public-safe information only; do not store prospect/customer personal data, private CRM records, confidential contracts, secrets or unpublished sensitive commercial information here.
+> Repository disclosure: this repository is currently public. Commit public-safe information only; do not store confidential portfolio details, customer/partner data, credentials, private investor terms, sensitive personal data or confidential invention material here.

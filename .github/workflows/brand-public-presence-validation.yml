@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-014 brand public presence
+      - name: Validate canonical brand public presence
         shell: bash
         run: |
           set -euo pipefail
@@ -39,24 +39,9 @@ jobs:
             'company/PUBLIC-PROOF-AND-DISCLOSURE-POLICY.md',
             'company/PUBLIC-ASSET-GOVERNANCE.md',
             'company/ACCESSIBILITY-PERFORMANCE-BRAND-GUARDRAILS.md',
-            'company/BRAND-WEBSITE-IMPLEMENTATION-HANDOFF.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-014.json'
+            'company/BRAND-WEBSITE-IMPLEMENTATION-HANDOFF.md'
           ];
           for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-014 output: '+p);
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-014') throw new Error('WO-014 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
-
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-014.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-014') throw new Error('WO-014 Context Lock mismatch');
-          if(lock.externalImplementationEvidence?.commit!=='e14cfbe4660b076db85e7e529befffe17a098cd1') throw new Error('Website evidence pin mismatch');
-
-          for(let n=15;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
-          }
 
           const brand=fs.readFileSync('company/BRAND-SYSTEM.md','utf8');
           const name=fs.readFileSync('company/NAME-AND-MARK-USAGE.md','utf8');
@@ -113,5 +98,11 @@ jobs:
 
           if(!handoff.includes('KayzenRoot/nexlabs-company') || !handoff.includes('KayzenRoot/nexlabs-website') || !handoff.includes('e14cfbe4660b076db85e7e529befffe17a098cd1')) throw new Error('Cross-repo handoff/evidence missing');
 
-          console.log('WO-014 Brand/Public Presence validation passed.');
+          const wo14=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-014.md','utf8');
+          if(!wo14.includes('Status:** `APPROVED / MERGED`') &&
+             !wo14.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-014 Brand/Public Presence authority is not in an accepted lifecycle state');
+          }
+
+          console.log('Canonical NexLabs Brand/Public Presence validation passed.');
           NODE
