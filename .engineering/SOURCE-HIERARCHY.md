@@ -21,10 +21,11 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 14 | Research & IP | `company/RESEARCH-INNOVATION-STRATEGY.md` plus supporting research/provenance/disposition documents |
 | 15 | Security | `company/SECURITY-ARCHITECTURE.md` plus supporting security/privacy/Web3/financial controls; `.engineering/SECURITY.md` is the engineering baseline |
 | 16 | Finance | `company/FINANCE-OPERATING-MODEL.md` plus supporting budget/economics/funding documents |
-| 17 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 18 | Deployment | `DEPLOYMENT.md` |
-| 19 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 20 | Conversation | transient context only |
+| 17 | GTM / Commercial | `company/GO-TO-MARKET-OPERATING-MODEL.md` plus supporting sales/marketing/customer-success documents |
+| 18 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 19 | Deployment | `DEPLOYMENT.md` |
+| 20 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 21 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -202,3 +203,24 @@ Supporting canonical finance sources:
 - `company/MANAGEMENT-FINANCIAL-REPORTING.md`
 
 Management-finance policy does not replace statutory accounting, tax, legal financing documents or bank/investment execution controls.
+
+
+## GTM / commercial authority
+
+`company/GO-TO-MARKET-OPERATING-MODEL.md` is the primary authority for NexLabs commercial lifecycle from validated product evidence through acquisition, qualification, onboarding, retention and expansion.
+
+Supporting canonical commercial sources:
+- `company/ICP-AND-SEGMENTATION.md`
+- `company/POSITIONING-AND-VALUE-PROPOSITION.md`
+- `company/CHANNEL-STRATEGY.md`
+- `company/CONTENT-SEO-AND-DEMAND-GENERATION.md`
+- `company/LIFECYCLE-MARKETING.md`
+- `company/SALES-PIPELINE-AND-QUALIFICATION.md`
+- `company/CRM-OPERATING-MODEL.md`
+- `company/ONBOARDING-AND-ACTIVATION.md`
+- `company/CUSTOMER-SUCCESS-RETENTION-EXPANSION.md`
+- `company/COMMERCIAL-METRICS-AND-ATTRIBUTION.md`
+- `company/GTM-EXPERIMENTATION-LOOP.md`
+- `company/COMMERCIAL-CLAIMS-AND-TRUST-POLICY.md`
+
+Commercial strategy may refine product-specific channel/message execution but may not invent product capability, traction, customer proof or regulatory status.
