@@ -14,7 +14,7 @@
   "activeStatus": "ADMITTED_IN_PROGRESS",
   "knownCritical": 0,
   "knownHigh": 0,
-  "nextLegalAction": "EXECUTE_WO_013_SALES_GTM_MARKETING_CUSTOMER_SUCCESS",
+  "nextLegalAction": "VALIDATE_WO_013_GTM_MODEL_AND_OPEN_PR",
   "stopState": "NO_WO_014_OR_LATER_EXECUTION_BEFORE_WO_013_APPROVAL_MERGE_AND_CHECKPOINT_PROMOTION",
   "repositoryDisclosure": "PUBLIC_SAFE_ONLY",
   "financeAuthority": "company/FINANCE-OPERATING-MODEL.md",
