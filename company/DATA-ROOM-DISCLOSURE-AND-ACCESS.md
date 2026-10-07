@@ -19,6 +19,14 @@ Legal/privileged/highly sensitive records; share only under explicit Founder/leg
 ### DO_NOT_SHARE
 Secrets, raw credentials, seed/private keys, unnecessary sensitive personal data or material that must not be distributed.
 
+## Public repository boundary
+
+This public repository may contain the data-room architecture, indexes, schemas and public-safe summaries only.
+
+It must not contain confidential diligence files, binding private financing documents, shareholder personal data, customer-confidential material, legal-restricted records, credentials, secrets, wallet keys or other sensitive records merely because they belong to investor diligence.
+
+Protected evidence is referenced by governed protected location/ID rather than copied into public Git.
+
 ## Disclosure principle
 
 Investor interest is not blanket authorization.
