@@ -1,0 +1,108 @@
+name: Validate NexLabs Company OS Architecture
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  company-os-architecture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-016 Company OS architecture
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const required=[
+            'company-os/ARCHITECTURE.md','company-os/BOUNDED-CONTEXTS.md','company-os/MODULE-BOUNDARIES.md',
+            'company-os/DATA-MODEL.md','company-os/ENTITY-CATALOG.md','company-os/STATE-MACHINES.md',
+            'company-os/API-CONTRACTS.md','company-os/DOMAIN-EVENTS.md','company-os/AUDIT-EVIDENCE-MODEL.md',
+            'company-os/AUTHORIZATION-AND-APPROVAL-MODEL.md','company-os/AGENT-RUNTIME-CONTRACT.md',
+            'company-os/INTEGRATION-CONTRACTS.md','company-os/IDEMPOTENCY-RECOVERY.md',
+            'company-os/OBSERVABILITY-CONTRACT.md','company-os/LOCAL-FIRST-TOPOLOGY.md','company-os/ADR-INDEX.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-016.json'
+          ];
+          for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-016 output: '+p);
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-016') throw new Error('WO-016 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-016.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-016') throw new Error('WO-016 Context Lock mismatch');
+
+          for(let n=17;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const arch=fs.readFileSync('company-os/ARCHITECTURE.md','utf8');
+          const contexts=fs.readFileSync('company-os/BOUNDED-CONTEXTS.md','utf8');
+          const modules=fs.readFileSync('company-os/MODULE-BOUNDARIES.md','utf8');
+          const data=fs.readFileSync('company-os/DATA-MODEL.md','utf8');
+          const states=fs.readFileSync('company-os/STATE-MACHINES.md','utf8');
+          const api=fs.readFileSync('company-os/API-CONTRACTS.md','utf8');
+          const events=fs.readFileSync('company-os/DOMAIN-EVENTS.md','utf8');
+          const audit=fs.readFileSync('company-os/AUDIT-EVIDENCE-MODEL.md','utf8');
+          const auth=fs.readFileSync('company-os/AUTHORIZATION-AND-APPROVAL-MODEL.md','utf8');
+          const agent=fs.readFileSync('company-os/AGENT-RUNTIME-CONTRACT.md','utf8');
+          const integrations=fs.readFileSync('company-os/INTEGRATION-CONTRACTS.md','utf8');
+          const recovery=fs.readFileSync('company-os/IDEMPOTENCY-RECOVERY.md','utf8');
+          const obs=fs.readFileSync('company-os/OBSERVABILITY-CONTRACT.md','utf8');
+          const topology=fs.readFileSync('company-os/LOCAL-FIRST-TOPOLOGY.md','utf8');
+          const adrs=fs.readFileSync('company-os/ADR-INDEX.md','utf8');
+
+          if(!arch.toLowerCase().includes('modular monolith')) throw new Error('Modular monolith decision missing');
+          if(!arch.includes('PostgreSQL') || !arch.toLowerCase().includes('redis is not canonical truth')) throw new Error('Canonical/ephemeral storage boundary incomplete');
+
+          for(const c of ['Organization & Identity','Governance & Authority','Work & Engineering Governance','AI Workforce','Product & Portfolio','Finance & Economics','Approval & High Assurance','Evidence & Audit','Integration & Execution']){
+            if(!contexts.includes(c)) throw new Error('Bounded context missing: '+c);
+          }
+
+          if(!modules.toLowerCase().includes('forbidden coupling') || !modules.toLowerCase().includes('shared kernel')) throw new Error('Module-boundary rules incomplete');
+
+          for(const marker of ['organization_id','work_orders','context_locks','approval_requests','authority_envelopes','audit_records','outbox_events','inbox_receipts']){
+            if(!data.includes(marker)) throw new Error('Data model missing: '+marker);
+          }
+
+          if(!states.includes('RECOVERY_REQUIRED') || !states.includes('UNKNOWN_COMPLETION')) throw new Error('Recovery states missing');
+          if(!api.toLowerCase().includes('commands') || !api.toLowerCase().includes('queries') || !api.includes('idempotency_key')) throw new Error('Command/query/idempotency API semantics missing');
+
+          if(!events.toLowerCase().includes('transactional outbox') || !events.toLowerCase().includes('at-least-once') || !events.toLowerCase().includes('idempotent')) throw new Error('Event delivery contract incomplete');
+
+          if(!audit.toLowerCase().includes('append-only') || !audit.toLowerCase().includes('content hash')) throw new Error('Audit/evidence immutability incomplete');
+
+          if(!auth.toLowerCase().includes('default deny') || !auth.includes('HIGH_ASSURANCE') || !auth.toLowerCase().includes('action digest')) throw new Error('Authorization/high-assurance model incomplete');
+
+          for(const marker of ['Hermes','OpenAI','Codex','local LLMs']){
+            if(!agent.includes(marker)) throw new Error('Provider-independent runtime evidence missing: '+marker);
+          }
+
+          if(!integrations.includes('GitHub adapter') || !integrations.toLowerCase().includes('external ids/shas') && !integrations.includes('external IDs/SHAs')) {
+            if(!integrations.toLowerCase().includes('external record ids')) throw new Error('External reference authority missing');
+          }
+
+          if(!recovery.includes('RECOVERY_REQUIRED') || !recovery.toLowerCase().includes('blind replay')) throw new Error('Ambiguous mutation recovery incomplete');
+
+          if(!obs.toLowerCase().includes('token/model usage') || !obs.toLowerCase().includes('raw credentials')) throw new Error('Observability/cost/secret guardrails incomplete');
+
+          if(!topology.includes('Docker') || !topology.toLowerCase().includes('docker socket') || !topology.includes('LOCAL → STAGING → PRODUCTION')) throw new Error('Local-first/production portability incomplete');
+
+          for(const adr of ['ADR-COS-001','ADR-COS-002','ADR-COS-005','ADR-COS-007','ADR-COS-009','ADR-COS-013']){
+            if(!adrs.includes(adr)) throw new Error('Architecture decision missing: '+adr);
+          }
+
+          console.log('WO-016 Company OS Architecture validation passed.');
+          NODE

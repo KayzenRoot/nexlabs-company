@@ -1,6 +1,6 @@
 # NexLabs Company Architecture
 
-Status: `CONCEPTUAL_BASELINE`
+Status: `FUNCTIONAL_BASELINE_WO_016`
 
 ## Architectural principles
 
@@ -10,43 +10,81 @@ Status: `CONCEPTUAL_BASELINE`
 4. Local-first development must not create a local-only product architecture.
 5. High-risk domains fail closed.
 6. Company modules must be replaceable through explicit contracts.
-7. GEF governance is part of the operating architecture, not an after-the-fact review layer.
+7. GEF governance is part of the operating architecture.
+8. Canonical state and derived acceleration are explicitly separated.
+9. Ambiguous mutations reconcile before retry.
+10. Distribution is earned by scaling/security/availability evidence.
 
-## Target layers
+## Canonical Company OS authority
 
-### 1. Founder Layer
-Intent, approvals, strategic decisions and high-assurance authorization.
+Primary architecture: `company-os/ARCHITECTURE.md`
 
-### 2. Company Governance Layer
-Policies, authority matrix, risk classification, decisions, checkpoints, audit rules and Work Order admission.
+Supporting contracts:
+- `company-os/BOUNDED-CONTEXTS.md`
+- `company-os/MODULE-BOUNDARIES.md`
+- `company-os/DATA-MODEL.md`
+- `company-os/ENTITY-CATALOG.md`
+- `company-os/STATE-MACHINES.md`
+- `company-os/API-CONTRACTS.md`
+- `company-os/DOMAIN-EVENTS.md`
+- `company-os/AUDIT-EVIDENCE-MODEL.md`
+- `company-os/AUTHORIZATION-AND-APPROVAL-MODEL.md`
+- `company-os/AGENT-RUNTIME-CONTRACT.md`
+- `company-os/INTEGRATION-CONTRACTS.md`
+- `company-os/IDEMPOTENCY-RECOVERY.md`
+- `company-os/OBSERVABILITY-CONTRACT.md`
+- `company-os/LOCAL-FIRST-TOPOLOGY.md`
+- `company-os/ADR-INDEX.md`
 
-### 3. Company OS Core
-Projects, products, agents, roles, tasks, Work Orders, evidence, approvals, decisions, checkpoints, events and audit records.
+## v0.1 architecture
 
-### 4. AI Workforce Layer
-Role-bound executive and specialist agents created from a governed employee contract.
+### Style
+Modular monolith with explicit bounded contexts and extraction seams.
 
-### 5. Product Factory
-Research, product validation, planning, architecture, execution, QA, review, release and iteration/kill workflow.
+### Canonical persistence
+PostgreSQL.
 
-### 6. Agent Runtime Abstraction
-Provider-independent session, memory, tool, model-routing and execution interfaces. Hermes is a candidate first adapter.
+### Derived/ephemeral acceleration
+Redis/cache/queues where justified, never canonical truth.
 
-### 7. Executor Adapters
-ChatGPT/GitHub, Codex, local tools, CI runners and future executors behind bounded execution contracts.
+### Evidence/artifacts
+Immutable/content-hashed artifact storage with relational metadata.
 
-### 8. Integration Layer
-GitHub, cloud, communications, CRM, analytics, finance and future external systems.
+### Events
+Transactional outbox with at-least-once delivery and idempotent consumers.
 
-### 9. Data and Memory Layer
-Canonical relational state, queues/caches where justified, audit/evidence storage and bounded agent memory. Concrete technologies require later architecture admission.
+### Authorization
+Capability/policy based, default deny, bounded approval envelopes for high-assurance actions.
 
-### 10. Observability Layer
-Health, traces, logs, costs, agent runs, approvals, failures and founder-facing status.
+### Agent runtime
+Provider-independent adapter contract.
 
-### 11. Infrastructure Layer
-Local Docker first; staging/production later using portable service contracts.
+### Recovery
+Unknown mutation completion enters `RECOVERY_REQUIRED`; blind replay is prohibited.
 
-## No premature technology lock
+### Deployment
+Local Docker first, portable to staging/production through stable infrastructure contracts.
 
-PostgreSQL, Redis, queues, vector stores and specific frontend/backend frameworks are candidates, not approved requirements in WO-002. They must be justified in the relevant architecture Work Order.
+## Layer model
+
+1. Founder interface
+2. Governance & authority
+3. Company OS application/orchestration
+4. Domain bounded contexts
+5. AI workforce/runtime abstraction
+6. Integration/executor adapters
+7. Canonical data/evidence
+8. Observability
+9. Infrastructure
+
+## Security boundary
+
+Company OS does not store raw long-lived secrets in ordinary domain records. Secret handles/brokered capabilities are used across agent/tool/integration boundaries.
+
+## External truth
+
+GitHub, banks, CRMs and model/runtime providers remain authoritative for their provider-native state. Company OS stores exact IDs/SHAs/refs and synchronized projections where justified.
+
+## Future evolution
+
+Successor WOs may choose concrete implementation frameworks, Docker services, migrations and UI. They may not silently overturn these architecture decisions without governed change.
