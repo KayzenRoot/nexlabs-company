@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-016 are complete. WO-017 is the only currently admitted Work Order.
+WO-002 through WO-017 are complete. No Work Order is currently admitted; WO-018 is the next eligible admission.
 
 | WO | Issue | Classification | Phase | Status |
 | --- | ---: | --- | --- | --- |
@@ -18,10 +18,10 @@ WO-002 through WO-016 are complete. WO-017 is the only currently admitted Work O
 | NXL-COMPANY-WO-011 | #12 | NECESSARY | Company Blueprint | APPROVED / MERGED |
 | NXL-COMPANY-WO-012 | #13 | NECESSARY | Company Blueprint | APPROVED / MERGED |
 | NXL-COMPANY-WO-013 | #14 | NECESSARY | Company Blueprint | APPROVED / MERGED |
-| NXL-COMPANY-WO-014 | #15 | IMPORTANT | Public Presence | PLANNED / NOT_ADMITTED |
-| NXL-COMPANY-WO-015 | #16 | IMPORTANT | Investor Readiness | PLANNED / NOT_ADMITTED |
-| NXL-COMPANY-WO-016 | #17 | NECESSARY | Company OS Design | PLANNED / NOT_ADMITTED |
-| NXL-COMPANY-WO-017 | #18 | NECESSARY | Company OS Design | PLANNED / NOT_ADMITTED |
+| NXL-COMPANY-WO-014 | #15 | IMPORTANT | Public Presence | APPROVED / MERGED |
+| NXL-COMPANY-WO-015 | #16 | IMPORTANT | Investor Readiness | APPROVED / MERGED |
+| NXL-COMPANY-WO-016 | #17 | NECESSARY | Company OS Design | APPROVED / MERGED |
+| NXL-COMPANY-WO-017 | #18 | NECESSARY | Company OS Design | APPROVED / MERGED |
 | NXL-COMPANY-WO-018 | #19 | NECESSARY | Agent Runtime Design | PLANNED / NOT_ADMITTED |
 | NXL-COMPANY-WO-019 | #20 | NECESSARY | MVP Build | PLANNED / NOT_ADMITTED |
 | NXL-COMPANY-WO-020 | #21 | IMPORTANT | Founder Operations | PLANNED / NOT_ADMITTED |

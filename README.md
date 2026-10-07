@@ -18,23 +18,27 @@ Canonical company and engineering repository for NexLabs Technology.
 - Brand / Public Presence: `company/BRAND-SYSTEM.md`
 - Investor System: `company/INVESTOR-READINESS-OPERATING-MODEL.md`
 - Company OS Architecture: `company-os/ARCHITECTURE.md`
+- Local Docker Runtime: `company-os/LOCAL-DOCKER-RUNTIME.md`
 
-## Company OS architecture posture
+## Local runtime posture
 
-NexLabs Company OS v0.1 begins as a **modular monolith** with explicit bounded contexts. PostgreSQL is canonical transactional truth. Redis/cache/queues are optional acceleration and never authoritative state. Domain events use a transactional outbox with at-least-once delivery and idempotent consumers.
+NexLabs Company OS local infrastructure is executable under `infra/docker/`.
 
-Authorization is capability/policy based. High-assurance actions use action-bound approval envelopes and post-action verification. Agent runtimes such as Hermes, OpenAI, Codex and local models sit behind replaceable adapters.
-
-Ambiguous external mutations enter `RECOVERY_REQUIRED`; blind replay is prohibited. GitHub and other providers remain authoritative for their provider-native objects, referenced by exact IDs/SHAs.
-
-The first environment is local Docker, but the architecture is explicitly portable to staging and production.
+- PostgreSQL is canonical persistent state.
+- Redis is optional, ephemeral and non-canonical.
+- evidence/artifact storage has a persistent named volume.
+- no service receives the Docker socket.
+- local secrets and runtime backups are ignored by Git.
+- OpenTelemetry, Prometheus and Grafana are optional observability services.
+- PostgreSQL/artifact backup and destructive restore paths exist for PowerShell and Bash.
+- Company OS app/worker containers are intentionally deferred until executable runtime code exists.
 
 ## Current governed state
 
-`NXL-COMPANY-WO-016` is complete.
+`NXL-COMPANY-WO-017` is complete.
 
-The next legal action is to **admit WO-017** against current canonical main and create a fresh Context Lock.
+The next legal action is to **admit WO-018** against current canonical main and create a fresh Context Lock.
 
-WO-017 and later remain non-executable until admitted.
+WO-018 and later remain non-executable until admitted.
 
-> Repository disclosure: this repository is public. Do not commit raw secrets, private keys, customer-confidential data, private financing documents or other protected operational material here.
+> Repository disclosure: this repository is public. Never commit real credentials, local secret files, database dumps, runtime backups, private keys or protected operational material here.
