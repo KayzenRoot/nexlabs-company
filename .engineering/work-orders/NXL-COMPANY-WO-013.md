@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-013 — Sales, GTM, Marketing & Customer Success
 
 **Issue:** #14  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** `STANDARD / COMMERCIAL_GOVERNANCE`  
 **Base:** `9d75babe50c866a4901ba766ce686790df38326d`  
@@ -163,3 +163,14 @@ Brazilian Portuguese: exact base/head, ICP integrity, positioning truthfulness, 
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-013. Do not admit or execute WO-014 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `6fd643a1966fb6a3ea4274bc57db3fef7d7880fb`
+- All thirteen required validations: `SUCCESS`
+- GTM merge SHA: `0aec48c357fe493267a0645319b548f083195105`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Commercial truth boundary: no fabricated testimonials, logos, traction, ROI, scarcity, security/compliance claims or customer proof.
+- Successor execution authority: `NONE`; WO-014 remains NOT_ADMITTED until separately compiled and locked.
