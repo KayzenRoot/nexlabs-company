@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-017 — Local Docker Infrastructure & Runtime Architecture
 
 **Issue:** #18  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `NECESSARY`  
 **Risk:** `ELEVATED / LOCAL_RUNTIME_INFRASTRUCTURE`  
 **Base:** `7625ca43d79c9ec92d309d9b59b198bee04e3897`  
@@ -78,3 +78,15 @@ Company OS application code; AgentRuntime/Hermes implementation; schema migratio
 
 ## STOP CONDITION
 Stop at exact-head audit for WO-017. Do not admit or execute WO-018 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `d2a13b6b79891e4ab0dee9c590025a9feb8c98c5`
+- All seventeen required validations: `SUCCESS`
+- Local Docker Runtime merge SHA: `0dcc2ace4aa1cc218d950511bd01a68de798a32c`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Recovery evidence: initial admission transport failure was reconciled read-only; no partial writes existed and no blind replay occurred.
+- Runtime locks: PostgreSQL canonical, Redis optional/non-canonical, artifact volume persistent, secrets ignored, no Docker socket, optional OTEL/Prometheus/Grafana, explicit backup/restore, PowerShell+Bash operations.
+- Successor execution authority: `NONE`; WO-018 remains NOT_ADMITTED until separately compiled and locked.

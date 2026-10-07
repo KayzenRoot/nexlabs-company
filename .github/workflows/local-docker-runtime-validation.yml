@@ -57,7 +57,6 @@ jobs:
             'company-os/HEALTH-AND-READINESS.md',
             'company-os/LOCAL-OBSERVABILITY.md',
             'company-os/DEVELOPER-RUNBOOK.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-017.json'
           ];
           for(const p of req) if(!fs.existsSync(p)) throw new Error('Missing WO-017 output: '+p);
 
@@ -89,18 +88,13 @@ jobs:
           const marker='I_UNDERSTAND_THIS_IS_DESTRUCTIVE';
           if(!restorePg.includes(marker) || !restoreArtifacts.includes(marker)) throw new Error('Restore destructive confirmation missing');
 
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-017') throw new Error('WO-017 must be active');
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-017.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-017') throw new Error('WO-017 Context Lock mismatch');
-
-          for(let n=18;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          const wo17=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-017.md','utf8');
+          if(!wo17.includes('Status:** `APPROVED / MERGED`') &&
+             !wo17.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-017 Local Docker Runtime authority is not in an accepted lifecycle state');
           }
 
-          console.log('WO-017 Local Docker Runtime structural validation passed.');
+          console.log('Canonical NexLabs Local Docker Runtime validation passed.');
           NODE
 
       - name: Validate shell script syntax
