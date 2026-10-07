@@ -14,23 +14,24 @@ Canonical company and engineering repository for NexLabs Technology.
 - Research / Innovation / IP: `company/RESEARCH-INNOVATION-STRATEGY.md`
 - Security: `company/SECURITY-ARCHITECTURE.md`
 - Finance: `company/FINANCE-OPERATING-MODEL.md`
-- GTM / Sales / Marketing / Customer Success: `company/GO-TO-MARKET-OPERATING-MODEL.md`
+- GTM: `company/GO-TO-MARKET-OPERATING-MODEL.md`
 - Brand / Public Presence: `company/BRAND-SYSTEM.md`
+- Investor System: `company/INVESTOR-READINESS-OPERATING-MODEL.md`
 
-## Brand posture
+## Investor posture
 
-The canonical company name is **NexLabs Technology**. Approved visual lockups include **NEX LABS** and **NEX LABS / TECHNOLOGY**. The selected corporate symbol direction is **Precision Blades N** (`NEX-N-A-PRECISION-BLADES`).
+Investor materials are a governed view over canonical company truth. ACTUAL, FORECAST, SCENARIO, TARGET and UNAVAILABLE are not blended. Pipeline is not revenue; product interest is not a customer; cap-table scenarios do not create ownership or valuation.
 
-The public visual system uses near-black/graphite, cold white, blue-gray, ice cyan/electric blue, restrained violet and silver/chrome material roles. Motion should make digital surfaces feel like a living technological organism while remaining reduced-motion safe and semantically usable without 3D/animation.
+The data-room architecture is defined here, but confidential diligence content does not belong in this public repository. Protected records are referenced through controlled locations.
 
-Public portfolio and case studies are evidence-backed. Internal work cannot masquerade as client work; fabricated customers, partners, patents, awards, metrics, testimonials and implied social proof are prohibited.
+Fundraising readiness is blocker-driven rather than a vanity score, and Founder/CEO retains authority over fundraising strategy, disclosure, investors, negotiation and binding terms.
 
 ## Current governed state
 
-`NXL-COMPANY-WO-014` is complete.
+`NXL-COMPANY-WO-015` is complete.
 
-The next legal action is to **admit WO-015** against current canonical main and create a fresh Context Lock.
+The next legal action is to **admit WO-016** against current canonical main and create a fresh Context Lock.
 
-WO-015 and later remain non-executable until admitted.
+WO-016 and later remain non-executable until admitted.
 
-> Repository disclosure: this repository is currently public. Commit public-safe information only; do not store confidential portfolio details, customer/partner data, credentials, private investor terms, sensitive personal data or confidential invention material here.
+> Repository disclosure: this repository is public. Never commit confidential cap tables, shareholder personal data, private financing documents, customer contracts, investor-restricted material, credentials, secrets or other protected diligence records here.
