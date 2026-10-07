@@ -1,0 +1,117 @@
+name: Validate NexLabs Brand and Public Presence
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  brand-public-presence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-014 brand public presence
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+
+          const required=[
+            'company/BRAND-SYSTEM.md',
+            'company/NAME-AND-MARK-USAGE.md',
+            'company/VISUAL-LANGUAGE.md',
+            'company/MOTION-AND-LIVING-SYSTEM.md',
+            'company/BRAND-VOICE-AND-PUBLIC-COPY.md',
+            'company/INSTITUTIONAL-WEBSITE-IA.md',
+            'company/PUBLIC-WEBSITE-CONTENT-CONTRACT.md',
+            'company/PUBLIC-PORTFOLIO-SCHEMA.md',
+            'company/CASE-STUDY-STANDARD.md',
+            'company/PUBLIC-PROOF-AND-DISCLOSURE-POLICY.md',
+            'company/PUBLIC-ASSET-GOVERNANCE.md',
+            'company/ACCESSIBILITY-PERFORMANCE-BRAND-GUARDRAILS.md',
+            'company/BRAND-WEBSITE-IMPLEMENTATION-HANDOFF.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-014.json'
+          ];
+          for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-014 output: '+p);
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-014') throw new Error('WO-014 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
+
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-014.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-014') throw new Error('WO-014 Context Lock mismatch');
+          if(lock.externalImplementationEvidence?.commit!=='e14cfbe4660b076db85e7e529befffe17a098cd1') throw new Error('Website evidence pin mismatch');
+
+          for(let n=15;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const brand=fs.readFileSync('company/BRAND-SYSTEM.md','utf8');
+          const name=fs.readFileSync('company/NAME-AND-MARK-USAGE.md','utf8');
+          const visual=fs.readFileSync('company/VISUAL-LANGUAGE.md','utf8');
+          const motion=fs.readFileSync('company/MOTION-AND-LIVING-SYSTEM.md','utf8');
+          const voice=fs.readFileSync('company/BRAND-VOICE-AND-PUBLIC-COPY.md','utf8');
+          const ia=fs.readFileSync('company/INSTITUTIONAL-WEBSITE-IA.md','utf8');
+          const content=fs.readFileSync('company/PUBLIC-WEBSITE-CONTENT-CONTRACT.md','utf8');
+          const portfolio=fs.readFileSync('company/PUBLIC-PORTFOLIO-SCHEMA.md','utf8');
+          const caseStudy=fs.readFileSync('company/CASE-STUDY-STANDARD.md','utf8');
+          const proof=fs.readFileSync('company/PUBLIC-PROOF-AND-DISCLOSURE-POLICY.md','utf8');
+          const assets=fs.readFileSync('company/PUBLIC-ASSET-GOVERNANCE.md','utf8');
+          const access=fs.readFileSync('company/ACCESSIBILITY-PERFORMANCE-BRAND-GUARDRAILS.md','utf8');
+          const handoff=fs.readFileSync('company/BRAND-WEBSITE-IMPLEMENTATION-HANDOFF.md','utf8');
+
+          if(!brand.includes('NexLabs Technology') || !brand.includes('NEX LABS') || !brand.includes('NEX-N-A-PRECISION-BLADES')) throw new Error('Canonical brand identity incomplete');
+          if(!name.includes('Corporate name') || !name.includes('Visual wordmark') || !name.includes('Precision Blades N')) throw new Error('Name/mark distinction missing');
+
+          for(const marker of ['Near-black','Cold white','Ice cyan','Electric blue','Restrained violet','Silver / chrome']){
+            if(!visual.toLowerCase().includes(marker.toLowerCase())) throw new Error('Visual material role missing: '+marker);
+          }
+          for(const marker of ['gaming','crypto-token','rainbow']){
+            if(!brand.toLowerCase().includes(marker.toLowerCase()) && !visual.toLowerCase().includes(marker.toLowerCase())) throw new Error('Brand anti-pattern missing: '+marker);
+          }
+
+          if(!motion.toLowerCase().includes('living') || !motion.includes('REDUCED') || !motion.includes('STATIC') || !motion.includes('prefers-reduced-motion')) throw new Error('Living/reduced-motion system incomplete');
+          if(!voice.toLowerCase().includes('fabricate') || !voice.toLowerCase().includes('public factual states')) throw new Error('Public copy truth guardrail missing');
+
+          for(const route of ['/solutions','/technology','/research','/company','/contact','/portfolio']){
+            if(!ia.includes(route)) throw new Error('Website IA missing route: '+route);
+          }
+
+          for(const state of ['RESEARCH','PROTOTYPE','PRIVATE_BETA','PUBLIC_BETA','ACTIVE_PRODUCT','INTERNAL_PLATFORM','OPEN_SOURCE','PAUSED','RETIRED']){
+            if(!portfolio.includes(state)) throw new Error('Portfolio status missing: '+state);
+          }
+          for(const field of ['proof_refs','metrics','disclosure_class','last_verified_at']){
+            if(!portfolio.includes(field)) throw new Error('Portfolio evidence field missing: '+field);
+          }
+
+          for(const type of ['INTERNAL_PRODUCT','INTERNAL_PLATFORM','RESEARCH_PROJECT','OPEN_SOURCE_PROJECT','CLIENT_PROJECT','PARTNERSHIP_PROJECT']){
+            if(!caseStudy.includes(type)) throw new Error('Case-study type missing: '+type);
+          }
+
+          for(const marker of ['customers','partners','patents','awards','certifications','revenue','testimonials']){
+            if(!proof.toLowerCase().includes(marker.toLowerCase())) throw new Error('Public-proof prohibition missing: '+marker);
+          }
+          if(!proof.includes('Implication counts as a claim')) throw new Error('Implied-claim rule missing');
+
+          for(const marker of ['license','confidentiality','secrets','personal']){
+            if(!assets.toLowerCase().includes(marker.toLowerCase())) throw new Error('Asset governance missing: '+marker);
+          }
+
+          if(!access.includes('SEMANTIC USABILITY') || !access.includes('prefers-reduced-motion') || !access.toLowerCase().includes('webgl')) throw new Error('Accessibility/performance fallback incomplete');
+
+          if(!handoff.includes('KayzenRoot/nexlabs-company') || !handoff.includes('KayzenRoot/nexlabs-website') || !handoff.includes('e14cfbe4660b076db85e7e529befffe17a098cd1')) throw new Error('Cross-repo handoff/evidence missing');
+
+          console.log('WO-014 Brand/Public Presence validation passed.');
+          NODE
