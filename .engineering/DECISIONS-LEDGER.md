@@ -378,3 +378,56 @@
 ## D-0092 — Finance reporting optimizes Founder decisions, not spreadsheet workload
 **Status:** APPROVED IN WO-012  
 **Decision:** The future Company OS surfaces cash/runway, anomalies, economics, milestones and decisions with drill-down evidence rather than requiring the Founder to manually operate raw finance spreadsheets.
+
+
+## D-0093 — GTM starts from validated product evidence
+**Status:** APPROVED IN WO-013  
+**Decision:** NexLabs does not scale acquisition merely because a product exists. GTM begins from Product Factory evidence, target user/problem, value proposition, pricing hypothesis, economics and risk constraints.
+
+## D-0094 — ICP is evidence-backed and product-specific
+**Status:** APPROVED IN WO-013  
+**Decision:** Each product/segment maintains ICP fields, disqualifiers, evidence refs and confidence. Persona detail unrelated to product/buying behavior is avoided.
+
+## D-0095 — Commercial claims cannot outrun product truth
+**Status:** APPROVED IN WO-013  
+**Decision:** Marketing/sales may not invent capability, customer proof, ROI, security/compliance status, traction, scarcity, market leadership or roadmap commitment.
+
+## D-0096 — Channel selection is a measurable hypothesis
+**Status:** APPROVED IN WO-013  
+**Decision:** Channels are evaluated by qualified downstream outcomes and economics, not traffic/impressions alone. Experiments define target, cap, success metric, stop condition and learning.
+
+## D-0097 — Sales stages represent evidence, not optimism
+**Status:** APPROVED IN WO-013  
+**Decision:** Pipeline stages have entry/exit criteria. Reply, meeting or subjective enthusiasm alone does not automatically mean a lead/opportunity is qualified.
+
+## D-0098 — CRM is operational commercial truth, not canonical strategy
+**Status:** APPROVED IN WO-013  
+**Decision:** CRM records contacts/accounts/opportunities/activities/consent/source. Company/product strategy remains governed in Git, and customer/prospect data remains subject to privacy policy.
+
+## D-0099 — Activation means first meaningful value
+**Status:** APPROVED IN WO-013  
+**Decision:** Signup/login is not automatically activation. Each product defines an evidence-backed activation event and tracks time-to-value and onboarding friction.
+
+## D-0100 — Customer Success is accountable for value realization and retention evidence
+**Status:** APPROVED IN WO-013  
+**Decision:** CS health incorporates product value/usage/retention signals rather than only ticket volume. Churn/expansion evidence feeds Product Factory.
+
+## D-0101 — Attribution carries uncertainty
+**Status:** APPROVED IN WO-013  
+**Decision:** First-touch, last-touch, multi-touch and self-reported attribution are models, not absolute truth. Commercial metrics include method/confidence/blind spots where material.
+
+## D-0102 — Growth cannot bypass unit economics
+**Status:** APPROVED IN WO-013  
+**Decision:** Paid acquisition/channel scaling eventually connects to activation, retention, gross/contribution margin and CAC/payback. Cheap leads without retained value are not efficient growth.
+
+## D-0103 — Lifecycle marketing must preserve consent and user trust
+**Status:** APPROVED IN WO-013  
+**Decision:** Lifecycle contact follows consent/applicability, preferences and suppression. Fake urgency, deceptive opt-in, cancellation friction and manipulative targeting are prohibited.
+
+## D-0104 — Commercial learning returns to Product Factory
+**Status:** APPROVED IN WO-013  
+**Decision:** Won/lost, objections, churn, activation, channel and customer-success evidence updates ICP, positioning, pricing hypotheses, roadmap/product validation and financial forecasts.
+
+## D-0105 — Founder retains authority over strategically material commercial commitments
+**Status:** APPROVED IN WO-013  
+**Decision:** Founder/CEO retains final authority over company positioning, major channel spend, strategic partnerships, major enterprise commitments and material regulated/high-risk GTM.
