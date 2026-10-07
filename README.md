@@ -14,19 +14,22 @@ Canonical company and engineering repository for NexLabs Technology.
 - Research / Innovation / IP: `company/RESEARCH-INNOVATION-STRATEGY.md`
 - Security: `company/SECURITY-ARCHITECTURE.md`
 - Finance: `company/FINANCE-OPERATING-MODEL.md`
+- GTM / Sales / Marketing / Customer Success: `company/GO-TO-MARKET-OPERATING-MODEL.md`
 
-## Financial posture
+## Commercial posture
 
-Financial truth is labeled as ACTUAL, COMMITTED, FORECAST, SCENARIO, ASSUMPTION, UNAVAILABLE or NOT_APPLICABLE. Cash, revenue, bookings, MRR and ARR remain distinct. AI/cloud costs are first-class product economics. Budget allocation never grants payment authority.
+GTM starts from validated Product Factory evidence. ICPs are evidence-backed and product-specific. Channels are experiments measured through qualified downstream outcomes, activation, retention and economics rather than traffic alone.
 
-Funding plans use explicit assumptions and milestone evidence. Investment tranches do not release merely because time passed; missed milestones trigger review/reforecast rather than fictional completion.
+Sales stages represent evidence, CRM remains an operational system rather than canonical strategy, and activation means first meaningful product value. Customer Success tracks value realization and returns churn, objection and expansion evidence to Product Factory.
+
+Commercial persuasion never overrides truth: fabricated testimonials, customer logos, traction, ROI, fake scarcity and unsupported security/compliance claims are prohibited.
 
 ## Current governed state
 
-`NXL-COMPANY-WO-012` is complete.
+`NXL-COMPANY-WO-013` is complete.
 
-The next legal action is to **admit WO-013** against current canonical main and create a fresh Context Lock.
+The next legal action is to **admit WO-014** against current canonical main and create a fresh Context Lock.
 
-WO-013 and later remain non-executable until admitted.
+WO-014 and later remain non-executable until admitted.
 
-> Repository disclosure: this repository is currently public. Commit public-safe information only; do not store confidential investor terms, bank credentials, private financial records, secrets or customer-sensitive data here.
+> Repository disclosure: this repository is currently public. Commit public-safe information only; do not store prospect/customer personal data, private CRM records, confidential contracts, secrets or unpublished sensitive commercial information here.

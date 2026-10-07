@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-012 are complete. WO-013 is the only currently admitted Work Order.
+WO-002 through WO-013 are complete. No Work Order is currently admitted; WO-014 is the next eligible admission.
 
 | WO | Issue | Classification | Phase | Status |
 | --- | ---: | --- | --- | --- |
@@ -17,7 +17,7 @@ WO-002 through WO-012 are complete. WO-013 is the only currently admitted Work O
 | NXL-COMPANY-WO-010 | #11 | IMPORTANT | Company Blueprint | APPROVED / MERGED |
 | NXL-COMPANY-WO-011 | #12 | NECESSARY | Company Blueprint | APPROVED / MERGED |
 | NXL-COMPANY-WO-012 | #13 | NECESSARY | Company Blueprint | APPROVED / MERGED |
-| NXL-COMPANY-WO-013 | #14 | NECESSARY | Company Blueprint | ADMITTED / IN_PROGRESS |
+| NXL-COMPANY-WO-013 | #14 | NECESSARY | Company Blueprint | APPROVED / MERGED |
 | NXL-COMPANY-WO-014 | #15 | IMPORTANT | Public Presence | PLANNED / NOT_ADMITTED |
 | NXL-COMPANY-WO-015 | #16 | IMPORTANT | Investor Readiness | PLANNED / NOT_ADMITTED |
 | NXL-COMPANY-WO-016 | #17 | NECESSARY | Company OS Design | PLANNED / NOT_ADMITTED |

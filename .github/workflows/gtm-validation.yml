@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-013 GTM model
+      - name: Validate canonical GTM model
         shell: bash
         run: |
           set -euo pipefail
@@ -38,22 +38,9 @@ jobs:
             'company/CUSTOMER-SUCCESS-RETENTION-EXPANSION.md',
             'company/COMMERCIAL-METRICS-AND-ATTRIBUTION.md',
             'company/GTM-EXPERIMENTATION-LOOP.md',
-            'company/COMMERCIAL-CLAIMS-AND-TRUST-POLICY.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-013.json'
+            'company/COMMERCIAL-CLAIMS-AND-TRUST-POLICY.md'
           ];
           for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-013 output: '+p);
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-013') throw new Error('WO-013 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-013.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-013') throw new Error('WO-013 Context Lock mismatch');
-
-          for(let n=14;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
-          }
 
           const gtm=fs.readFileSync('company/GO-TO-MARKET-OPERATING-MODEL.md','utf8');
           const icp=fs.readFileSync('company/ICP-AND-SEGMENTATION.md','utf8');
@@ -102,5 +89,11 @@ jobs:
           }
           if(!cs.includes('Product Factory') || !exp.includes('Product Factory')) throw new Error('Commercial feedback loop to Product Factory missing');
 
-          console.log('WO-013 GTM Model validation passed.');
+          const wo13=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-013.md','utf8');
+          if(!wo13.includes('Status:** `APPROVED / MERGED`') &&
+             !wo13.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-013 GTM authority is not in an accepted lifecycle state');
+          }
+
+          console.log('Canonical NexLabs GTM Model validation passed.');
           NODE
