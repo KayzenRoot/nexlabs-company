@@ -1,45 +1,80 @@
 # NXL-COMPANY-WO-017 — Local Docker Infrastructure & Runtime Architecture
 
 **Issue:** #18  
-**Status:** `PLANNED / NOT_ADMITTED`  
+**Status:** `ADMITTED / IN_PROGRESS`  
 **Classification:** `NECESSARY`  
-**Dependencies:** WO-016 APPROVED
+**Risk:** `ELEVATED / LOCAL_RUNTIME_INFRASTRUCTURE`  
+**Base:** `7625ca43d79c9ec92d309d9b59b198bee04e3897`  
+**Branch:** `infra/NXL-COMPANY-WO-017-local-docker-runtime`  
+**Context Lock:** `.engineering/context-locks/NXL-COMPANY-WO-017.json`
 
 ## OBJECTIVE
-Design the local-first Docker environment used to build and test the company before VPS/cloud.
-
-## CONTEXT
-This Work Order is part of the NexLabs Company v0.1 roadmap created by WO-002. It has no execution authority until explicitly admitted after all listed dependencies are approved and the current canonical checkpoint is rehydrated.
+Design and materialize the local-first Docker infrastructure used to build/test NexLabs Company OS before staging/VPS/cloud, preserving WO-016 architecture.
 
 ## SCOPE
-At admission, refine this planned objective into the smallest sufficient increment required by the canonical Scope and Definition of Done.
+- Docker Compose topology for local infrastructure.
+- PostgreSQL canonical persistence.
+- Optional Redis acceleration profile.
+- Persistent local artifact/evidence storage.
+- Private/internal networks and bounded host exposure.
+- Environment/secrets contract with ignored local secret files.
+- Health checks and dependency readiness.
+- OpenTelemetry/Prometheus/Grafana observability profile.
+- PostgreSQL and artifact backup/restore scripts.
+- Developer bootstrap/verify/runbook.
+- CI validation using `docker compose config` plus structural assertions.
 
 ## OUT OF SCOPE
-Implementation or decisions not necessary to this Work Order; unrelated cleanup; bypassing predecessor gates; execution while this file remains NOT_ADMITTED.
+Company OS application code; AgentRuntime/Hermes implementation; schema migrations; founder dashboard; VPS/production deployment; real secrets; Docker-socket access; WO-018+.
 
-## FILES/SOURCES TO READ
-At admission: current Checkpoint; Decisions Ledger/ADRs; Scope; DoD; Architecture; Requirements; applicable prior approved artifacts; this issue; exact Git/provider state.
+## RUNTIME DECISIONS TO FREEZE
+- Compose Specification is the local orchestration contract.
+- PostgreSQL is always-on canonical local state.
+- Redis is optional/profile-gated and never canonical.
+- Local artifact/evidence storage is filesystem-backed behind a portable artifact-store contract.
+- Observability is optional/profile-gated and cannot become a domain dependency.
+- Only intentional host ports are published and data-service developer ports bind to loopback.
+- App/worker containers are not fabricated before their runtime exists.
+- Real credentials are never committed.
+- Infrastructure readiness uses health checks.
+- Backups are explicit/timestamped/outside container writable layers.
+- Restore requires an explicit input.
+- Ordinary agents receive no Docker socket.
+- Named volumes hold canonical DB state.
+- Images use governed version families, never floating `latest`.
 
-## REQUIREMENTS
-Trace every admitted deliverable to canonical requirements. Unknown or conflicting authority must block execution rather than be guessed.
-
-## ARCHITECTURE RULES
-Preserve founder authority, provider independence, auditability, fail-closed high-risk behavior, local-first portability and GEF governance.
-
-## CONSTRAINTS
-Exact base SHA, active branch, Context Lock, allowed files, acceptance criteria and tests are intentionally compiled only at admission time.
+## ALLOWED OUTPUTS
+`infra/docker/**`, `company-os/LOCAL-DOCKER-RUNTIME.md`, `company-os/SECRETS-AND-CONFIGURATION.md`, `company-os/BACKUP-RESTORE-LOCAL.md`, `company-os/HEALTH-AND-READINESS.md`, `company-os/LOCAL-OBSERVABILITY.md`, `company-os/DEVELOPER-RUNBOOK.md`, `.gitignore`, required GEF governance/checkpoint files and `.github/workflows/local-docker-runtime-validation.yml`.
 
 ## ACCEPTANCE CRITERIA
-To be frozen at admission from the then-current canonical sources. Must include objective evidence, source consistency, no unresolved HIGH/CRITICAL finding and a proposed Checkpoint Delta.
+1. Base Compose parses without real secrets.
+2. PostgreSQL has named persistence and health check.
+3. Redis is optional/profile-gated/non-canonical.
+4. Artifact/evidence storage persists outside ephemeral containers.
+5. No Docker socket mount.
+6. No real secret committed; runtime/secret/backup paths ignored.
+7. Network design separates internal data plane from host access.
+8. Optional observability profile defines OTEL Collector, Prometheus and Grafana.
+9. Telemetry contract excludes raw secrets.
+10. Backup scripts fail closed and create explicit timestamped outputs.
+11. Restore scripts require explicit input.
+12. Runbook covers bootstrap/start/profiles/verify/backup/restore/shutdown/reset warnings.
+13. CI validates Compose syntax and structural security/persistence rules.
+14. WO-018..WO-022 remain NOT_ADMITTED.
+15. All prior persistent validators plus Local Docker Runtime validator pass on exact head.
+16. No unresolved HIGH/CRITICAL finding.
 
 ## TESTS
-Risk-appropriate tests/evidence are compiled at admission. Documentation work requires structural/consistency validation; software work follows the risk matrix in TEST-BENCHMARK-PLAN.md.
-
-## DELIVERABLES
-Docker topology; networks; volumes; persistence candidates; observability; secrets; backup; health checks; developer runbook.
-
-## REVIEW FORMAT
-Brazilian Portuguese. Report exact base/head, scope, evidence, findings by severity, risks, verdict and proposed Checkpoint Delta.
+- `docker compose --env-file infra/docker/.env.example -f infra/docker/compose.yml config`
+- merged observability config validation
+- no Docker socket
+- PostgreSQL named volume + healthcheck
+- Redis optional profile
+- loopback-only data-service host ports
+- ignored secret/runtime/backup paths
+- shell syntax checks
+- deterministic structural validation workflow
+- all persistent repository validators
 
 ## STOP CONDITION
-Do not execute while status is `PLANNED / NOT_ADMITTED`. At future execution, stop at exact-head audit; do not advance to a successor while correction/block remains.
+Stop at exact-head audit for WO-017. Do not admit or execute WO-018 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
