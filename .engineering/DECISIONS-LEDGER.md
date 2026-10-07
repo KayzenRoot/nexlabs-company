@@ -606,3 +606,48 @@
 ## D-0148 — Audit/evidence is distinct from operational telemetry
 **Status:** APPROVED IN WO-016  
 **Decision:** Logs/traces/metrics support operations; append-only audit/evidence supports governance. Operational log retention/format cannot be treated as the sole record of consequential actions.
+
+
+## D-0149 — Docker Compose is the local orchestration contract
+**Status:** APPROVED IN WO-017  
+**Decision:** NexLabs Company OS local infrastructure is described through Compose Specification files under `infra/docker/`, with deterministic project/network/volume naming.
+
+## D-0150 — PostgreSQL is always-on; Redis is optional and ephemeral
+**Status:** APPROVED IN WO-017  
+**Decision:** Local PostgreSQL uses a named persistent volume and health check. Redis is profile-gated, uses ephemeral tmpfs/no persistence and cannot hold sole canonical state.
+
+## D-0151 — Do not fabricate application containers before implementation
+**Status:** APPROVED IN WO-017  
+**Decision:** WO-017 provisions infrastructure only. `company-os-app` and worker/runtime containers are added only when real executable code exists in successor Work Orders.
+
+## D-0152 — Local artifact storage starts as a portable filesystem adapter
+**Status:** APPROVED IN WO-017  
+**Decision:** Local evidence/artifacts use a named Docker volume behind the artifact-store contract. Production may replace this with object/S3-compatible storage without changing domain semantics.
+
+## D-0153 — Local secrets remain outside Git
+**Status:** APPROVED IN WO-017  
+**Decision:** Committed configuration contains no real credentials. Local secrets live under ignored paths and are mounted through Compose secret files/handles.
+
+## D-0154 — Observability is an optional profile, not a domain dependency
+**Status:** APPROVED IN WO-017  
+**Decision:** OpenTelemetry Collector, Prometheus and Grafana form the local observability profile. Their failure does not become loss of canonical Company OS state.
+
+## D-0155 — Local restore is explicit and deliberately destructive
+**Status:** APPROVED IN WO-017  
+**Decision:** Backup outputs are timestamped and outside container writable layers. Restore requires an explicit source path plus a destructive-confirmation value; implicit "restore latest" behavior is prohibited.
+
+## D-0156 — Windows PowerShell is a first-class local operations path
+**Status:** APPROVED IN WO-017  
+**Decision:** Bootstrap, verification, PostgreSQL backup/restore and artifact backup/restore have PowerShell paths for the Founder workstation, with Bash equivalents retained for portable environments.
+
+## D-0157 — Data services are not host-published by default
+**Status:** APPROVED IN WO-017  
+**Decision:** PostgreSQL and Redis remain on internal Docker networking by default. Optional observability UI ports bind to loopback only.
+
+## D-0158 — No ordinary service receives Docker host authority
+**Status:** APPROVED IN WO-017  
+**Decision:** Local Compose mounts no Docker socket. Future host/container mutations use bounded executor/broker contracts.
+
+## D-0159 — Runtime images never use floating latest
+**Status:** APPROVED IN WO-017  
+**Decision:** Local runtime image families are explicitly versioned and upgraded through governed maintenance rather than floating `latest` tags.

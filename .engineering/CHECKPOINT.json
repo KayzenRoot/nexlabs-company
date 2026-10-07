@@ -14,7 +14,7 @@
   "activeStatus": "ADMITTED_IN_PROGRESS",
   "knownCritical": 0,
   "knownHigh": 0,
-  "nextLegalAction": "EXECUTE_WO_017_LOCAL_DOCKER_RUNTIME",
+  "nextLegalAction": "VALIDATE_WO_017_LOCAL_DOCKER_RUNTIME_AND_OPEN_PR",
   "stopState": "NO_WO_018_OR_LATER_EXECUTION_BEFORE_WO_017_APPROVAL_MERGE_AND_CHECKPOINT_PROMOTION",
   "repositoryDisclosure": "PUBLIC_SAFE_ONLY",
   "companyOsArchitectureAuthority": "company-os/ARCHITECTURE.md"

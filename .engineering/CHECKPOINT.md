@@ -17,7 +17,7 @@
 - Repository disclosure risk: `PUBLIC — public-safe information only`
 
 ## Next legal action
-`EXECUTE_WO_017_LOCAL_DOCKER_RUNTIME`
+`VALIDATE_WO_017_LOCAL_DOCKER_RUNTIME_AND_OPEN_PR`
 
 ## Stop state
 Do not admit or execute WO-018 or any later Work Order until WO-017 is exact-head audited, merged and checkpoint-promoted.

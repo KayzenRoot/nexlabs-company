@@ -1,0 +1,132 @@
+name: Validate NexLabs Local Docker Runtime
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  local-docker-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare CI-only local secret fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p infra/docker/secrets/local
+          printf '%s\n' 'ci-postgres-fixture-not-a-production-secret' > infra/docker/secrets/local/postgres_password.txt
+          printf '%s\n' 'ci-grafana-fixture-not-a-production-secret' > infra/docker/secrets/local/grafana_admin_password.txt
+          cp infra/docker/.env.example infra/docker/.env
+
+      - name: Validate Compose contracts
+        working-directory: infra/docker
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker compose --env-file .env -f compose.yml config --quiet
+          docker compose --env-file .env -f compose.yml --profile cache config --quiet
+          docker compose --env-file .env -f compose.yml -f compose.observability.yml --profile observability config --quiet
+
+      - name: Validate runtime structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const req=[
+            'infra/docker/compose.yml',
+            'infra/docker/compose.observability.yml',
+            'infra/docker/.env.example',
+            'infra/docker/config/otel-collector.yaml',
+            'infra/docker/config/prometheus.yml',
+            'infra/docker/config/grafana/provisioning/datasources/datasources.yml',
+            'company-os/LOCAL-DOCKER-RUNTIME.md',
+            'company-os/SECRETS-AND-CONFIGURATION.md',
+            'company-os/BACKUP-RESTORE-LOCAL.md',
+            'company-os/HEALTH-AND-READINESS.md',
+            'company-os/LOCAL-OBSERVABILITY.md',
+            'company-os/DEVELOPER-RUNBOOK.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-017.json'
+          ];
+          for(const p of req) if(!fs.existsSync(p)) throw new Error('Missing WO-017 output: '+p);
+
+          const base=fs.readFileSync('infra/docker/compose.yml','utf8');
+          const obs=fs.readFileSync('infra/docker/compose.observability.yml','utf8');
+          const env=fs.readFileSync('infra/docker/.env.example','utf8');
+          const ignore=fs.readFileSync('.gitignore','utf8');
+          const restorePg=fs.readFileSync('infra/docker/scripts/restore-postgres.sh','utf8');
+          const restoreArtifacts=fs.readFileSync('infra/docker/scripts/restore-artifacts.sh','utf8');
+
+          if(base.includes('/var/run/docker.sock') || obs.includes('/var/run/docker.sock')) throw new Error('Docker socket mount prohibited');
+          if(/image:\s*[^\n]*:latest\b/.test(base+obs)) throw new Error('Floating latest image prohibited');
+          if(!base.includes('postgres_data:/var/lib/postgresql/data')) throw new Error('Postgres named volume missing');
+          if(!base.includes('pg_isready')) throw new Error('Postgres healthcheck missing');
+          if(!base.includes('profiles: ["cache"]')) throw new Error('Redis must be profile-gated');
+          if(!base.includes('tmpfs:') || !base.includes('/data')) throw new Error('Redis ephemeral tmpfs missing');
+          if(!base.includes('internal: true')) throw new Error('Internal network missing');
+          if(!base.includes('artifacts:')) throw new Error('Artifact persistent volume missing');
+          if(/postgres:[\s\S]{0,1000}ports:/.test(base)) throw new Error('Postgres host port should not be published');
+          if(/redis:[\s\S]{0,700}ports:/.test(base)) throw new Error('Redis host port should not be published');
+
+          for(const svc of ['otel-collector','prometheus','grafana']) if(!obs.includes(svc+':')) throw new Error('Observability service missing: '+svc);
+          if(!obs.includes('127.0.0.1:')) throw new Error('Observability host ports must bind loopback');
+          if(!obs.includes('GF_SECURITY_ADMIN_PASSWORD__FILE')) throw new Error('Grafana password secret-file contract missing');
+
+          if(/PASSWORD\s*=\s*[^\s#]+/i.test(env)) throw new Error('Committed env must not contain password values');
+          for(const p of ['infra/docker/.env','infra/docker/secrets/local/','infra/docker/runtime/*']) if(!ignore.includes(p)) throw new Error('Missing gitignore boundary: '+p);
+
+          const marker='I_UNDERSTAND_THIS_IS_DESTRUCTIVE';
+          if(!restorePg.includes(marker) || !restoreArtifacts.includes(marker)) throw new Error('Restore destructive confirmation missing');
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-017') throw new Error('WO-017 must be active');
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-017.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-017') throw new Error('WO-017 Context Lock mismatch');
+
+          for(let n=18;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          console.log('WO-017 Local Docker Runtime structural validation passed.');
+          NODE
+
+      - name: Validate shell script syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in infra/docker/scripts/*.sh; do sh -n "$f"; done
+
+      - name: Validate PowerShell script syntax
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem infra/docker/scripts/*.ps1 | ForEach-Object {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) {
+              $errors | ForEach-Object { Write-Error $_.Message }
+              throw "PowerShell parse errors in $($_.FullName)"
+            }
+          }
+
+      - name: Validate ignored local state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git check-ignore infra/docker/.env
+          git check-ignore infra/docker/secrets/local/example.secret
+          git check-ignore infra/docker/runtime/backups/example.dump
