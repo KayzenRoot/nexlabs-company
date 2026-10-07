@@ -431,3 +431,56 @@
 ## D-0105 — Founder retains authority over strategically material commercial commitments
 **Status:** APPROVED IN WO-013  
 **Decision:** Founder/CEO retains final authority over company positioning, major channel spend, strategic partnerships, major enterprise commitments and material regulated/high-risk GTM.
+
+
+## D-0106 — Corporate name and visual wordmark are distinct layers
+**Status:** APPROVED IN WO-014  
+**Decision:** The canonical company name is `NexLabs Technology`. `NEX LABS` and `NEX LABS / TECHNOLOGY` are approved visual lockups; their spacing does not create a second company identity.
+
+## D-0107 — Precision Blades N is the selected corporate identity direction
+**Status:** APPROVED IN WO-014  
+**Decision:** `NEX-N-A-PRECISION-BLADES` is the selected symbol direction. The flat/vector silhouette is the identity source of truth; chrome/glass/light are presentation layers. Replacing it with a generic N requires a new Founder-approved brand decision.
+
+## D-0108 — Brand material roles are frozen; exact production tokens may evolve
+**Status:** APPROVED IN WO-014  
+**Decision:** Near-black/graphite, cold white, blue-gray, ice cyan/electric blue, restrained violet and silver/chrome are canonical visual roles. Exact implementation token values may be refined in the website design system without redefining brand identity.
+
+## D-0109 — NexLabs digital surfaces should feel alive, not game-like
+**Status:** APPROVED IN WO-014  
+**Decision:** Motion uses restrained circulation, energy, parallax, light and depth to create a living technological organism. Continuous spins, aggressive camera travel, glitch/noise overload and gaming-HUD behavior are rejected.
+
+## D-0110 — Accessibility and semantic usability outrank decorative fidelity
+**Status:** APPROVED IN WO-014  
+**Decision:** Critical navigation/content cannot depend on WebGL, canvas, animation or hover. Reduced-motion/static fallbacks must preserve brand meaning. When tradeoffs are unavoidable, semantic usability/accessibility/content truth/performance outrank decorative detail.
+
+## D-0111 — Public website IA distinguishes implemented core from future expansion
+**Status:** APPROVED IN WO-014  
+**Decision:** Current V1 core routes are Home, Solutions, Technology, Research, Company and Contact. Portfolio and other expansion routes become public only when implementation/content evidence exists; planned routes are never presented as implemented.
+
+## D-0112 — Portfolio records carry explicit public status and disclosure class
+**Status:** APPROVED IN WO-014  
+**Decision:** Public portfolio entries declare product/project status, origin type, proof refs, metric state and disclosure class. Internal work cannot masquerade as client work, and absent demos/repos remain absent rather than replaced by fake links.
+
+## D-0113 — Public case studies must declare what kind of work they represent
+**Status:** APPROVED IN WO-014  
+**Decision:** Every public case study identifies whether it is internal product, internal platform, research, open source, client or partnership work. Client/partnership status requires real evidence and permission.
+
+## D-0114 — Implication counts as a public claim
+**Status:** APPROVED IN WO-014  
+**Decision:** Logo walls, fake dashboards, “trusted by” sections, stock-office maps, quotes and decorative metrics may create false factual implication even without an explicit sentence. Public-proof policy applies to implication as well as text.
+
+## D-0115 — Public assets require provenance and disclosure review
+**Status:** APPROVED IN WO-014  
+**Decision:** Logos, screenshots, 3D/media, fonts and generated assets retain provenance/license/confidentiality review. Screenshots are checked for secrets/personal/customer data, and customer/partner marks require a real relationship plus permitted use.
+
+## D-0116 — Company authority and website implementation authority remain separate
+**Status:** APPROVED IN WO-014  
+**Decision:** `nexlabs-company` governs corporate identity, facts, portfolio/public-proof and IA intent; `nexlabs-website` governs implementation code, concrete tokens, 3D assets, responsive execution and deployment. Neither silently rewrites the other's domain.
+
+## D-0117 — Existing owner-approved website identity is implementation evidence
+**Status:** APPROVED IN WO-014  
+**Decision:** `KayzenRoot/nexlabs-website@e14cfbe4660b076db85e7e529befffe17a098cd1` is the pinned implementation evidence used by WO-014 for Precision Blades N, approved material language, Home visual master and living-organism behavior.
+
+## D-0118 — A small truthful portfolio is preferable to a large fictional one
+**Status:** APPROVED IN WO-014  
+**Decision:** NexLabs does not populate public portfolio/case-study surfaces with placeholders or inflated status merely to appear larger. Publication waits for evidence-backed entries.

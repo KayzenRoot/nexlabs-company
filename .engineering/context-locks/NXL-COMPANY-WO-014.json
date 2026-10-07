@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-014",
+  "issue": 15,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "planning/NXL-COMPANY-WO-014-brand-website-portfolio",
+  "baseSha": "0ab7771edcb043f8277a728fbbfb118d52a366c9",
+  "compiledDate": "2026-10-07",
+  "authorityModel": "GEF_1_1_2",
+  "externalImplementationEvidence": {
+    "repository": "KayzenRoot/nexlabs-website",
+    "commit": "e14cfbe4660b076db85e7e529befffe17a098cd1",
+    "files": {
+      ".engineering/BRAND-SYSTEM.md": "blob:4bf2f02468f8e92b6d6d97c35c1ff6185f9f5b8d",
+      ".engineering/UI-UX.md": "blob:59eadddca0ac907cc8c03a37d1bf250e13916dbb",
+      ".engineering/VISUAL-DIRECTION.md": "blob:a860d2ee3f11232036434ccdd1168711f1b65e54",
+      ".engineering/HOME-VISUAL-MASTER-SPEC.md": "blob:b8f161e0880ab2707cbe6c0be8604d90d9924df0",
+      ".engineering/SECONDARY-PAGES-SPEC.md": "blob:43a86ff730954a5ef169244d4fb6f19239220e8e"
+    }
+  },
+  "criticalSourceFingerprints": {
+    ".engineering/CHECKPOINT.json": "blob:3fdf422132d30f98f061d707ee5f37c28711f69f",
+    ".engineering/DECISIONS-LEDGER.md": "blob:93a69dee48bc0ddb65ce9022d78285858d5cbde0",
+    ".engineering/REQUIREMENTS.md": "blob:2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/DEFINITION-OF-DONE.md": "blob:a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/work-orders/NXL-COMPANY-WO-014.md": "blob:7e84614b4bab59e354f90952094f1f26b43dfa61",
+    "company/COMPANY-MASTER.md": "blob:51b7de15a3e6aaa9812d0040db5e4cc9da578955",
+    "company/GO-TO-MARKET-OPERATING-MODEL.md": "blob:8322a0b716454c10fd0b49711ed32b75a0665975",
+    "company/POSITIONING-AND-VALUE-PROPOSITION.md": "blob:757e4a6610f4315f76af941aadd73a7f6d2f6a24",
+    "company/COMMERCIAL-CLAIMS-AND-TRUST-POLICY.md": "blob:f9b2875950a8a645f9448f8e1bc9201442ad3aa2",
+    "company/PRODUCT-PORTFOLIO-STRATEGY.md": "blob:2e637cd591c524c3b4900cd0c4d1f77d226b509c",
+    "company/PRODUCT-FACTORY.md": "blob:4a1d8965bed1278c9d111878b958e19074351039",
+    "company/IP-OWNERSHIP-AND-PROVENANCE.md": "blob:260f2a294e85d17eda9c6d0e43f6b4285e8c792a",
+    "company/SECURITY-ARCHITECTURE.md": "blob:a46e90261c98de0b85695527ccaec93eae1a67f2",
+    "company/DATA-GOVERNANCE-AND-PRIVACY.md": "blob:4c19364b854c95d4a9ae8863711d3c7ffbe4921f"
+  },
+  "admittedOutputs": [
+    "company/BRAND-SYSTEM.md",
+    "company/NAME-AND-MARK-USAGE.md",
+    "company/VISUAL-LANGUAGE.md",
+    "company/MOTION-AND-LIVING-SYSTEM.md",
+    "company/BRAND-VOICE-AND-PUBLIC-COPY.md",
+    "company/INSTITUTIONAL-WEBSITE-IA.md",
+    "company/PUBLIC-WEBSITE-CONTENT-CONTRACT.md",
+    "company/PUBLIC-PORTFOLIO-SCHEMA.md",
+    "company/CASE-STUDY-STANDARD.md",
+    "company/PUBLIC-PROOF-AND-DISCLOSURE-POLICY.md",
+    "company/PUBLIC-ASSET-GOVERNANCE.md",
+    "company/ACCESSIBILITY-PERFORMANCE-BRAND-GUARDRAILS.md",
+    "company/BRAND-WEBSITE-IMPLEMENTATION-HANDOFF.md",
+    ".engineering/SOURCE-HIERARCHY.md",
+    ".engineering/DECISIONS-LEDGER.md",
+    ".engineering/CHECKPOINT.md",
+    ".engineering/CHECKPOINT.json",
+    ".engineering/WORK-ORDER-REGISTRY.md",
+    ".engineering/BACKLOG.md",
+    ".engineering/work-orders/NXL-COMPANY-WO-014.md",
+    ".engineering/context-locks/NXL-COMPANY-WO-014.json",
+    ".github/workflows/brand-public-presence-validation.yml"
+  ],
+  "refreshTriggers": [
+    "main changes before WO-014 implementation audit",
+    "company strategy/GTM/portfolio/public-proof authority changes",
+    "owner-approved visual identity changes in website repository",
+    "GEF baseline changes"
+  ],
+  "state": "LOCKED_FOR_WO_014"
+}

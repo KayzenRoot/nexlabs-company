@@ -22,10 +22,11 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 15 | Security | `company/SECURITY-ARCHITECTURE.md` plus supporting security/privacy/Web3/financial controls; `.engineering/SECURITY.md` is the engineering baseline |
 | 16 | Finance | `company/FINANCE-OPERATING-MODEL.md` plus supporting budget/economics/funding documents |
 | 17 | GTM / Commercial | `company/GO-TO-MARKET-OPERATING-MODEL.md` plus supporting sales/marketing/customer-success documents |
-| 18 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 19 | Deployment | `DEPLOYMENT.md` |
-| 20 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 21 | Conversation | transient context only |
+| 18 | Brand / Public presence | `company/BRAND-SYSTEM.md` plus supporting website/portfolio/public-proof documents |
+| 19 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 20 | Deployment | `DEPLOYMENT.md` |
+| 21 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 22 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -224,3 +225,24 @@ Supporting canonical commercial sources:
 - `company/COMMERCIAL-CLAIMS-AND-TRUST-POLICY.md`
 
 Commercial strategy may refine product-specific channel/message execution but may not invent product capability, traction, customer proof or regulatory status.
+
+
+## Brand / public-presence authority
+
+`company/BRAND-SYSTEM.md` is the primary authority for NexLabs corporate brand identity and public visual principles.
+
+Supporting canonical public-presence sources:
+- `company/NAME-AND-MARK-USAGE.md`
+- `company/VISUAL-LANGUAGE.md`
+- `company/MOTION-AND-LIVING-SYSTEM.md`
+- `company/BRAND-VOICE-AND-PUBLIC-COPY.md`
+- `company/INSTITUTIONAL-WEBSITE-IA.md`
+- `company/PUBLIC-WEBSITE-CONTENT-CONTRACT.md`
+- `company/PUBLIC-PORTFOLIO-SCHEMA.md`
+- `company/CASE-STUDY-STANDARD.md`
+- `company/PUBLIC-PROOF-AND-DISCLOSURE-POLICY.md`
+- `company/PUBLIC-ASSET-GOVERNANCE.md`
+- `company/ACCESSIBILITY-PERFORMANCE-BRAND-GUARDRAILS.md`
+- `company/BRAND-WEBSITE-IMPLEMENTATION-HANDOFF.md`
+
+The company repository governs corporate truth and brand rules. The website repository governs implementation technique and visual execution, provided it does not contradict canonical company identity or public-proof rules.
