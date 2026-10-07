@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-014 — Brand System, Institutional Website & Public Portfolio
 
 **Issue:** #15  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `IMPORTANT`  
 **Risk:** `STANDARD / PUBLIC_IDENTITY_GOVERNANCE`  
 **Base:** `0ab7771edcb043f8277a728fbbfb118d52a366c9`  
@@ -178,3 +178,15 @@ Brazilian Portuguese: exact base/head, naming/identity fidelity, visual system, 
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-014. Do not admit or execute WO-015 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `21d3e66ce07c3897d24f0d2192314fcff02d6a1f`
+- All fourteen required validations: `SUCCESS`
+- Brand/Public Presence merge SHA: `0f87e25d72694a8a81ff9a4cf143b7003c523936`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Pinned website implementation evidence: `KayzenRoot/nexlabs-website@e14cfbe4660b076db85e7e529befffe17a098cd1`
+- Identity lock: `NexLabs Technology` corporate name; `NEX LABS` / `NEX LABS / TECHNOLOGY` approved wordmark treatments; `NEX-N-A-PRECISION-BLADES` selected symbol direction.
+- Successor execution authority: `NONE`; WO-015 remains NOT_ADMITTED until separately compiled and locked.
