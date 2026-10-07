@@ -1,0 +1,106 @@
+name: Validate NexLabs GTM Model
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gtm-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-013 GTM model
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const required=[
+            'company/GO-TO-MARKET-OPERATING-MODEL.md',
+            'company/ICP-AND-SEGMENTATION.md',
+            'company/POSITIONING-AND-VALUE-PROPOSITION.md',
+            'company/CHANNEL-STRATEGY.md',
+            'company/CONTENT-SEO-AND-DEMAND-GENERATION.md',
+            'company/LIFECYCLE-MARKETING.md',
+            'company/SALES-PIPELINE-AND-QUALIFICATION.md',
+            'company/CRM-OPERATING-MODEL.md',
+            'company/ONBOARDING-AND-ACTIVATION.md',
+            'company/CUSTOMER-SUCCESS-RETENTION-EXPANSION.md',
+            'company/COMMERCIAL-METRICS-AND-ATTRIBUTION.md',
+            'company/GTM-EXPERIMENTATION-LOOP.md',
+            'company/COMMERCIAL-CLAIMS-AND-TRUST-POLICY.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-013.json'
+          ];
+          for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-013 output: '+p);
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-013') throw new Error('WO-013 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-013.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-013') throw new Error('WO-013 Context Lock mismatch');
+
+          for(let n=14;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const gtm=fs.readFileSync('company/GO-TO-MARKET-OPERATING-MODEL.md','utf8');
+          const icp=fs.readFileSync('company/ICP-AND-SEGMENTATION.md','utf8');
+          const pos=fs.readFileSync('company/POSITIONING-AND-VALUE-PROPOSITION.md','utf8');
+          const channel=fs.readFileSync('company/CHANNEL-STRATEGY.md','utf8');
+          const content=fs.readFileSync('company/CONTENT-SEO-AND-DEMAND-GENERATION.md','utf8');
+          const lifecycle=fs.readFileSync('company/LIFECYCLE-MARKETING.md','utf8');
+          const sales=fs.readFileSync('company/SALES-PIPELINE-AND-QUALIFICATION.md','utf8');
+          const crm=fs.readFileSync('company/CRM-OPERATING-MODEL.md','utf8');
+          const onboard=fs.readFileSync('company/ONBOARDING-AND-ACTIVATION.md','utf8');
+          const cs=fs.readFileSync('company/CUSTOMER-SUCCESS-RETENTION-EXPANSION.md','utf8');
+          const metrics=fs.readFileSync('company/COMMERCIAL-METRICS-AND-ATTRIBUTION.md','utf8');
+          const exp=fs.readFileSync('company/GTM-EXPERIMENTATION-LOOP.md','utf8');
+          const trust=fs.readFileSync('company/COMMERCIAL-CLAIMS-AND-TRUST-POLICY.md','utf8');
+
+          for(const marker of ['APPROVED PRODUCT CASE','ICP','POSITIONING','QUALIFICATION','ACTIVATION','RETENTION','EXPANSION']){
+            if(!gtm.includes(marker)) throw new Error('GTM lifecycle missing: '+marker);
+          }
+          for(const field of ['problem','willingness_to_pay_evidence','disqualifiers','evidence_refs','confidence']){
+            if(!icp.includes(field)) throw new Error('ICP field missing: '+field);
+          }
+          for(const marker of ['unsupported ROI','customer logos','security/compliance']){
+            if(!pos.toLowerCase().includes(marker.toLowerCase())) throw new Error('Positioning truth guardrail missing: '+marker);
+          }
+          for(const marker of ['hypothesis','budget/cap','downstream success metric','stop condition']){
+            if(!channel.toLowerCase().includes(marker.toLowerCase())) throw new Error('Channel experiment element missing: '+marker);
+          }
+          if(!content.toLowerCase().includes('keyword stuffing') || !content.toLowerCase().includes('user/customer problems')) throw new Error('SEO/content quality policy incomplete');
+          if(!lifecycle.toLowerCase().includes('consent') || !lifecycle.toLowerCase().includes('fake urgency')) throw new Error('Lifecycle privacy/trust policy incomplete');
+          for(const stage of ['NEW','CONTACTED','DISCOVERY','QUALIFIED','SOLUTION_FIT','PROPOSAL/TRIAL','WON / LOST']){
+            if(!sales.includes(stage)) throw new Error('Sales stage missing: '+stage);
+          }
+          for(const marker of ['Contact','Account','Opportunity','Activity','Consent / preference','source']){
+            if(!crm.includes(marker)) throw new Error('CRM model missing: '+marker);
+          }
+          if(!onboard.includes('Activation') || !onboard.includes('Time-to-value')) throw new Error('Activation/time-to-value missing');
+          for(const marker of ['HEALTHY','AT_RISK','CHURNED','Retention','Expansion']){
+            if(!cs.includes(marker)) throw new Error('Customer Success model missing: '+marker);
+          }
+          if(!metrics.includes('Attribution is an estimation system') || !metrics.includes('CAC') || !metrics.includes('NRR') || !metrics.includes('GRR')) throw new Error('Commercial metrics/attribution incomplete');
+          for(const marker of ['HYPOTHESIS','CAP','MEASURE','DECIDE','stop condition']){
+            if(!exp.toLowerCase().includes(marker.toLowerCase())) throw new Error('GTM experimentation loop missing: '+marker);
+          }
+          for(const marker of ['customer logos','testimonials','revenue/traction','ROI','scarcity']){
+            if(!trust.toLowerCase().includes(marker.toLowerCase())) throw new Error('Commercial trust prohibition missing: '+marker);
+          }
+          if(!cs.includes('Product Factory') || !exp.includes('Product Factory')) throw new Error('Commercial feedback loop to Product Factory missing');
+
+          console.log('WO-013 GTM Model validation passed.');
+          NODE
