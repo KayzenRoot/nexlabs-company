@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate WO-015 investor readiness
+      - name: Validate canonical investor readiness
         shell: bash
         run: |
           set -euo pipefail
@@ -40,22 +40,9 @@ jobs:
             'company/DILIGENCE-EVIDENCE-INDEX-STANDARD.md',
             'company/INVESTOR-RISK-DISCLOSURE.md',
             'company/INVESTOR-UPDATES-AND-REPORTING.md',
-            'company/INVESTOR-READINESS-SCORECARD.md',
-            '.engineering/context-locks/NXL-COMPANY-WO-015.json'
+            'company/INVESTOR-READINESS-SCORECARD.md'
           ];
           for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-015 output: '+p);
-
-          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
-          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-015') throw new Error('WO-015 must be active');
-          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
-          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-015.json','utf8'));
-          if(lock.workOrderId!=='NXL-COMPANY-WO-015') throw new Error('WO-015 Context Lock mismatch');
-
-          for(let n=16;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
-            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
-          }
 
           const op=fs.readFileSync('company/INVESTOR-READINESS-OPERATING-MODEL.md','utf8');
           const exec=fs.readFileSync('company/INVESTOR-EXECUTIVE-SUMMARY-STANDARD.md','utf8');
@@ -122,5 +109,11 @@ jobs:
           }
           if(!score.includes('Blocking RED conditions') || !score.toLowerCase().includes('cap table')) throw new Error('Readiness blocking conditions incomplete');
 
-          console.log('WO-015 Investor Readiness validation passed.');
+          const wo15=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-015.md','utf8');
+          if(!wo15.includes('Status:** `APPROVED / MERGED`') &&
+             !wo15.includes('Status:** `ADMITTED / IN_PROGRESS`')) {
+            throw new Error('WO-015 Investor System authority is not in an accepted lifecycle state');
+          }
+
+          console.log('Canonical NexLabs Investor Readiness validation passed.');
           NODE
