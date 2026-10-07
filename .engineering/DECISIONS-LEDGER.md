@@ -541,3 +541,68 @@
 ## D-0132 — Founder retains fundraising and disclosure authority
 **Status:** APPROVED IN WO-015  
 **Decision:** AI agents may prepare/model/check investor packages, but Founder/CEO controls fundraising timing, investor selection, ask posture, material disclosure, negotiation and binding financing decisions.
+
+
+## D-0133 — Company OS v0.1 starts as a modular monolith
+**Status:** APPROVED IN WO-016  
+**Decision:** Company OS begins as a modular monolith with explicit bounded contexts/interfaces. Microservices are extracted only when scaling, security, availability or isolation evidence justifies their distributed-system cost.
+
+## D-0134 — PostgreSQL is canonical transactional truth
+**Status:** APPROVED IN WO-016  
+**Decision:** Company OS relational state, Work Orders, approvals, decisions, audit metadata and transactional outbox use PostgreSQL as canonical source of truth.
+
+## D-0135 — Redis/cache/queues are non-authoritative
+**Status:** APPROVED IN WO-016  
+**Decision:** Redis or similar infrastructure may accelerate cache, locks, rate limits or queue coordination but cannot be the only durable source of business/governance truth.
+
+## D-0136 — Evidence/artifacts are immutable by reference and content hash
+**Status:** APPROVED IN WO-016  
+**Decision:** Large evidence/artifacts live in object/artifact storage with relational metadata and content hashes. Corrections create new evidence/supersession rather than rewriting history.
+
+## D-0137 — Domain events use a transactional outbox
+**Status:** APPROVED IN WO-016  
+**Decision:** State transitions and outgoing domain events commit atomically in PostgreSQL. Delivery is at-least-once and consumers must be idempotent.
+
+## D-0138 — Company OS authorization is capability/policy based
+**Status:** APPROVED IN WO-016  
+**Decision:** Role titles do not grant authority. Authorization evaluates actor, capability, resource/environment scope, risk, policy and approvals under default-deny semantics.
+
+## D-0139 — High-assurance actions use action-bound authority envelopes
+**Status:** APPROVED IN WO-016  
+**Decision:** High-risk approval binds exact action digest/constraints, approver authority and validity window. Execution verifies/read-backs the actual result and stores evidence.
+
+## D-0140 — Agent runtimes/providers are replaceable adapters
+**Status:** APPROVED IN WO-016  
+**Decision:** Hermes, OpenAI, Codex, local models and future runtimes implement a provider-independent session/model/tool/evidence contract. Company business logic cannot depend on one provider name.
+
+## D-0141 — Ambiguous writes enter RECOVERY_REQUIRED
+**Status:** APPROVED IN WO-016  
+**Decision:** A timed-out or uncertain external mutation is not treated as failed. Blind replay is prohibited; read-only reconciliation determines confirmed complete/absent/partial/unknown state before another mutation.
+
+## D-0142 — External systems remain authoritative for provider-native facts
+**Status:** APPROVED IN WO-016  
+**Decision:** GitHub and future CRM/finance/provider systems retain authority for native objects. Company OS stores exact external IDs/SHAs/versions and governed projections instead of assuming stale local copies are truth.
+
+## D-0143 — v0.1 remains one-company but canonical entities are organization-scoped
+**Status:** APPROVED IN WO-016  
+**Decision:** Major tables include `organization_id` so the data model does not require destructive redesign if multiple organizations/scopes are introduced later.
+
+## D-0144 — Semantic/vector memory is derived, never canonical
+**Status:** APPROVED IN WO-016  
+**Decision:** RAG/vector indexes may assist discovery but cannot override relational/Git/company canonical sources or silently become policy memory.
+
+## D-0145 — Commands mutate; queries do not
+**Status:** APPROVED IN WO-016  
+**Decision:** Mutations use explicit command contracts with actor/authority/idempotency/correlation semantics. Queries remain read-only and may not hide side effects.
+
+## D-0146 — Local Docker is the first runtime, not the architectural ceiling
+**Status:** APPROVED IN WO-016  
+**Decision:** Company OS begins locally in Docker with persistent canonical storage and bounded networking. Stable data/integration/secret/artifact contracts preserve migration to staging/production.
+
+## D-0147 — Broad Docker-socket access is not an ordinary agent capability
+**Status:** APPROVED IN WO-016  
+**Decision:** Host/container mutations flow through bounded executor/broker contracts; ordinary agents do not receive unrestricted Docker host authority.
+
+## D-0148 — Audit/evidence is distinct from operational telemetry
+**Status:** APPROVED IN WO-016  
+**Decision:** Logs/traces/metrics support operations; append-only audit/evidence supports governance. Operational log retention/format cannot be treated as the sole record of consequential actions.
