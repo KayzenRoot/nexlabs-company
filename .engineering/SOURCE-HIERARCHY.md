@@ -24,10 +24,11 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 17 | GTM / Commercial | `company/GO-TO-MARKET-OPERATING-MODEL.md` plus supporting sales/marketing/customer-success documents |
 | 18 | Brand / Public presence | `company/BRAND-SYSTEM.md` plus supporting website/portfolio/public-proof documents |
 | 19 | Investor system | `company/INVESTOR-READINESS-OPERATING-MODEL.md` plus supporting pitch/data-room/investor documents |
-| 20 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 21 | Deployment | `DEPLOYMENT.md` |
-| 22 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 23 | Conversation | transient context only |
+| 20 | Company OS architecture | `company-os/ARCHITECTURE.md` plus functional architecture contracts |
+| 21 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 22 | Deployment | `DEPLOYMENT.md` |
+| 23 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 24 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -269,3 +270,12 @@ Supporting canonical investor sources:
 - `company/INVESTOR-READINESS-SCORECARD.md`
 
 Investor materials summarize canonical strategy/product/finance/proof sources and may not silently redefine them. Binding financing terms, securities/corporate records and legal conclusions require authoritative legal/company records and appropriate professional review.
+
+
+## Company OS functional-architecture authority
+
+`company-os/ARCHITECTURE.md` is the primary functional software architecture authority for NexLabs Company OS.
+
+Supporting sources define bounded contexts, data model, state machines, APIs, events, audit/evidence, authorization, agent/runtime adapters, integrations, recovery, observability and local-first topology.
+
+Canonical operating policy in `company/` outranks implementation convenience. Company OS architecture translates policy into software contracts; it does not rewrite business/governance truth.
