@@ -23,10 +23,11 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 16 | Finance | `company/FINANCE-OPERATING-MODEL.md` plus supporting budget/economics/funding documents |
 | 17 | GTM / Commercial | `company/GO-TO-MARKET-OPERATING-MODEL.md` plus supporting sales/marketing/customer-success documents |
 | 18 | Brand / Public presence | `company/BRAND-SYSTEM.md` plus supporting website/portfolio/public-proof documents |
-| 19 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 20 | Deployment | `DEPLOYMENT.md` |
-| 21 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 22 | Conversation | transient context only |
+| 19 | Investor system | `company/INVESTOR-READINESS-OPERATING-MODEL.md` plus supporting pitch/data-room/investor documents |
+| 20 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 21 | Deployment | `DEPLOYMENT.md` |
+| 22 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 23 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -246,3 +247,25 @@ Supporting canonical public-presence sources:
 - `company/BRAND-WEBSITE-IMPLEMENTATION-HANDOFF.md`
 
 The company repository governs corporate truth and brand rules. The website repository governs implementation technique and visual execution, provided it does not contradict canonical company identity or public-proof rules.
+
+
+## Investor-system authority
+
+`company/INVESTOR-READINESS-OPERATING-MODEL.md` is the primary authority for NexLabs investor-readiness preparation and diligence packaging.
+
+Supporting canonical investor sources:
+- `company/INVESTOR-EXECUTIVE-SUMMARY-STANDARD.md`
+- `company/INVESTMENT-THESIS.md`
+- `company/PITCH-DECK-CONTENT-ARCHITECTURE.md`
+- `company/INVESTOR-KPI-CONTRACT.md`
+- `company/INVESTOR-TRACTION-AND-PROOF.md`
+- `company/INVESTOR-ASK-USE-OF-FUNDS-AND-MILESTONES.md`
+- `company/CAP-TABLE-SCENARIO-MODEL.md`
+- `company/INVESTOR-DATA-ROOM-IA.md`
+- `company/DATA-ROOM-DISCLOSURE-AND-ACCESS.md`
+- `company/DILIGENCE-EVIDENCE-INDEX-STANDARD.md`
+- `company/INVESTOR-RISK-DISCLOSURE.md`
+- `company/INVESTOR-UPDATES-AND-REPORTING.md`
+- `company/INVESTOR-READINESS-SCORECARD.md`
+
+Investor materials summarize canonical strategy/product/finance/proof sources and may not silently redefine them. Binding financing terms, securities/corporate records and legal conclusions require authoritative legal/company records and appropriate professional review.
