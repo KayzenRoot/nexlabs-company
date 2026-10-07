@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-015 — Investor Readiness, Pitch & Data Room
 
 **Issue:** #16  
-**Status:** `ADMITTED / IN_PROGRESS`  
+**Status:** `APPROVED / MERGED`  
 **Classification:** `IMPORTANT`  
 **Risk:** `ELEVATED / INVESTOR_DISCLOSURE_GOVERNANCE`  
 **Base:** `a4f64768f53bd6fd4cabb18cf96451b79fb03d04`  
@@ -168,3 +168,15 @@ Brazilian Portuguese: exact base/head, truthfulness, investment thesis, pitch co
 ## STOP CONDITION
 
 Stop at exact-head audit for WO-015. Do not admit or execute WO-016 in the same PR. Promotion and issue close require a separate bounded checkpoint delta.
+
+
+## CLOSEOUT
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`
+- Exact audited head: `ac306d9dd7096f64b503d2c699898b0492c8bb9b`
+- All fifteen required validations: `SUCCESS`
+- Investor System merge SHA: `c135b356c90c488818706fce238dcbe90be7c5dc`
+- Known CRITICAL/HIGH at approval: `0 / 0`
+- Correction: data-room disclosure policy explicitly states that confidential diligence content stays out of the public repository and is referenced from protected storage.
+- Investor truth boundary: no invented traction, valuation, financing terms, investor commitments or guaranteed returns.
+- Successor execution authority: `NONE`; WO-016 remains NOT_ADMITTED until separately compiled and locked.
