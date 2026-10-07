@@ -1,0 +1,126 @@
+name: Validate NexLabs Investor Readiness
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  investor-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate WO-015 investor readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+
+          const required=[
+            'company/INVESTOR-READINESS-OPERATING-MODEL.md',
+            'company/INVESTOR-EXECUTIVE-SUMMARY-STANDARD.md',
+            'company/INVESTMENT-THESIS.md',
+            'company/PITCH-DECK-CONTENT-ARCHITECTURE.md',
+            'company/INVESTOR-KPI-CONTRACT.md',
+            'company/INVESTOR-TRACTION-AND-PROOF.md',
+            'company/INVESTOR-ASK-USE-OF-FUNDS-AND-MILESTONES.md',
+            'company/CAP-TABLE-SCENARIO-MODEL.md',
+            'company/INVESTOR-DATA-ROOM-IA.md',
+            'company/DATA-ROOM-DISCLOSURE-AND-ACCESS.md',
+            'company/DILIGENCE-EVIDENCE-INDEX-STANDARD.md',
+            'company/INVESTOR-RISK-DISCLOSURE.md',
+            'company/INVESTOR-UPDATES-AND-REPORTING.md',
+            'company/INVESTOR-READINESS-SCORECARD.md',
+            '.engineering/context-locks/NXL-COMPANY-WO-015.json'
+          ];
+          for(const p of required) if(!fs.existsSync(p)) throw new Error('Missing WO-015 output: '+p);
+
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-015') throw new Error('WO-015 must be active');
+          if(cp.activeStatus!=='ADMITTED_IN_PROGRESS' && cp.activeStatus!=='APPROVED_READY_FOR_PROMOTION') throw new Error('Unexpected active status: '+cp.activeStatus);
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-015.json','utf8'));
+          if(lock.workOrderId!=='NXL-COMPANY-WO-015') throw new Error('WO-015 Context Lock mismatch');
+
+          for(let n=16;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            const body=fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8');
+            if(!body.includes('NOT_ADMITTED')) throw new Error(id+' must remain NOT_ADMITTED');
+          }
+
+          const op=fs.readFileSync('company/INVESTOR-READINESS-OPERATING-MODEL.md','utf8');
+          const exec=fs.readFileSync('company/INVESTOR-EXECUTIVE-SUMMARY-STANDARD.md','utf8');
+          const thesis=fs.readFileSync('company/INVESTMENT-THESIS.md','utf8');
+          const pitch=fs.readFileSync('company/PITCH-DECK-CONTENT-ARCHITECTURE.md','utf8');
+          const kpi=fs.readFileSync('company/INVESTOR-KPI-CONTRACT.md','utf8');
+          const traction=fs.readFileSync('company/INVESTOR-TRACTION-AND-PROOF.md','utf8');
+          const ask=fs.readFileSync('company/INVESTOR-ASK-USE-OF-FUNDS-AND-MILESTONES.md','utf8');
+          const cap=fs.readFileSync('company/CAP-TABLE-SCENARIO-MODEL.md','utf8');
+          const room=fs.readFileSync('company/INVESTOR-DATA-ROOM-IA.md','utf8');
+          const access=fs.readFileSync('company/DATA-ROOM-DISCLOSURE-AND-ACCESS.md','utf8');
+          const evidence=fs.readFileSync('company/DILIGENCE-EVIDENCE-INDEX-STANDARD.md','utf8');
+          const risks=fs.readFileSync('company/INVESTOR-RISK-DISCLOSURE.md','utf8');
+          const updates=fs.readFileSync('company/INVESTOR-UPDATES-AND-REPORTING.md','utf8');
+          const score=fs.readFileSync('company/INVESTOR-READINESS-SCORECARD.md','utf8');
+
+          for(const s of ['ACTUAL','FORECAST','SCENARIO','TARGET','UNAVAILABLE','NOT_APPLICABLE']){
+            if(!op.includes(s)) throw new Error('Investor fact state missing: '+s);
+          }
+
+          for(const marker of ['Company','Problem / opportunity','Products / portfolio','Traction / proof','Funding plan','Risks / gaps']){
+            if(!exec.includes(marker)) throw new Error('Executive summary section missing: '+marker);
+          }
+
+          if(!thesis.toLowerCase().includes('two compounding assets') || !thesis.toLowerCase().includes('does not guarantee')) throw new Error('Investment thesis evidence/risk boundary incomplete');
+
+          for(const marker of ['Problem','Market / timing','Product / portfolio','Business model','GTM','Traction / proof','Competition','Funding ask / use of funds','Risks / key assumptions']){
+            if(!pitch.includes(marker)) throw new Error('Pitch section missing: '+marker);
+          }
+
+          for(const field of ['definition','state','period','source','last_verified_at','comparability_notes']){
+            if(!kpi.includes(field)) throw new Error('Investor KPI field missing: '+field);
+          }
+
+          if(!traction.includes('FORECAST') || !traction.includes('TARGET') || !traction.toLowerCase().includes('pipeline is not revenue')) throw new Error('Traction truth boundary incomplete');
+
+          if(!ask.toLowerCase().includes('funding scenario') || !ask.toLowerCase().includes('milestone')) throw new Error('Ask/use-of-funds model incomplete');
+
+          for(const marker of ['POST_MONEY','NEW_INVESTOR_%','ILLUSTRATIVE','LEGAL_RECORD','fully diluted']){
+            if(!cap.toLowerCase().includes(marker.toLowerCase())) throw new Error('Cap table scenario rule missing: '+marker);
+          }
+
+          for(const marker of ['Company & Corporate','Finance','Security, Privacy & Compliance','Research & IP','Legal & Contracts','Fundraise']){
+            if(!room.includes(marker)) throw new Error('Data room IA missing: '+marker);
+          }
+
+          for(const cls of ['PUBLIC','INVESTOR_SHARED','CONFIDENTIAL_DILIGENCE','LEGAL_RESTRICTED','DO_NOT_SHARE']){
+            if(!access.includes(cls)) throw new Error('Data-room access class missing: '+cls);
+          }
+          if(!access.toLowerCase().includes('public repository') && !room.toLowerCase().includes('public repository')) throw new Error('Public repo confidentiality boundary missing');
+
+          for(const field of ['source_system','owner','document_version','as_of_date','last_verified_at','access_class']){
+            if(!evidence.includes(field)) throw new Error('Diligence evidence field missing: '+field);
+          }
+
+          for(const category of ['Company / key-person','Product','Market / competition','GTM','Financial','AI / model/provider','Security / privacy','Legal / IP','Execution / autonomy']){
+            if(!risks.includes(category)) throw new Error('Investor risk category missing: '+category);
+          }
+
+          if(!updates.toLowerCase().includes('cash') || !updates.toLowerCase().includes('runway') || !updates.toLowerCase().includes('milestones')) throw new Error('Investor update model incomplete');
+
+          for(const state of ['NOT_READY','PREPARING','READY_FOR_INITIAL_CONVERSATIONS','READY_FOR_DILIGENCE','READY_FOR_TERM_NEGOTIATION']){
+            if(!score.includes(state)) throw new Error('Investor readiness state missing: '+state);
+          }
+          if(!score.includes('Blocking RED conditions') || !score.toLowerCase().includes('cap table')) throw new Error('Readiness blocking conditions incomplete');
+
+          console.log('WO-015 Investor Readiness validation passed.');
+          NODE
