@@ -14,7 +14,7 @@
   "activeStatus": "ADMITTED_IN_PROGRESS",
   "knownCritical": 0,
   "knownHigh": 0,
-  "nextLegalAction": "EXECUTE_WO_015_INVESTOR_READINESS_PITCH_DATA_ROOM",
+  "nextLegalAction": "VALIDATE_WO_015_INVESTOR_READINESS_AND_OPEN_PR",
   "stopState": "NO_WO_016_OR_LATER_EXECUTION_BEFORE_WO_015_APPROVAL_MERGE_AND_CHECKPOINT_PROMOTION",
   "repositoryDisclosure": "PUBLIC_SAFE_ONLY",
   "investorTruthAuthority": "company/FINANCE-OPERATING-MODEL.md"
