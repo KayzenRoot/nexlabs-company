@@ -13,7 +13,7 @@
 | NXL-COMPANY-WO-010 | #11 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-010-research-innovation-ip` |
 | NXL-COMPANY-WO-011 | #12 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-011-security-privacy-web3-financial-risk` |
 | NXL-COMPANY-WO-012 | #13 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-012-finance-budget-unit-economics-investment` |
-| NXL-COMPANY-WO-013 | #14 | NOT_ADMITTED | TBD at admission |
+| NXL-COMPANY-WO-013 | #14 | ADMITTED / IN_PROGRESS | `planning/NXL-COMPANY-WO-013-sales-gtm-marketing-customer-success` |
 | NXL-COMPANY-WO-014 | #15 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-015 | #16 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-016 | #17 | NOT_ADMITTED | TBD at admission |
