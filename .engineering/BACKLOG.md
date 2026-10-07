@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-013 are complete. WO-014 is the only currently admitted Work Order.
+WO-002 through WO-014 are complete. No Work Order is currently admitted; WO-015 is the next eligible admission.
 
 | WO | Issue | Classification | Phase | Status |
 | --- | ---: | --- | --- | --- |
