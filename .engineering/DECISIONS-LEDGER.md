@@ -484,3 +484,60 @@
 ## D-0118 — A small truthful portfolio is preferable to a large fictional one
 **Status:** APPROVED IN WO-014  
 **Decision:** NexLabs does not populate public portfolio/case-study surfaces with placeholders or inflated status merely to appear larger. Publication waits for evidence-backed entries.
+
+
+## D-0119 — Investor materials are a view over canonical truth, not a new truth source
+**Status:** APPROVED IN WO-015  
+**Decision:** Executive summaries, pitch decks, updates and data-room packages summarize strategy/product/finance/proof sources. They may not silently redefine product status, traction, economics, corporate ownership or risk.
+
+## D-0120 — Material investor claims are state-labeled
+**Status:** APPROVED IN WO-015  
+**Decision:** Investor-facing quantitative and traction claims use ACTUAL, FORECAST, SCENARIO, TARGET, UNAVAILABLE or NOT_APPLICABLE plus source/period/verification. Forecast/target are never described as traction.
+
+## D-0121 — NexLabs investment thesis is products plus compounding company capability
+**Status:** APPROVED IN WO-015  
+**Decision:** The investor thesis is that NexLabs compounds through owned products and reusable AI-native company capability. Any claimed capital-efficiency or execution advantage remains a hypothesis until supported by real evidence.
+
+## D-0122 — Pitch architecture must include risks and assumptions
+**Status:** APPROVED IN WO-015  
+**Decision:** The canonical pitch includes problem, market, solution/company thesis, products, Product Factory, technology/AI workforce, business model, GTM, traction, economics, competition, team/operating model, research/IP, security/governance, funding/use-of-funds/milestones, risks and closing.
+
+## D-0123 — Market sizing requires disclosed method and reachable-market logic
+**Status:** APPROVED IN WO-015  
+**Decision:** TAM/SAM/SOM or equivalent sizing identifies sources, date, assumptions and connection to actual ICP/distribution. Large top-down market totals alone are not proof of opportunity.
+
+## D-0124 — Investor KPIs are versioned evidence contracts
+**Status:** APPROVED IN WO-015  
+**Decision:** Material investor KPIs define name, formula/definition, state, value/range, period, source, owner, last verification and comparability notes. Metric definitions cannot silently change to improve trends.
+
+## D-0125 — Pipeline and interest are not traction unless their actual state is explicit
+**Status:** APPROVED IN WO-015  
+**Decision:** Pipeline, pilot interest, waitlists and conversations may be disclosed accurately but are not customers, revenue or closed traction. Pre-revenue evidence may use product/technical/validation milestones instead.
+
+## D-0126 — Funding ask is a scenario until actual terms exist
+**Status:** APPROVED IN WO-015  
+**Decision:** Capital range, runway, use-of-funds and milestones may be modeled before a raise. They do not create a binding valuation, instrument, investor right or financing offer.
+
+## D-0127 — Cap-table models are scenarios, not ownership records
+**Status:** APPROVED IN WO-015  
+**Decision:** Ownership/cap-table scenarios must declare fully diluted scope and instrument assumptions. Actual ownership comes from authoritative company/legal records; scenario math does not establish valuation or rights.
+
+## D-0128 — Sensitive diligence content stays out of the public repository
+**Status:** APPROVED IN WO-015  
+**Decision:** The public company repo stores data-room architecture/index standards, not confidential cap tables, shareholder personal data, customer contracts, legal-restricted records, secrets or private financing documents.
+
+## D-0129 — Diligence evidence is indexed with freshness and access state
+**Status:** APPROVED IN WO-015  
+**Decision:** Critical diligence evidence records source, owner, version/date, verification state and access class. Stale/superseded evidence cannot silently support current claims.
+
+## D-0130 — Investor risk disclosure is substantive
+**Status:** APPROVED IN WO-015  
+**Decision:** Investor materials disclose material company, product, market, GTM, financial, AI/provider, technical, security/privacy, regulatory, legal/IP and execution risks with controls/residual risk where appropriate.
+
+## D-0131 — Fundraising readiness is gated by blockers, not a vanity score
+**Status:** APPROVED IN WO-015  
+**Decision:** Critical RED items such as unknown authoritative cap table during an equity raise, no credible runway, unsupported investor claims, material IP uncertainty or uncontrolled confidential data-room access block readiness regardless of aggregate score.
+
+## D-0132 — Founder retains fundraising and disclosure authority
+**Status:** APPROVED IN WO-015  
+**Decision:** AI agents may prepare/model/check investor packages, but Founder/CEO controls fundraising timing, investor selection, ask posture, material disclosure, negotiation and binding financing decisions.
