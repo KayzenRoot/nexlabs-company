@@ -39,7 +39,7 @@ NexLabs Company OS local infrastructure is executable under `infra/docker/`.
 
 `NXL-COMPANY-WO-020` is APPROVED/MERGED for its local, read-only Founder Command Center. Run `node company-os/founder/cli.mjs` or use `infra/docker/compose.founder-demo.yaml` to inspect a Git-source engineering snapshot. Operational integrations, privileged approvals, live agents and production availability are NOT_CONNECTED. Integrated v0.1 DoD remains open.
 
-WO-021 is admitted solely for isolated local recovery testing and portable production-readiness planning; NO production deployment is authorized. WO-022 remains NOT_ADMITTED.
+WO-021 is APPROVED/MERGED for CI-only PostgreSQL/artifact recovery proof, transactional archive preflight hardening and future production-readiness runbook. NO production deploy occurred. WO-022 remains NOT_ADMITTED while the real Founder observability DoD gap is assessed.
 
 > Repository disclosure: this repository is public. Never commit real credentials, local secret files, database dumps, runtime backups, private keys or protected operational material here.
 
