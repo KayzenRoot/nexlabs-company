@@ -23,7 +23,7 @@ const WO=id=>`NXL-COMPANY-WO-${String(id).padStart(3,"0")}`;
 
 // This function uses only supplied, explicitly labeled evidence metadata; it
 // does not fetch GitHub, change checkpoint state, sign a release or start work.
-export function planBlockedAcceptance({audit, checkpoint, candidateIssues}) {
+export function planBlockedAcceptance({audit, checkpoint, baselineCheckpoint, candidateIssues}) {
   // A handoff plan must bind to the same *preliminary* offline audit and
   // immutable admission identity. A fabricated or stale metadata object must
   // not appear to be a trustworthy predecessor of WO-024.
@@ -45,6 +45,16 @@ export function planBlockedAcceptance({audit, checkpoint, candidateIssues}) {
      checkpoint.admissionBaseSha!=="d2f7acc85babd62cfacb87a4d061ef39e74a566d" ||
      checkpoint.completedThroughWorkOrder!=="NXL-COMPANY-WO-023")
      fail("ACTIVE_WO_CONFLICT");
+  // The admission-base main checkpoint was idle while the WO-022 PR
+  // checkpoint became active. This *difference* is not permission to start
+  // WO-024: the issue/PR still bind the only admitted work to WO-022.
+  // Must be hydrated from the exact frozen Git base, never agent memory.
+  if(!baselineCheckpoint || baselineCheckpoint.gefVersion!=="1.1.2" ||
+     baselineCheckpoint.activeWorkOrder!==null ||
+     baselineCheckpoint.activeStatus!=="NONE" ||
+     baselineCheckpoint.activeIssue!==null ||
+     baselineCheckpoint.completedThroughWorkOrder!=="NXL-COMPANY-WO-023")
+    fail("BASELINE_HANDOFF_CONFLICT");
   if(!Array.isArray(candidateIssues))fail("ROADMAP_UNVERIFIED");
   const expected=new Set(Array.from({length:8},(_,i)=>WO(i+24)));
   const seen=new Set();
@@ -82,6 +92,8 @@ export function planBlockedAcceptance({audit, checkpoint, candidateIssues}) {
   return Object.freeze({
     auditVerdict:"RELEASE_NOT_APPROVED",
     activeWorkOrder:checkpoint.activeWorkOrder,
+    baselineActiveWorkOrder:null,
+    authorityDivergence:"BASE_MAIN_IDLE_AUDIT_BRANCH_ACTIVE",
     successorAdmission:"BLOCKED",
     canStartImplementation:false,
     nextAction:"REVIEW_GEF_BLOCKED_AUDIT_TRANSITION",
