@@ -141,6 +141,16 @@ test("only a committed exact review receipt and fresh GitHub readback release th
   assert.equal(result.ownerAudit, "OWNER_SELF_AUDIT / NOT_INDEPENDENT");
 });
 
+test("provider readback requires the exact committed COMMENTED technical review", () => {
+  for (const technicalReview of [undefined, "UNCOMMENTED"]) {
+    const providerReadback = validProviderReadback();
+    if (technicalReview === undefined) delete providerReadback.governancePr128.technicalReview;
+    else providerReadback.governancePr128.technicalReview = technicalReview;
+    reject({...reconciledSource(), currentMainSha: "c".repeat(40), providerReadback},
+      "GOVERNANCE_MERGE_READBACK_CONFLICT");
+  }
+});
+
 test("a provider readback with a different reviewed governance head cannot release the slot", () => {
   const providerReadback = validProviderReadback();
   providerReadback.governancePr128.reviewedHeadSha = "e".repeat(40);
