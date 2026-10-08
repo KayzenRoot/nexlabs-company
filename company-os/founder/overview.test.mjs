@@ -39,6 +39,11 @@ test("checkpoint must match exactly one admitted work order", () => {
   assert.throws(() => projectOverview({ ...checkpoint, activeWorkOrder: null }, registry), /CHECKPOINT_REGISTRY_CONFLICT/);
   assert.throws(() => projectOverview({ ...checkpoint, activeWorkOrder: "NXL-COMPANY-WO-999" }, registry), /CHECKPOINT_REGISTRY_CONFLICT/);
   assert.throws(() => projectOverview({ ...checkpoint, knownHigh: -1 }, registry), /CHECKPOINT_INVALID/);
+  assert.throws(() => projectOverview({ ...checkpoint, activeIssue: 20 }, registry), /CHECKPOINT_REGISTRY_CONFLICT/);
+  assert.throws(() => projectOverview({ ...checkpoint, completedThroughWorkOrder: "NXL-COMPANY-WO-018" }, registry), /CHECKPOINT_REGISTRY_CONFLICT/);
+  const secondAdmitted = registry.replace("| NXL-COMPANY-WO-021 | #22 | NOT_ADMITTED |",
+    "| NXL-COMPANY-WO-021 | #22 | ADMITTED / IN_PROGRESS |");
+  assert.throws(() => projectOverview(checkpoint, secondAdmitted), /CHECKPOINT_REGISTRY_CONFLICT/);
   assert.equal(projectOverview(checkpoint, registry).work.totalRegistered, 3);
 });
 test("markup escapes untrusted checkpoint data", () => {
