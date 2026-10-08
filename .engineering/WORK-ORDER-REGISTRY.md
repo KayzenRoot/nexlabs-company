@@ -20,7 +20,7 @@
 | NXL-COMPANY-WO-017 | #18 | APPROVED / MERGED | `infra/NXL-COMPANY-WO-017-local-docker-runtime` |
 | NXL-COMPANY-WO-018 | #19 | APPROVED / MERGED | `design/NXL-COMPANY-WO-018-agent-runtime-hermes` |
 | NXL-COMPANY-WO-019 | #20 | APPROVED / MERGED | `feat/NXL-COMPANY-WO-019-autonomous-engineering-cell-mvp` |
-| NXL-COMPANY-WO-020 | #21 | ADMITTED / IN_PROGRESS | `feat/NXL-COMPANY-WO-020-founder-command-center` |
+| NXL-COMPANY-WO-020 | #21 | APPROVED / MERGED | `feat/NXL-COMPANY-WO-020-founder-command-center` |
 | NXL-COMPANY-WO-021 | #22 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-022 | #23 | NOT_ADMITTED | TBD at admission |
 
