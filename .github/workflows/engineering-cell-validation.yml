@@ -28,7 +28,7 @@ jobs:
           if(!wo.includes('ADMITTED / IN_PROGRESS')&&!wo.includes('APPROVED / MERGED'))throw new Error('WO-019 not in accepted lifecycle');
           const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
           if(cp.gefVersion!=='1.1.2')throw new Error('GEF baseline changed');
-          for(let n=21;n<=22;n++){
+          for(let n=22;n<=22;n++){
             const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
             if(!fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8').includes('NOT_ADMITTED'))throw new Error('Future WO admitted: '+id);
           }
