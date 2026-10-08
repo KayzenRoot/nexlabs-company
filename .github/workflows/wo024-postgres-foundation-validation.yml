@@ -1,0 +1,54 @@
+name: Validate WO-024 PostgreSQL Foundation
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  postgres-foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Disposable, network-isolated PostgreSQL 17 schema and invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The image is the existing local PostgreSQL major-version baseline.
+          # No host ports, no Docker socket mount, no user volume and no
+          # credentials; trust auth is ONLY in this network-isolated CI fixture.
+          docker run -d --name nxl-wo024-ci-pg --network none \
+            -e POSTGRES_HOST_AUTH_METHOD=trust \
+            postgres:17-alpine >/dev/null
+          trap 'docker rm -f nxl-wo024-ci-pg >/dev/null 2>&1 || true' EXIT
+          ready=0
+          for i in $(seq 1 45); do
+            if docker exec nxl-wo024-ci-pg pg_isready -U postgres -d postgres >/dev/null 2>&1; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          test "$ready" -eq 1
+          echo 'Applying migration in one transaction, no host port'
+          docker exec -i nxl-wo024-ci-pg psql -X -v ON_ERROR_STOP=1 \
+            --single-transaction -U postgres -d postgres \
+            < company-os/persistence/migrations/0001_core.sql
+          echo 'Running adversarial tenant, admission, audit and inbox tests'
+          docker exec -i nxl-wo024-ci-pg psql -X -v ON_ERROR_STOP=1 \
+            -U postgres -d postgres \
+            < company-os/persistence/tests/0001_core.test.sql
+          echo 'Reapplying migration to check idempotent DDL'
+          docker exec -i nxl-wo024-ci-pg psql -X -v ON_ERROR_STOP=1 \
+            --single-transaction -U postgres -d postgres \
+            < company-os/persistence/migrations/0001_core.sql
+          tables="$(docker exec nxl-wo024-ci-pg psql -X -U postgres -d postgres -Atqc \
+            "SELECT count(*) FROM pg_catalog.pg_tables WHERE schemaname='company_os'")"
+          if [ "$tables" -lt 13 ]; then
+            echo "Missing expected canonical tables: $tables" >&2
+            exit 1
+          fi
+          echo "WO-024 isolated PostgreSQL foundation passed; canonical tables: $tables"
