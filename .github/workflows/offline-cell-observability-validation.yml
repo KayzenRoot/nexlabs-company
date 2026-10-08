@@ -32,7 +32,7 @@ jobs:
           if(cp.activeWorkOrder==='NXL-COMPANY-WO-023') {
             if(cp.activeIssue!==64||cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-023.json'||cp.admissionBaseSha!==lock.baseSha)throw Error('Active context drift');
             if(!registry.includes('| NXL-COMPANY-WO-023 | #64 | ADMITTED / IN_PROGRESS |'))throw Error('Registry mismatch');
-          } else if(cp.activeWorkOrder!==null || !registry.includes('| NXL-COMPANY-WO-023 | #64 | APPROVED / MERGED |'))throw Error('Promoted state mismatch');
+          } else if(!registry.includes('| NXL-COMPANY-WO-023 | #64 | APPROVED / MERGED |') || (cp.activeWorkOrder!==null && !registry.includes('| '+cp.activeWorkOrder+' | #'+cp.activeIssue+' | ADMITTED / IN_PROGRESS |')))throw Error('Successor state mismatch');
           const release=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8');
           if(!release.includes(cp.activeWorkOrder==='NXL-COMPANY-WO-022'?'ADMITTED / IN_PROGRESS':'NOT_ADMITTED'))throw Error('Acceptance lifecycle unexpected');
           for(const [p,sha] of Object.entries(lock.sourceBlobFingerprints)){
