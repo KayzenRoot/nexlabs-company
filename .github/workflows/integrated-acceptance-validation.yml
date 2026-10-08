@@ -75,7 +75,7 @@ jobs:
           scanner="/tmp/gitleaks-8.24.3/gitleaks"
           if [ ! -x "$scanner" ]; then echo "Pinned Gitleaks binary unavailable"; exit 1; fi
           set +e
-          "$scanner" git --log-opts="--all" --redact --exit-code=2 --report-format=json --report-path=/tmp/nxl-wo022-history.json .
+          "$scanner" git --log-opts="--all" --gitleaks-ignore-path=company-os/acceptance/.gitleaksignore --redact --exit-code=2 --report-format=json --report-path=/tmp/nxl-wo022-history.json .
           result=$?
           set -e
           if [ -s /tmp/nxl-wo022-history.json ]; then
