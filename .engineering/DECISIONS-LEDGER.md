@@ -718,3 +718,15 @@
 ## D-0175 — Real Founder operations observability remains an open release gate
 **Status:** APPROVED IN WO-021 (GAP RECOGNITION)  
 **Decision:** A local engineering Git snapshot or a CI restore cannot be represented as live agent run, approval, failure, cost or service observability. WO-020 real operational metrics remain NOT_CONNECTED. v0.1 integrated acceptance requires explicit evidence or truthful correction of this DoD gap.
+
+## D-0176 — Observe only actual offline engineering-cell receipts in v0.1 demonstration
+**Status:** APPROVED IN WO-023  
+**Decision:** Founder local snapshot may include a distinct, **clearly fixture-scoped** projection from an actual one-time deterministic WO-019 `runDemo()` execution with verified receipt hash-chain. It may derive QA failures, correction and fixture approval events from authenticated-in-fixture deterministic evidence. It may not label a test verifier as real Founder authentication or promote live agent/production telemetry.
+
+## D-0177 — Production integrations remain unavailable unless independently evidenced
+**Status:** APPROVED IN WO-023  
+**Decision:** Real agent runs, external approvals, incidents, costs and deployments stay NOT_CONNECTED/null until separately implemented and tested. A valid in-memory demo receipt chain does not imply database-backed operations, durable tamper protection or production authority.
+
+## D-0178 — Acceptance Work Order remains separately governed
+**Status:** APPROVED IN WO-023  
+**Decision:** WO-023 is the expressly admitted NECESSARY pre-acceptance remediation before the pre-existing WO-022. Source Pack dependency order is 002–021, 023, 022. v0.1 can only be declared complete after WO-022 integrated audit and explicit Founder acceptance, never by automatic promotion of demonstration status.
