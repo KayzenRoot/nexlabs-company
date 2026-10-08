@@ -1,0 +1,51 @@
+name: Validate NexLabs v0.1 Integrated Acceptance
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preliminary-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate WO-022 source and authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-022.json','utf8'));
+          const wo=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8');
+          const registry=fs.readFileSync('.engineering/WORK-ORDER-REGISTRY.md','utf8');
+          if(cp.gefVersion!=='1.1.2'||cp.repositoryDisclosure!=='PUBLIC_SAFE_ONLY')throw Error('Changed governance baseline');
+          if(lock.workOrderId!=='NXL-COMPANY-WO-022'||lock.issue!==23||
+            lock.baseSha!=='d2f7acc85babd62cfacb87a4d061ef39e74a566d'||lock.state!=='LOCKED_FOR_WO_022')throw Error('Lock mismatch');
+          if(cp.activeWorkOrder!=='NXL-COMPANY-WO-022'||cp.activeIssue!==23||
+            cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-022.json')throw Error('Acceptance must remain explicitly active pending signoff');
+          if(!wo.includes('ADMITTED / IN_PROGRESS')||!registry.includes('| NXL-COMPANY-WO-022 | #23 | ADMITTED / IN_PROGRESS |'))throw Error('WO or registry state conflict');
+          if(cp.completedThroughWorkOrder!=='NXL-COMPANY-WO-023')throw Error('Prior remediation not completed');
+          for(const [p,sha] of Object.entries(lock.sourceBlobFingerprints))if(!fs.existsSync(p)||!/^[a-f0-9]{40}$/.test(sha))throw Error('Invalid source fingerprint '+p);
+          console.log('WO-022 single admission/lock preflight accepted; no release authorization');
+          NODE
+      - name: Run read-only integrated DoD evaluator
+        run: |
+          node --check company-os/acceptance/v01-audit.mjs
+          node --check company-os/acceptance/v01-audit.test.mjs
+          node --test company-os/acceptance/v01-audit.test.mjs
+          node company-os/acceptance/v01-audit.mjs > /tmp/nexlabs-v01-preliminary.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const x=JSON.parse(fs.readFileSync('/tmp/nexlabs-v01-preliminary.json','utf8'));
+          if(x.state!=='RELEASE_NOT_APPROVED'||x.fullDoDSatisfied!==false||
+             x.founderApproval!=='PENDING'||x.unresolved.length<1)throw Error('Premature release authorization');
+          console.log('Release remains gated, assessment complete');
+          NODE
