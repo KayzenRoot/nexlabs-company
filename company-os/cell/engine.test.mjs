@@ -80,3 +80,16 @@ test("source fingerprint required",async()=>{
 test("digest canonicalization is independent of object key order",()=>{
  assert.equal(digest({a:1,b:2}),digest({b:2,a:1}));
 });
+test("rejects missing trusted Founder verification adapter",async()=>{
+ const f=demoInput();delete f.trustedApprovalVerifier;
+ await assert.rejects(runEngineeringCell({...f,executor:passingExecutor}),{code:"AUTHORIZATION_DENIED"});
+});
+test("rejects Founder data despite self-declared APPROVED if trusted adapter denies",async()=>{
+ const f=demoInput();f.trustedApprovalVerifier=async()=>false;
+ await assert.rejects(runEngineeringCell({...f,executor:passingExecutor}),{code:"AUTHORIZATION_DENIED"});
+});
+test("cancellation after provider proposal does not stage or promote candidate",async()=>{
+ const f=demoInput();const controller=new AbortController();f.signal=controller.signal;
+ const result=await runEngineeringCell({...f,executor:{async propose(){controller.abort();return {state:"PROPOSED",edits:[{path:"examples/hello.mjs",content:"export function hello(){}"}]};}}});
+ assert.equal(result.status,"CANCELLED");assert.equal(result.checkpoint_handoff,null);
+});
