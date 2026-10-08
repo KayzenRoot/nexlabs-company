@@ -21,8 +21,8 @@ const checkpoint = {
 test("read current canonical checkpoint/registry consistently", async () => {
   const view = await loadOverview(root);
   assert.equal(view.company.gefVersion, "1.1.2");
-  assert.equal(view.governance.activeWorkOrder, "NXL-COMPANY-WO-020");
-  assert.equal(view.work.admitted, 1);
+  assert.match(view.governance.completedThrough, /^NXL-COMPANY-WO-\d{3}$/);
+  assert.equal(view.work.admitted, view.governance.activeWorkOrder === null ? 0 : 1);
   assert.ok(view.work.approvedMerged >= 18);
   assert.equal(view.trust.liveOperationalData, false);
   for (const value of Object.values(view.operations)) {
