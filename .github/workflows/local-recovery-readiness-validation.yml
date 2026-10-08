@@ -40,7 +40,9 @@ jobs:
         run: |
           set -euo pipefail
           bash -n infra/docker/scripts/ci-recovery-rehearsal.sh
-          for f in infra/docker/scripts/*.sh; do sh -n "$f"; done
+          for f in infra/docker/scripts/*.sh; do
+            case "$f" in *ci-recovery-rehearsal.sh) bash -n "$f";; *) sh -n "$f";; esac
+          done
       - name: Validate Windows PowerShell syntax
         shell: pwsh
         run: |
