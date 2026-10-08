@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-023",
+  "issue": 64,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "feat/NXL-COMPANY-WO-023-offline-cell-observability",
+  "baseSha": "86a328127585fe8a31b446fe0294da1c992490d5",
+  "state": "LOCKED_FOR_WO_023",
+  "admission": "ADMITTED",
+  "risk": "STANDARD",
+  "scope": "LOCAL_OFFLINE_FIXTURE_EVIDENCE_ONLY",
+  "sourceBlobFingerprints": {
+    ".engineering/CHECKPOINT.json": "1425be7dd49f9975f982ce40814fb89d8fec21d2",
+    ".engineering/SCOPE.md": "d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/DECISIONS-LEDGER.md": "d8f2c347ba9d3c271f5f6f6db33cd6571b28dba4",
+    ".engineering/ARCHITECTURE.md": "38797d6b4c1423083afe6e3251bad9ae5668eb8c",
+    ".engineering/REQUIREMENTS.md": "2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    "company-os/cell/engine.mjs": "65ca3aab2227b3ae1b658b004d84bfc03d383021",
+    "company-os/cell/fixtures.mjs": "5140ee9125020d6ca3bb0a46a986bd544c51efc0",
+    "company-os/founder/server.mjs": "3b9d2beb5519eb124474bd02b01ddebdaa6ddf3b",
+    "company-os/founder/overview.mjs": "249ec980674ba898ef761f7f863d6bbd3aa43eef",
+    "company-os/OBSERVABILITY-CONTRACT.md": "9f1c3fe58981a3647865874121a2c742fbbb6ae9"
+  },
+  "allowedPaths": [
+    "company-os/founder/",
+    "company-os/OFFLINE-CELL-OBSERVABILITY.md",
+    ".github/workflows/",
+    "infra/docker/compose.founder-demo.yaml",
+    ".engineering/",
+    "README.md"
+  ],
+  "externalMutations": "PROHIBITED",
+  "realExternalTelemetry": "NOT_CONNECTED",
+  "nextAcceptance": "NXL-COMPANY-WO-022_NOT_ADMITTED"
+}

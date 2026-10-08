@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. No active WO. Cloud production deferred. WO-022 remains NOT_ADMITTED pending integrated DoD feasibility/gap remediation.
+WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. WO-023 is the sole admitted NECESSARY local observability remediation. Cloud production deferred; WO-022 remains NOT_ADMITTED.
 
 | WO | Issue | Classification | Phase | Status |
 | --- | ---: | --- | --- | --- |
@@ -27,6 +27,7 @@ WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local rec
 | NXL-COMPANY-WO-020 | #21 | IMPORTANT | Founder Operations | APPROVED / MERGED |
 | NXL-COMPANY-WO-021 | #22 | IMPORTANT | Local Recovery Required Subset | APPROVED / MERGED |
 | NXL-COMPANY-WO-022 | #23 | NECESSARY | Integrated Acceptance | PLANNED / NOT_ADMITTED |
+| NXL-COMPANY-WO-023 | #64 | NECESSARY | Pre-acceptance Local Observability | ADMITTED / IN_PROGRESS |
 
 ## Phase gates
 

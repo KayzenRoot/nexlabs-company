@@ -9,7 +9,7 @@ const securityHeaders = {
   "Referrer-Policy": "no-referrer",
   "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
 };
-export function createDashboardServer({ repoRoot, overviewLoader = () => loadOverview(repoRoot) } = {}) {
+export function createDashboardServer({ repoRoot, overviewLoader = () => loadOverview(repoRoot), offlineEvidence = null } = {}) {
   if (typeof repoRoot !== "string" || !repoRoot) throw new TypeError("repoRoot required");
   return httpServer(async (req, res) => {
     const respond = (status, contentType, body, more = {}) => {
@@ -32,13 +32,20 @@ export function createDashboardServer({ repoRoot, overviewLoader = () => loadOve
       respond(200, "application/json; charset=utf-8", JSON.stringify({ http: "LIVE", runtimeDependencies: "NOT_CHECKED", authorizedActions: false }));
       return;
     }
+    if (pathname === "/v1/offline-cell-evidence") {
+      if (!offlineEvidence || offlineEvidence.state !== "OBSERVED_OFFLINE_FIXTURE") {
+        respond(503, "application/json; charset=utf-8", '{"error":"OFFLINE_EVIDENCE_UNAVAILABLE"}');
+        return;
+      }
+      respond(200, "application/json; charset=utf-8", JSON.stringify(offlineEvidence)); return;
+    }
     if (pathname !== "/" && pathname !== "/v1/overview") {
       respond(404, "application/json; charset=utf-8", '{"error":"NOT_FOUND"}'); return;
     }
     try {
       const snapshot = await overviewLoader();
       if (pathname === "/v1/overview") respond(200, "application/json; charset=utf-8", JSON.stringify(snapshot));
-      else respond(200, "text/html; charset=utf-8", renderDashboard(snapshot));
+      else respond(200, "text/html; charset=utf-8", renderDashboard({ ...snapshot, offlineCell: offlineEvidence }));
     } catch {
       respond(503, "application/json; charset=utf-8", '{"error":"SOURCE_UNAVAILABLE","live":false}');
     }

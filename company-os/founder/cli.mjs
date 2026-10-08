@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { createDashboardServer } from "./server.mjs";
+import { captureOfflineCellEvidence } from "./offline-evidence.mjs";
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const rawPort = process.env.PORT ?? "4173";
 const port = Number(rawPort);
@@ -8,7 +9,9 @@ if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("Invali
 if (!["127.0.0.1", "0.0.0.0"].includes(host)) throw new Error("Invalid HOST");
 if (host === "0.0.0.0" && process.env.LOCAL_CONTAINER_DEMO !== "true")
   throw new Error("Wildcard bind requires explicitly isolated LOCAL_CONTAINER_DEMO=true");
-const server = createDashboardServer({ repoRoot: root });
+const offlineEvidence = await captureOfflineCellEvidence();
+const server = createDashboardServer({ repoRoot: root, offlineEvidence });
 server.listen(port, host, () => {
   console.log("NexLabs Founder read-only local dashboard at http://127.0.0.1:" + port);
+  console.log("Local deterministic fixture verified; NOT a real agent, real Founder approval or live production telemetry.");
 });

@@ -37,6 +37,22 @@ export function renderDashboard(data) {
   const workRows = data.work.items.slice(-9).reverse().map(item =>
     `<tr><td class="code">${esc(item.id)}</td><td>#${esc(item.issue)}</td><td><span class="pill ${item.status.includes("NOT_ADMITTED") ? "pending" : ""}">${esc(item.status)}</span></td></tr>`
   ).join("");
+  const f = data.offlineCell?.state === "OBSERVED_OFFLINE_FIXTURE" ? data.offlineCell : null;
+  const fixture = f ? `<div class="alert" aria-label="Evidências da célula offline">
+      <strong>Execução local medida, não ambiente de produção.</strong>
+      <p>Fonte: célula determinística WO-019 • aprovação: verificador de TESTE • recibos: ${esc(f.receiptIntegrity)}.</p>
+      <div class="cards">
+        <article class="card"><div class="kicker">Execuções de demonstração</div><div class="value">${esc(f.measured.offlineRuns)}</div></article>
+        <article class="card"><div class="kicker">Tentativas</div><div class="value">${esc(f.measured.attemptedProposals)}</div></article>
+        <article class="card"><div class="kicker">Falhas QA observadas</div><div class="value">${esc(f.measured.qaFailures)}</div></article>
+        <article class="card"><div class="kicker">Correções solicitadas</div><div class="value">${esc(f.measured.correctionsRequired)}</div></article>
+      </div>
+      <div class="row"><span class="muted">Handoff aguardando governança</span><span class="code">${esc(f.checkpointHandoff)}</span></div>
+      <div class="row"><span class="muted">Recibo final SHA-256</span><span class="code">${esc(f.evidenceHead)}</span></div>
+      <div class="row"><span class="muted">Identidade Founder real</span><strong>NÃO verificada (fixture)</strong></div>
+      <div class="row"><span class="muted">Agentes remotos / telemetria externa</span><strong>NÃO CONECTADOS</strong></div>
+      <p class="small">Veja /v1/offline-cell-evidence para os eventos sanitizados. Nenhuma execução libera merge ou checkpoint.</p>
+    </div>` : `<div class="alert" role="status">Não há evidência verificável de execução offline neste processo. Métricas indisponíveis, nunca zero presumido.</div>`;
   const metrics = [
     ["Execuções de agentes", data.operations.agentRuns],
     ["Aprovações operacionais", data.operations.approvals],
@@ -84,6 +100,8 @@ export function renderDashboard(data) {
       <div class="row"><span class="muted">Próxima ação</span><span class="code">${esc(g.nextLegalAction)}</span></div>
     </article>
   </section>
+  <div class="sectionline"><h2>Célula de engenharia, demonstração offline</h2><span class="small">Recibos medidos nesta sessão local</span></div>
+  ${fixture}
   <div class="sectionline"><h2>Operação e observabilidade</h2><span class="small">Sem integrações de produção</span></div>
   <section class="grid" aria-label="Observabilidade">
     <article class="panel"><h3>Sinais operacionais</h3>${metrics}</article>

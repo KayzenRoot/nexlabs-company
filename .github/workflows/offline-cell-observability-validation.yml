@@ -1,0 +1,74 @@
+name: Validate NexLabs Offline Cell Observability
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-cell-observability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate WO-023 sole admitted authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-023.json','utf8'));
+          const wo=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-023.md','utf8');
+          const registry=fs.readFileSync('.engineering/WORK-ORDER-REGISTRY.md','utf8');
+          if(cp.gefVersion!=='1.1.2'||cp.repositoryDisclosure!=='PUBLIC_SAFE_ONLY')throw Error('Wrong governance baseline');
+          if(lock.workOrderId!=='NXL-COMPANY-WO-023'||lock.issue!==64||lock.baseSha!=='86a328127585fe8a31b446fe0294da1c992490d5'||lock.state!=='LOCKED_FOR_WO_023')throw Error('Context Lock drift');
+          if(!wo.includes('ADMITTED / IN_PROGRESS')&&!wo.includes('APPROVED / MERGED'))throw Error('WO-023 not admitted/approved');
+          if(cp.activeWorkOrder==='NXL-COMPANY-WO-023') {
+            if(cp.activeIssue!==64||cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-023.json'||cp.admissionBaseSha!==lock.baseSha)throw Error('Active context drift');
+            if(!registry.includes('| NXL-COMPANY-WO-023 | #64 | ADMITTED / IN_PROGRESS |'))throw Error('Registry mismatch');
+          } else if(cp.activeWorkOrder!==null || !registry.includes('| NXL-COMPANY-WO-023 | #64 | APPROVED / MERGED |'))throw Error('Promoted state mismatch');
+          if(!fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8').includes('NOT_ADMITTED'))throw Error('Acceptance admitted prematurely');
+          for(const [p,sha] of Object.entries(lock.sourceBlobFingerprints)){
+            if(!fs.existsSync(p)||!/^[a-f0-9]{40}$/.test(sha))throw Error('Invalid source fingerprint '+p);
+          }
+          for(const p of ['company-os/founder/offline-evidence.mjs','company-os/founder/offline-evidence.test.mjs','company-os/OFFLINE-CELL-OBSERVABILITY.md'])if(!fs.existsSync(p))throw Error('Missing artifact '+p);
+          console.log('WO-023 source and single admission accepted');
+          NODE
+      - name: Node 22 syntax and bounded offline tests
+        run: |
+          node --check company-os/founder/offline-evidence.mjs
+          node --check company-os/founder/offline-evidence.test.mjs
+          node --check company-os/founder/server.mjs
+          node --check company-os/founder/cli.mjs
+          node --check company-os/founder/ui.mjs
+          node --test company-os/founder/*.test.mjs
+      - name: Docker localhost-only real evidence HTTP smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker compose -f infra/docker/compose.founder-demo.yaml config --quiet
+          docker compose -f infra/docker/compose.founder-demo.yaml up -d
+          trap 'docker compose -f infra/docker/compose.founder-demo.yaml stop founder-command-center' EXIT
+          ready=0
+          for i in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/v1/offline-cell-evidence -o /tmp/nxl-offline-evidence.json; then ready=1; break; fi
+            sleep 2
+          done
+          test "$ready" = 1
+          curl --fail --silent http://127.0.0.1:4173/v1/overview -o /tmp/nxl-overview.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const ev=JSON.parse(fs.readFileSync('/tmp/nxl-offline-evidence.json','utf8'));
+          const ov=JSON.parse(fs.readFileSync('/tmp/nxl-overview.json','utf8'));
+          if(ev.state!=='OBSERVED_OFFLINE_FIXTURE'||ev.receiptIntegrity!=='VERIFIED_SHA256_CHAIN')throw Error('Invalid receipt evidence');
+          if(ev.measured.offlineRuns!==1||ev.measured.qaFailures!==1||ev.measured.correctionsRequired!==1)throw Error('Missing measured failure/correction');
+          if(ev.realFounderIdentityVerified!==false||ev.mergeAuthorized!==false)throw Error('Fixture was promoted');
+          if(ov.operations.agentRuns.count!==null||ov.operations.approvals.count!==null)throw Error('External unobserved must remain null');
+          console.log('Real read-only HTTP and fixture origin verified');
+          NODE
