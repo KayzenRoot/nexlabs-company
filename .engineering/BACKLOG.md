@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. WO-023 local deterministic fixture visibility is APPROVED/MERGED; no active Work Order. WO-022 integrated acceptance audit is ADMITTED / IN_PROGRESS; explicit Founder acceptance remains PENDING. Cloud production deferred.
+WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. WO-023 local deterministic fixture visibility is APPROVED/MERGED. The last promoted `main` checkpoint lists no active Work Order, but WO-022 integrated acceptance is the sole ADMITTED / IN_PROGRESS Work Order in issue #23 and draft PR #67. This split authority MUST be reconciled before any successor admission; explicit Founder acceptance remains PENDING. Cloud production deferred.
 
 | WO | Issue | Classification | Phase | Status |
 | --- | ---: | --- | --- | --- |
