@@ -28,15 +28,17 @@ jobs:
           const registry=fs.readFileSync('.engineering/WORK-ORDER-REGISTRY.md','utf8');
           if(cp.gefVersion!=='1.1.2'||cp.repositoryDisclosure!=='PUBLIC_SAFE_ONLY')throw new Error('GEF/public boundary changed');
           if(lock.workOrderId!=='NXL-COMPANY-WO-020'||lock.issue!==21||lock.branch!=='feat/NXL-COMPANY-WO-020-founder-command-center')throw new Error('Lock identity mismatch');
-          if(!/^[0-9a-f]{40}$/.test(lock.baseSha)||cp.admissionBaseSha!==lock.baseSha)throw new Error('Git admission base mismatch');
+          if(!/^[0-9a-f]{40}$/.test(lock.baseSha))throw new Error('Invalid WO-020 base');
+          if(cp.activeWorkOrder==='NXL-COMPANY-WO-020'&&cp.admissionBaseSha!==lock.baseSha)throw new Error('Active WO-020 base mismatch');
           if(!wo.includes('ADMITTED / IN_PROGRESS')&&!wo.includes('APPROVED / MERGED'))throw new Error('WO-020 not in admitted/approved lifecycle');
           if(cp.activeWorkOrder==='NXL-COMPANY-WO-020') {
             if(cp.activeIssue!==21||cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-020.json')throw new Error('Active WO mismatch');
             if(!registry.includes('| NXL-COMPANY-WO-020 | #21 | ADMITTED / IN_PROGRESS |'))throw new Error('Registry mismatch');
-          } else if(cp.activeWorkOrder!==null||!registry.includes('| NXL-COMPANY-WO-020 | #21 | APPROVED / MERGED |')) {
+          } else if(!registry.includes('| NXL-COMPANY-WO-020 | #21 | APPROVED / MERGED |') ||
+                    (cp.activeWorkOrder!==null&&!registry.includes('| '+cp.activeWorkOrder+' | #'+cp.activeIssue+' | ADMITTED / IN_PROGRESS |'))) {
             throw new Error('Unknown WO-020 lifecycle');
           }
-          for(const n of [21,22]) {
+          for(const n of [22]) {
             const p='.engineering/work-orders/NXL-COMPANY-WO-'+String(n).padStart(3,'0')+'.md';
             if(!fs.readFileSync(p,'utf8').includes('NOT_ADMITTED'))throw new Error('Successor admitted: '+n);
           }

@@ -9,15 +9,23 @@ set -eu
 
 ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 cd "$ROOT"
+[ -f .env ] || { echo "Missing .env" >&2; exit 4; }
 DUMP="$1"
-[ -f "$DUMP" ] || { echo "Dump not found: $DUMP" >&2; exit 4; }
-
+[ -s "$DUMP" ] || { echo "Dump missing or empty: $DUMP" >&2; exit 4; }
 CID="$(docker compose --env-file .env -f compose.yml ps -q postgres)"
 [ -n "$CID" ] || { echo "Postgres container is not running." >&2; exit 5; }
 
-TMP="/tmp/nexlabs-restore.dump"
-docker cp "$DUMP" "$CID:$TMP"
-docker compose --env-file .env -f compose.yml exec -T postgres sh -ec 'pg_restore --clean --if-exists --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB" /tmp/nexlabs-restore.dump'
-docker compose --env-file .env -f compose.yml exec -T postgres rm -f "$TMP"
+# A unique remote temporary path prevents collisions across restore invocations.
+TMP="$(docker compose --env-file .env -f compose.yml exec -T postgres mktemp /tmp/nexlabs-restore.XXXXXX)"
+[ -n "$TMP" ] || { echo "Could not allocate temporary restore path" >&2; exit 6; }
+cleanup() { docker compose --env-file .env -f compose.yml exec -T postgres rm -f "$TMP" >/dev/null 2>&1 || :; }
+trap cleanup EXIT HUP INT TERM
 
-echo "PostgreSQL restore completed from $DUMP"
+docker cp "$DUMP" "$CID:$TMP"
+# Validate archive BEFORE any transactional data mutation.
+docker compose --env-file .env -f compose.yml exec -T postgres sh -ec '
+  pg_restore --list "$1" >/dev/null
+  pg_restore --single-transaction --exit-on-error --clean --if-exists --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB" "$1"
+' sh "$TMP"
+
+echo "PostgreSQL restore completed from $DUMP (single transaction)"

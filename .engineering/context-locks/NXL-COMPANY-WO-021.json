@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-021",
+  "issue": 22,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "infra/NXL-COMPANY-WO-021-local-recovery-readiness",
+  "baseSha": "dc38085cb057073a4551728dfc2a962b119903c0",
+  "state": "LOCKED_FOR_WO_021",
+  "admission": "ADMITTED",
+  "scope": "NECESSARY_LOCAL_RECOVERY_PROOF_ONLY",
+  "risk": "ELEVATED",
+  "environment": "EPHEMERAL_CI_FIXTURES_ONLY",
+  "sourceBlobFingerprints": {
+    ".engineering/CHECKPOINT.json": "641af335369fe7125b9377284a4c9690560f5743",
+    ".engineering/SCOPE.md": "d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/DECISIONS-LEDGER.md": "a8e12715ac1d6d5a6aaed734ae14a8aadfd1b2a8",
+    ".engineering/ARCHITECTURE.md": "38797d6b4c1423083afe6e3251bad9ae5668eb8c",
+    ".engineering/REQUIREMENTS.md": "2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/TEST-BENCHMARK-PLAN.md": "2a2945ded79bfa50397d7c16a8eca51db6919d4b",
+    "company-os/BACKUP-RESTORE-LOCAL.md": "4a69e7ea36877f30fdac0fa2c7e60c5ee5147b03",
+    "infra/docker/compose.yml": "f740199b308d7ae0379f19773e9b1a092a2ef07e",
+    ".engineering/work-orders/NXL-COMPANY-WO-021.md": "452110f22da43cee20235025bb8b985864ac1bef"
+  },
+  "allowedPaths": [
+    ".engineering/",
+    "infra/docker/scripts/restore-postgres.sh",
+    "infra/docker/scripts/restore-postgres.ps1",
+    "infra/docker/scripts/restore-artifacts.sh",
+    "infra/docker/scripts/restore-artifacts.ps1",
+    "infra/docker/scripts/ci-recovery-rehearsal.sh",
+    ".github/workflows/local-recovery-readiness-validation.yml",
+    ".github/workflows/engineering-cell-validation.yml",
+    ".github/workflows/founder-command-center-validation.yml",
+    "company-os/STAGING-PRODUCTION-READINESS.md",
+    "company-os/BACKUP-RESTORE-LOCAL.md",
+    "README.md",
+    ".github/workflows/local-docker-runtime-validation.yml"
+  ],
+  "externalProductionWrites": "PROHIBITED",
+  "restores": "ISOLATED_EPHEMERAL_CI_FIXTURES_ONLY",
+  "successor": "NXL-COMPANY-WO-022_NOT_ADMITTED"
+}

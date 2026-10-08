@@ -1,0 +1,64 @@
+name: Validate NexLabs Local Recovery Readiness
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  local-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate admission and isolated scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('node:fs');
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-021.json','utf8'));
+          const wo=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-021.md','utf8');
+          const registry=fs.readFileSync('.engineering/WORK-ORDER-REGISTRY.md','utf8');
+          if(lock.workOrderId!=='NXL-COMPANY-WO-021'||lock.issue!==22||!/^([0-9a-f]{40})$/.test(lock.baseSha))throw Error('Invalid lock');
+          if(cp.gefVersion!=='1.1.2'||cp.repositoryDisclosure!=='PUBLIC_SAFE_ONLY')throw Error('GEF/public boundary changed');
+          if(!['ADMITTED / IN_PROGRESS','APPROVED / MERGED'].some(s=>wo.includes(s)))throw Error('WO-021 lifecycle invalid');
+          if(cp.activeWorkOrder==='NXL-COMPANY-WO-021') {
+            if(cp.activeIssue!==22||cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-021.json'||cp.admissionBaseSha!==lock.baseSha)throw Error('Active context drift');
+            if(!registry.includes('| NXL-COMPANY-WO-021 | #22 | ADMITTED / IN_PROGRESS |'))throw Error('Registry drift');
+          } else if(cp.activeWorkOrder!==null||!registry.includes('| NXL-COMPANY-WO-021 | #22 | APPROVED / MERGED |'))throw Error('Checkpoint drift');
+          if(!fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8').includes('NOT_ADMITTED'))throw Error('WO-022 admitted prematurely');
+          if(lock.restores!=='ISOLATED_EPHEMERAL_CI_FIXTURES_ONLY')throw Error('Risk/restore boundary changed');
+          for(const [path,sha] of Object.entries(lock.sourceBlobFingerprints))if(!fs.existsSync(path)||!/^[0-9a-f]{40}$/.test(sha))throw Error('Invalid fingerprint: '+path);
+          console.log('WO-021 authority and scope validated');
+          NODE
+      - name: Validate shell and PowerShell syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash -n infra/docker/scripts/ci-recovery-rehearsal.sh
+          for f in infra/docker/scripts/*.sh; do
+            case "$f" in *ci-recovery-rehearsal.sh) bash -n "$f";; *) sh -n "$f";; esac
+          done
+      - name: Validate Windows PowerShell syntax
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem infra/docker/scripts/restore-*.ps1 | ForEach-Object {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) { throw "PowerShell syntax failed: $($_.Name)" }
+          }
+      - name: Confirm rehearsal refuses non-CI context
+        shell: bash
+        run: |
+          if env -u GITHUB_ACTIONS bash infra/docker/scripts/ci-recovery-rehearsal.sh; then
+            echo "CI-only safety boundary bypassed" >&2; exit 1
+          fi
+      - name: Real isolated PostgreSQL and artifact recovery rehearsal
+        shell: bash
+        run: bash infra/docker/scripts/ci-recovery-rehearsal.sh
