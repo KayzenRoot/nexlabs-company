@@ -1,0 +1,65 @@
+name: Validate NexLabs Founder Command Center
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  founder-command-center:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate WO-020 admission, single active order and public disclosure
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-020.json','utf8'));
+          const wo=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-020.md','utf8');
+          const registry=fs.readFileSync('.engineering/WORK-ORDER-REGISTRY.md','utf8');
+          if(cp.gefVersion!=='1.1.2'||cp.repositoryDisclosure!=='PUBLIC_SAFE_ONLY')throw new Error('GEF/public boundary changed');
+          if(lock.workOrderId!=='NXL-COMPANY-WO-020'||lock.issue!==21||lock.branch!=='feat/NXL-COMPANY-WO-020-founder-command-center')throw new Error('Lock identity mismatch');
+          if(!/^[0-9a-f]{40}$/.test(lock.baseSha)||cp.admissionBaseSha!==lock.baseSha)throw new Error('Git admission base mismatch');
+          if(!wo.includes('ADMITTED / IN_PROGRESS')&&!wo.includes('APPROVED / MERGED'))throw new Error('WO-020 not in admitted/approved lifecycle');
+          if(cp.activeWorkOrder==='NXL-COMPANY-WO-020') {
+            if(cp.activeIssue!==21||cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-020.json')throw new Error('Active WO mismatch');
+            if(!registry.includes('| NXL-COMPANY-WO-020 | #21 | ADMITTED / IN_PROGRESS |'))throw new Error('Registry mismatch');
+          } else if(cp.activeWorkOrder!==null||!registry.includes('| NXL-COMPANY-WO-020 | #21 | APPROVED / MERGED |')) {
+            throw new Error('Unknown WO-020 lifecycle');
+          }
+          for(const n of [21,22]) {
+            const p='.engineering/work-orders/NXL-COMPANY-WO-'+n+'.md';
+            if(!fs.readFileSync(p,'utf8').includes('NOT_ADMITTED'))throw new Error('Successor admitted: '+n);
+          }
+          for(const [p,sha] of Object.entries(lock.sourceBlobFingerprints)) {
+            if(!fs.existsSync(p)||!/^[0-9a-f]{40}$/.test(sha))throw new Error('Bad source fingerprint: '+p);
+          }
+          for(const p of ['company-os/founder/overview.mjs','company-os/founder/ui.mjs','company-os/founder/server.mjs','company-os/founder/cli.mjs','company-os/founder/overview.test.mjs','company-os/FOUNDER-COMMAND-CENTER.md']) {
+            if(!fs.existsSync(p))throw new Error('Missing deliverable: '+p);
+          }
+          console.log('WO-020 source and authority checks passed');
+          NODE
+      - name: Static checks
+        run: |
+          node --check company-os/founder/overview.mjs
+          node --check company-os/founder/ui.mjs
+          node --check company-os/founder/server.mjs
+          node --check company-os/founder/cli.mjs
+          node --check company-os/founder/overview.test.mjs
+      - name: Unit, integration and security negative tests
+        run: node --test company-os/founder/overview.test.mjs
+      - name: Docker compose least-privilege config
+        run: |
+          docker compose -f infra/docker/compose.founder-demo.yaml config --quiet
+          grep -q '127.0.0.1:4173:4173' infra/docker/compose.founder-demo.yaml
+          grep -q 'read_only: true' infra/docker/compose.founder-demo.yaml
+          ! grep -q 'docker.sock' infra/docker/compose.founder-demo.yaml
