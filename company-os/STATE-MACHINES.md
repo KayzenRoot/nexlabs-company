@@ -11,7 +11,7 @@ Alternate states:
 - `BLOCKED`
 - `CANCELLED`
 
-Blocked Work Orders may carry a versioned `blocked_reason` value while their
+Blocked Work Orders carry the versioned `blockedReason` field while their
 canonical `state` remains `BLOCKED`. The WO-022 administrative deferral uses
 `AWAITING_REMEDIATION`; `BLOCKED_AWAITING_REMEDIATION` is a derived display label,
 not a stored state. Unknown reason values fail closed. This disposition is

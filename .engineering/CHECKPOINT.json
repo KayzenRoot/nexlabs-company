@@ -15,7 +15,7 @@
   "activeStatus": "NONE",
   "knownCritical": 0,
   "knownHigh": 0,
-  "nextLegalAction": "MERGE_GOVERNANCE_PR_128_THEN_READ_BACK_ISSUE_23_AND_PR_67_BEFORE_WO_024_ADMISSION",
+  "nextLegalAction": "COMPLETE_EXACT_HEAD_CHECKS_AND_CODE_RABBIT_REVIEW_AND_OWNER_SELF_AUDIT_NOT_INDEPENDENT_THEN_MERGE_PR_128;_READ_BACK_ISSUE_23_AND_PR_67_BEFORE_WO_024_ADMISSION",
   "stopState": "RELEASE_NOT_APPROVED; DO_NOT_ADMIT_WO_024_UNTIL_PROVIDER_READBACK_CONFIRMS_ZERO_CONFLICTING_ADMISSION_CLAIMS",
   "wo022AdministrativeDisposition": {
     "schemaVersion": 1,
@@ -27,6 +27,8 @@
     "governancePr": 128,
     "auditHeadSha": "7a5e42b1e3bfd0736668279780ec13ae4f96e13b",
     "auditBaseSha": "d2f7acc85babd62cfacb87a4d061ef39e74a566d",
+    "governanceHeadSha": null,
+    "governanceMergeSha": null,
     "auditStatus": "BLOCKED_FOR_RELEASE",
     "releaseVerdict": "RELEASE_NOT_APPROVED",
     "founderReleaseAcceptance": "PENDING",

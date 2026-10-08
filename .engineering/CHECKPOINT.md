@@ -28,4 +28,4 @@
 - PR #128 exact-head review and merge, then fresh issue #23 / PR #67 provider readback, remain required. A missing, conflicting or stale readback leaves the slot blocked.
 
 ## Next legal action
-`MERGE_GOVERNANCE_PR_128_THEN_READ_BACK_ISSUE_23_AND_PR_67_BEFORE_WO_024_ADMISSION`. Prepare WO-024 only from the resulting fresh `main` SHA and a new Context Lock; do not represent the production Company OS as ready.
+`COMPLETE_EXACT_HEAD_CHECKS_AND_CODE_RABBIT_REVIEW_AND_OWNER_SELF_AUDIT_NOT_INDEPENDENT_THEN_MERGE_PR_128`, then read back issue #23 and PR #67. Prepare WO-024 only after reconciliation, from the resulting fresh `main` SHA and a new Context Lock; do not represent the production Company OS as ready.

@@ -69,6 +69,7 @@ Represents Founder, human operator, AI agent or system integration actor.
 - issue_ref
 - state (canonical lifecycle enum)
 - blocked_reason nullable (versioned, validated enum; required only while BLOCKED)
+- API and governance records serialize `blocked_reason` as the canonical `blockedReason` field.
 - display_label nullable (derived, never an authority field)
 - disposition_evidence_ref nullable
 - classification

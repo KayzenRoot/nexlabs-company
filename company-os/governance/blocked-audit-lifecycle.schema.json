@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "required": [
     "schemaVersion", "state", "blockedReason", "displayLabel", "auditIssue", "auditPr",
-    "governancePr", "auditHeadSha", "auditBaseSha", "auditStatus", "releaseVerdict",
+    "governancePr", "auditHeadSha", "auditBaseSha", "governanceHeadSha", "governanceMergeSha", "auditStatus", "releaseVerdict",
     "founderReleaseAcceptance", "proven", "partial", "blocked", "blockingAcceptanceCriterion",
     "reviewModality"
   ],
@@ -20,6 +20,8 @@
     "governancePr": { "const": 128 },
     "auditHeadSha": { "const": "7a5e42b1e3bfd0736668279780ec13ae4f96e13b" },
     "auditBaseSha": { "const": "d2f7acc85babd62cfacb87a4d061ef39e74a566d" },
+    "governanceHeadSha": { "type": ["string", "null"], "pattern": "^[a-f0-9]{40}$" },
+    "governanceMergeSha": { "type": ["string", "null"], "pattern": "^[a-f0-9]{40}$" },
     "auditStatus": { "const": "BLOCKED_FOR_RELEASE" },
     "releaseVerdict": { "const": "RELEASE_NOT_APPROVED" },
     "founderReleaseAcceptance": { "const": "PENDING" },

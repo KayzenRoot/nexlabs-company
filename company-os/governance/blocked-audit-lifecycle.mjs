@@ -32,6 +32,9 @@ function validateDisposition(d) {
       d.blocked !== 1 || d.blockingAcceptanceCriterion !== "ACC-03" ||
       d.reviewModality !== "CODERABBIT_PLUS_OWNER_SELF_AUDIT_NOT_INDEPENDENT")
     fail("INVALID_BLOCKED_ARCHIVE_MANIFEST");
+  const governanceReceiptMissing = d.governanceHeadSha === null && d.governanceMergeSha === null;
+  const governanceReceiptValid = sha40(d.governanceHeadSha) && sha40(d.governanceMergeSha);
+  if (!governanceReceiptMissing && !governanceReceiptValid) fail("INVALID_BLOCKED_ARCHIVE_MANIFEST");
   const allowed = Object.keys(schema.properties);
   if (Object.keys(d).some(key => !allowed.includes(key)) ||
       Object.keys(schema.properties).some(key => schema.required.includes(key) && !(key in d)))
@@ -89,9 +92,11 @@ function validAuditPr67(auditPr, disposition) {
     auditPr.disposition === "BLOCKED_UNMERGED_EVIDENCE";
 }
 
-function validGovernancePr128(governancePr, readback) {
-  return governancePr?.state === "MERGED" && governancePr.headSha === readback.governanceHeadSha &&
-    sha40(governancePr.mergeSha) && governancePr.reviewedHeadSha === governancePr.headSha &&
+function validGovernancePr128(governancePr, readback, expectedHeadSha, expectedMergeSha) {
+  return sha40(expectedHeadSha) && sha40(expectedMergeSha) &&
+    governancePr?.state === "MERGED" && governancePr.headSha === expectedHeadSha &&
+    readback.governanceHeadSha === expectedHeadSha && governancePr.mergeSha === expectedMergeSha &&
+    governancePr.reviewedHeadSha === expectedHeadSha &&
     governancePr.technicalReview === "COMMENTED" &&
     governancePr.ownerAudit === "OWNER_SELF_AUDIT / NOT_INDEPENDENT" && governancePr.checksPassed === true &&
     readback.governanceMergeIsAncestorOfMain === true;
@@ -118,7 +123,10 @@ function validateProviderReadback(readback, currentMainSha, disposition, success
   assertFreshReadback(readback, currentMainSha);
   if (!validIssue23(issue)) fail("EXTERNAL_ISSUE_STATE_CONFLICT");
   if (!validAuditPr67(auditPr, disposition)) fail("EXTERNAL_AUDIT_PR_STATE_CONFLICT");
-  if (!validGovernancePr128(governancePr, readback)) fail("GOVERNANCE_MERGE_READBACK_CONFLICT");
+  if (!validGovernancePr128(governancePr, readback,
+      disposition.governanceHeadSha, disposition.governanceMergeSha))
+    fail(disposition.governanceHeadSha === null || disposition.governanceMergeSha === null
+      ? "GOVERNANCE_REVIEW_RECEIPT_MISSING" : "GOVERNANCE_MERGE_READBACK_CONFLICT");
   if (!validSuccessorClaim(readback, successorActive)) fail("EXTERNAL_ACTIVE_ADMISSION_CLAIM");
   return true;
 }

@@ -16,12 +16,19 @@ const disposition = {
   schemaVersion: 1, state: "BLOCKED", blockedReason: "AWAITING_REMEDIATION",
   displayLabel: "BLOCKED_AWAITING_REMEDIATION", auditIssue: 23, auditPr: 67,
   governancePr: 128, auditHeadSha: auditHead, auditBaseSha: auditBase,
+  governanceHeadSha: null, governanceMergeSha: null,
   auditStatus: "BLOCKED_FOR_RELEASE", releaseVerdict: "RELEASE_NOT_APPROVED",
   founderReleaseAcceptance: "PENDING", proven: 19, partial: 6, blocked: 1,
   blockingAcceptanceCriterion: "ACC-03",
   reviewModality: "CODERABBIT_PLUS_OWNER_SELF_AUDIT_NOT_INDEPENDENT"
 };
 const blockedSource = () => structuredClone(source);
+const reconciledSource = () => {
+  const x = blockedSource();
+  x.checkpoint.wo022AdministrativeDisposition.governanceHeadSha = "b".repeat(40);
+  x.checkpoint.wo022AdministrativeDisposition.governanceMergeSha = "d".repeat(40);
+  return x;
+};
 const activeFixture = () => {
   const x = blockedSource();
   x.checkpoint = {...x.checkpoint, wo022AdministrativeDisposition: undefined,
@@ -85,8 +92,8 @@ test("validates the prior PLANNED state and the original admitted audit state", 
   assert.equal(active.canAdmitSuccessor, false);
 });
 
-test("only fresh, exact GitHub readback with no active claim releases the slot", () => {
-  const result = inspectWo022Archive({...blockedSource(), currentMainSha: "c".repeat(40),
+test("only a committed exact review receipt and fresh GitHub readback release the slot", () => {
+  const result = inspectWo022Archive({...reconciledSource(), currentMainSha: "c".repeat(40),
     providerReadback: validProviderReadback()});
   assert.equal(result.admissionSlotAvailable, true);
   assert.equal(result.canAdmitSuccessor, true);
@@ -94,11 +101,16 @@ test("only fresh, exact GitHub readback with no active claim releases the slot",
   assert.equal(result.ownerAudit, "OWNER_SELF_AUDIT / NOT_INDEPENDENT");
 });
 
+test("candidate checkpoint cannot release the slot from caller-supplied matching provider SHAs", () => {
+  reject({...blockedSource(), currentMainSha: "c".repeat(40),
+    providerReadback: validProviderReadback()}, "GOVERNANCE_REVIEW_RECEIPT_MISSING");
+});
+
 test("the current open, admitted issue and unmerged audit PR remain conflicting provider claims", () => {
   const p = validProviderReadback();
   p.issue23 = {state: "OPEN", workOrderState: "ADMITTED / IN_PROGRESS"};
   p.auditPr67.state = "OPEN";
-  reject({...blockedSource(), currentMainSha: "c".repeat(40), providerReadback: p},
+  reject({...reconciledSource(), currentMainSha: "c".repeat(40), providerReadback: p},
     "EXTERNAL_ISSUE_STATE_CONFLICT");
 });
 
@@ -128,7 +140,7 @@ test("rejects active claims in the checkpoint, registry, or provider even if ano
   const y = blockedSource(); y.checkpoint.activeWorkOrder = "NXL-COMPANY-WO-024";
   y.checkpoint.activeIssue = 68;
   reject(y, "SINGLE_ACTIVE_CONFLICT");
-  const z = {...blockedSource(), currentMainSha: "c".repeat(40), providerReadback: validProviderReadback()};
+  const z = {...reconciledSource(), currentMainSha: "c".repeat(40), providerReadback: validProviderReadback()};
   z.providerReadback.activeAdmissionClaims = ["NXL-COMPANY-WO-022"];
   reject(z, "EXTERNAL_ACTIVE_ADMISSION_CLAIM");
 });
@@ -136,15 +148,19 @@ test("rejects active claims in the checkpoint, registry, or provider even if ano
 test("rejects stale, mismatched, incomplete or partial provider write readback", () => {
   const main = "c".repeat(40);
   const stale = validProviderReadback(main); stale.observedAt = "2020-01-01T00:00:00.000Z";
-  reject({...blockedSource(), currentMainSha: main, providerReadback: stale}, "RECOVERY_REQUIRED_STALE_PROVIDER_READBACK");
+  reject({...reconciledSource(), currentMainSha: main, providerReadback: stale}, "RECOVERY_REQUIRED_STALE_PROVIDER_READBACK");
   const mismatch = validProviderReadback(main); mismatch.checkpointSha = "d".repeat(40);
-  reject({...blockedSource(), currentMainSha: main, providerReadback: mismatch}, "RECOVERY_REQUIRED_STALE_PROVIDER_READBACK");
+  reject({...reconciledSource(), currentMainSha: main, providerReadback: mismatch}, "RECOVERY_REQUIRED_STALE_PROVIDER_READBACK");
   const partial = validProviderReadback(main); partial.auditPr67.merged = true;
-  reject({...blockedSource(), currentMainSha: main, providerReadback: partial}, "EXTERNAL_AUDIT_PR_STATE_CONFLICT");
+  reject({...reconciledSource(), currentMainSha: main, providerReadback: partial}, "EXTERNAL_AUDIT_PR_STATE_CONFLICT");
   const fakeReview = validProviderReadback(main);
   fakeReview.governancePr128.ownerAudit = "OWNER_SELF_AUDIT_APPROVED / INDEPENDENT";
-  reject({...blockedSource(), currentMainSha: main, providerReadback: fakeReview}, "GOVERNANCE_MERGE_READBACK_CONFLICT");
-  reject({...blockedSource(), currentMainSha: main, providerReadback: {observedMainSha: main}},
+  reject({...reconciledSource(), currentMainSha: main, providerReadback: fakeReview}, "GOVERNANCE_MERGE_READBACK_CONFLICT");
+  const wrongExpectedReceipt = reconciledSource();
+  wrongExpectedReceipt.checkpoint.wo022AdministrativeDisposition.governanceHeadSha = "e".repeat(40);
+  reject({...wrongExpectedReceipt, currentMainSha: main, providerReadback: validProviderReadback(main)},
+    "GOVERNANCE_MERGE_READBACK_CONFLICT");
+  reject({...reconciledSource(), currentMainSha: main, providerReadback: {observedMainSha: main}},
     "RECOVERY_REQUIRED_PROVIDER_EVIDENCE_MISSING");
 });
 
@@ -167,7 +183,7 @@ test("rejects false release approval, completion promotion, and a second active 
 });
 
 test("block release authorization regardless of a reconciled admission slot", () => {
-  const result = inspectWo022Archive({...blockedSource(), currentMainSha: "c".repeat(40),
+  const result = inspectWo022Archive({...reconciledSource(), currentMainSha: "c".repeat(40),
     providerReadback: validProviderReadback()});
   assert.equal(result.canRelease, false);
   assert.equal(result.mode, "BLOCKED_AWAITING_REMEDIATION");
