@@ -26,10 +26,11 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 19 | Investor system | `company/INVESTOR-READINESS-OPERATING-MODEL.md` plus supporting pitch/data-room/investor documents |
 | 20 | Company OS architecture | `company-os/ARCHITECTURE.md` plus functional architecture contracts |
 | 21 | Local Docker runtime | `company-os/LOCAL-DOCKER-RUNTIME.md` plus `infra/docker/` executable contracts |
-| 22 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 23 | Deployment | `DEPLOYMENT.md` |
-| 24 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 25 | Conversation | transient context only |
+| 22 | Agent runtime | `company-os/AGENT-RUNTIME-DESIGN.md` plus Hermes integration and contract tests |
+| 23 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 24 | Deployment | `DEPLOYMENT.md` |
+| 25 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 26 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -295,3 +296,8 @@ Supporting canonical sources:
 - executable Compose/config/scripts under `infra/docker/`
 
 The local runtime implements WO-016 architecture. It may not redefine PostgreSQL canonical truth, Redis non-authoritative semantics, provider independence, secret boundaries or high-assurance controls.
+
+
+## Agent runtime authority
+
+`company-os/AGENT-RUNTIME-DESIGN.md` governs provider-neutral session/tool/memory/budget/routing semantics. `company-os/HERMES-ADAPTER-SPEC.md` pins Hermes as a replaceable design adapter, not a required provider or host installation. Executable pure contract tests are under `company-os/contracts/`. Company OS governance and security policies outrank adapter affordances.

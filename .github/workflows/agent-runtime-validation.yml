@@ -1,0 +1,47 @@
+name: Validate NexLabs Agent Runtime
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  agent-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check agent design and test invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const files=[
+            'company-os/AGENT-RUNTIME-DESIGN.md','company-os/HERMES-ADAPTER-SPEC.md',
+            'company-os/AGENT-SESSION-PROTOCOL.md','company-os/MODEL-ROUTING-AND-FALLBACK.md',
+            'company-os/TOOL-CAPABILITY-BROKER.md','company-os/AGENT-MEMORY-BOUNDARIES.md',
+            'company-os/AGENT-BUDGET-AND-TELEMETRY.md','company-os/AGENT-FAILURE-AND-RECOVERY.md',
+            'company-os/AGENT-CONTRACT-TEST-PLAN.md',
+            'company-os/contracts/agent-runtime.mjs','company-os/contracts/agent-runtime.test.mjs'
+          ];
+          for(const file of files) if(!fs.existsSync(file)) throw new Error('Missing runtime file: '+file);
+          const read=x=>fs.readFileSync(x,'utf8');
+          if(!read(files[0]).includes('provider')||!read(files[1]).includes('NOT EXECUTED')) throw new Error('Runtime/Hermes execution boundary unclear');
+          if(!read('company-os/TOOL-CAPABILITY-BROKER.md').includes('HIGH_ASSURANCE')) throw new Error('High assurance missing');
+          if(!read('company-os/AGENT-FAILURE-AND-RECOVERY.md').includes('RECOVERY_REQUIRED')) throw new Error('Recovery boundary missing');
+          if(!read('company-os/AGENT-MEMORY-BOUNDARIES.md').includes('non-canonical') && !read('company-os/AGENT-MEMORY-BOUNDARIES.md').includes('never change policy')) throw new Error('Memory boundary missing');
+          const wo=read('.engineering/work-orders/NXL-COMPANY-WO-018.md');
+          if(!wo.includes('ADMITTED / IN_PROGRESS')&&!wo.includes('APPROVED / MERGED')) throw new Error('WO-018 lifecycle invalid');
+          const cp=JSON.parse(read('.engineering/CHECKPOINT.json'));
+          if(cp.activeWorkOrder && cp.activeWorkOrder!=='NXL-COMPANY-WO-018') throw new Error('Unexpected active WO');
+          console.log('Agent Runtime architecture structure valid');
+          NODE
+          node --test company-os/contracts/agent-runtime.test.mjs
