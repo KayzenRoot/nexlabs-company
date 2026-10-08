@@ -57,6 +57,7 @@ test("unregistered, missing, duplicated or admitted candidate issues fail closed
   rejects({candidateIssues:issueFixtures.slice(1)},"ROADMAP_INCOMPLETE");
   rejects({candidateIssues:[...issueFixtures.slice(0,-1),issueFixtures[0]]},"CANDIDATE_NOT_SAFE");
   rejects({candidateIssues:issueFixtures.map((x,i)=>i===0?{...x,state:"ADMITTED"}:x)},"CANDIDATE_NOT_SAFE");
+  rejects({candidateIssues:issueFixtures.map((x,i)=>i===0?{...x,issueNumber:9999}:x)},"CANDIDATE_NOT_SAFE");
   rejects({candidateIssues:issueFixtures.map((x,i)=>i===0?{...x,id:"NXL-COMPANY-WO-999"}:x)},"CANDIDATE_NOT_SAFE");
 });
 
