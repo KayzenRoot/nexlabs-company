@@ -12,7 +12,7 @@
 
 This is an evidence assessment, **not** production deployment or signed acceptance. The project currently proves a deterministic offline engineering cell, governed Git workflow, local Docker reproducibility and synthetic-data recovery, not a continuously running AI-native company with authenticated agents and durable live Company OS state. Passing CI only verifies that code/tests and structural contracts succeed, not that external systems exist.
 
-The 26 DoD obligations are mapped explicitly in `v01-obligations.json` with exact source paths and a human-authored limitation note. A source path existing is **not itself proof** of its claim. The read-only audit script verifies existence, mandatory count, schema and status honesty, denies unsafe paths and refuses fictional Founder approval flags.
+**Current matrix:** 19 `PROVEN` within bounded claims, 6 `PARTIAL`, 1 `BLOCKED` (after scoped OPS-03 secret-scan evidence). The HEAD of this report must still pass its own exact-head CI and review before any final audit claim.\n\nThe 26 DoD obligations are mapped explicitly in `v01-obligations.json` with exact source paths and a human-authored limitation note. A source path existing is **not itself proof** of its claim. The read-only audit script verifies existence, mandatory count, schema and status honesty, denies unsafe paths and refuses fictional Founder approval flags.
 
 ## Findings requiring a release decision
 
@@ -23,7 +23,7 @@ The 26 DoD obligations are mapped explicitly in `v01-obligations.json` with exac
 | MVP-02 | PARTIAL | The cell produces a local plan and virtual Work Order; real Company OS admission authority is external GEF |
 | MVP-05 | PARTIAL | The cell emits QA and correction signals; independent final review is outside the cell |
 | OPS-01 | PARTIAL | Founder visibility is proven for a local **fixture**, not actual authenticated agents, real approvals or production failures |
-| OPS-03 | PARTIAL | GitIgnore and CI contracts exist; no complete independent credential/secret scan evidence |
+| OPS-03 | PROVEN (bounded) | PR and full-history secret pattern scan passed at audited prior head: 664 commits, eight precisely triaged false positives; evidence in `WO-022-SECRET-SCAN-TRIAGE.md`. This is not full credential/security assurance. |
 | ACC-01 | PARTIAL | Integrated review currently in progress |
 | ACC-03 | BLOCKED | User has not explicitly accepted an exact v0.1 release scope and risk statement |
 
@@ -34,7 +34,7 @@ The 26 DoD obligations are mapped explicitly in `v01-obligations.json` with exac
 - **R-01 / release-blocking:** Real Founder acceptance absent. Release cannot be declared complete.
 - **R-02 / release-blocking subject to Scope review:** v0.1 minimum operational visibility covers only an offline fixture. Decide whether the Source Pack's requirement is satisfied for a local prototype or whether an authenticated real agent/approval pipeline is NECESSARY.
 - **R-03 / significant:** No real canonical PostgreSQL Company OS data model and audit/outbox integrated with this dashboard. Contract/design approved; implementation outside this audited increment.
-- **R-04 / significant:** No independent security/secret scan in this repository evidenced. Existing negative/security code tests and 22 checks are not a substitute.
+- **R-04 / significant, partially mitigated:** Automated Gitleaks PR/full-history detection is now evidenced, with eight exact false-positive fingerprints investigated and no unhandled findings across 664 commits. This scanner is not independent comprehensive security/credentials assurance; see `.engineering/audits/WO-022-SECRET-SCAN-TRIAGE.md`.
 - **R-05 / limited to production:** Artifact restore destination copy is not atomic; only CI synthetic-data restore is demonstrated. Not an approved production recovery posture.
 - **R-06 / governance:** Self-audit reviews are explicitly NOT_INDEPENDENT; release may require separate reviewer when available.
 
