@@ -1,0 +1,23 @@
+# WO-020 local-only, read-only proof. Never publish this dashboard remotely.
+services:
+  founder-command-center:
+    image: node:22-alpine
+    working_dir: /app
+    command: ["node", "company-os/founder/cli.mjs"]
+    environment:
+      PORT: "4173"
+      HOST: "0.0.0.0"
+      LOCAL_CONTAINER_DEMO: "true"
+    ports:
+      - "127.0.0.1:4173:4173"
+    volumes:
+      - ../../:/app:ro
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 60
+    mem_limit: 192m
+    cpus: 0.5
+    restart: "no"
