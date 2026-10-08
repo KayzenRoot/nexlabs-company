@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. WO-023 local deterministic fixture visibility is APPROVED/MERGED; no active Work Order. WO-022 integrated acceptance remains NOT_ADMITTED pending explicit admission and Founder acceptance. Cloud production deferred.
+WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. WO-023 local deterministic fixture visibility is APPROVED/MERGED; no active Work Order. WO-022 integrated acceptance audit is ADMITTED / IN_PROGRESS; explicit Founder acceptance remains PENDING. Cloud production deferred.
 
 | WO | Issue | Classification | Phase | Status |
 | --- | ---: | --- | --- | --- |
@@ -26,7 +26,7 @@ WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local rec
 | NXL-COMPANY-WO-019 | #20 | NECESSARY | MVP Build | APPROVED / MERGED |
 | NXL-COMPANY-WO-020 | #21 | IMPORTANT | Founder Operations | APPROVED / MERGED |
 | NXL-COMPANY-WO-021 | #22 | IMPORTANT | Local Recovery Required Subset | APPROVED / MERGED |
-| NXL-COMPANY-WO-022 | #23 | NECESSARY | Integrated Acceptance | PLANNED / NOT_ADMITTED |
+| NXL-COMPANY-WO-022 | #23 | NECESSARY | Integrated Acceptance | ADMITTED / IN_PROGRESS |
 | NXL-COMPANY-WO-023 | #64 | NECESSARY | Pre-acceptance Local Observability | APPROVED / MERGED |
 
 ## Phase gates
