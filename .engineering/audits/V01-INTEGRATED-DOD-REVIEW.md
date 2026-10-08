@@ -40,6 +40,14 @@ The 26 DoD obligations are mapped explicitly in `v01-obligations.json` with exac
 - **R-05 / limited to production:** Artifact restore destination copy is not atomic; only CI synthetic-data restore is demonstrated. Not an approved production recovery posture.
 - **R-06 / governance:** Self-audit reviews are explicitly NOT_INDEPENDENT; release may require separate reviewer when available.
 
+## Founder-directed remediation program (not admitted)
+
+The Founder directed that the missing real Company OS integrations be implemented before claiming 100% functioning and v0.1 acceptance. This is a new *engineering objective*, **not** approval of the current incomplete release candidate. The existing WO-022 has a read-only Context Lock and cannot lawfully implement those integrations in the same branch.
+
+A governed, dependency-ordered remediation plan was added in [`WO-022-LIVE-INTEGRATION-REMEDIATION.md`](WO-022-LIVE-INTEGRATION-REMEDIATION.md). Candidate planning issues [WO-024/#68](https://github.com/KayzenRoot/nexlabs-company/issues/68) through [WO-031/#75](https://github.com/KayzenRoot/nexlabs-company/issues/75) are **PLANNED / NOT_ADMITTED** and propose canonical persistence, Founder authentication, GEF admission, sandboxed tools/MCP/Jev, actual LLM agents, reviewed GitHub operations, live Founder visibility and independent security plus integrated acceptance.
+
+**Governance blocker:** WO-022 remains `ADMITTED / IN_PROGRESS` and the PR states **STOP / DRAFT / no merge while release evidence is blocked**. The canonical single-active-Work-Order rule and immutable original Context Lock must be reconciled through an explicit reviewable transition before any successor implementation is admitted. No success status, release tag, merge, authenticated approval or active agent is implied by these planned issues.
+
 ## Proposed next gates
 
 1. Complete reproducible exact-head 23/23 GitHub Actions checks for this audit Work Order, and reconcile the source fingerprints.
