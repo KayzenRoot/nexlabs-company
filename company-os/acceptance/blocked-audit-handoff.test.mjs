@@ -22,6 +22,13 @@ const fixture=Object.freeze({
     baseSha:"d2f7acc85babd62cfacb87a4d061ef39e74a566d",
     headSha:"0beec70b2ff03ea17a4df29c08c0d0b297ac9da6",
     headBranch:"audit/NXL-COMPANY-WO-022-v01-integrated-acceptance"},
+  // Static governance PR fixture: provenance must be checked against real GitHub
+  // in a future authorized transition. This unit test never grants authority.
+  governancePr:{number:128,state:"open",draft:true,merged:false,
+    author:"KayzenRoot",
+    baseSha:"d2f7acc85babd62cfacb87a4d061ef39e74a566d",
+    headSha:"172f1e8d9f2ffb2aed7f3283b83ee7dfbb1a8a4f",
+    headBranch:"governance/NXL-GOV-blocked-audit-handoff-proposal"},
   successorIssue:{number:68,id:"NXL-COMPANY-WO-024",state:"open",
     admission:"PLANNED_NOT_ADMITTED"},
   decision:{issue:127,state:"FOUNDER_PROPOSAL_APPROVED",
@@ -41,6 +48,7 @@ test("founder approval produces a review packet, NEVER execution permission",()=
   assert.equal(result.founderGovernanceDirection,"APPROVED_IN_CONVERSATION");
   assert.equal(result.reviewState,"INDEPENDENT_REVIEW_MISSING");
   assert.equal(result.authorityDivergence,"BASE_MAIN_IDLE_AUDIT_BRANCH_ACTIVE");
+  assert.equal(result.proposedGovernanceReviewHead,fixture.governancePr.headSha);
   assert.equal(result.auditVerdict,"RELEASE_NOT_APPROVED");
   assert.equal(result.releaseFounderAcceptance,"PENDING");
   assert.equal(result.canAmendCanonicalPolicy,false);
@@ -57,6 +65,9 @@ test("predecessor divergence and stale authority fail closed",()=>{
   refuses({auditPr:{...fixture.auditPr,draft:false}},"AUDIT_PR_CONFLICT");
   refuses({auditPr:{...fixture.auditPr,headSha:"unknown"}},"AUDIT_PR_CONFLICT");
   refuses({successorIssue:{...fixture.successorIssue,admission:"ADMITTED"}},"SUCCESSOR_NOT_PLANNED");
+  refuses({governancePr:{...fixture.governancePr,number:129}},"GOVERNANCE_PR_CONFLICT");
+  refuses({governancePr:{...fixture.governancePr,headSha:"stale"}},"GOVERNANCE_PR_CONFLICT");
+  refuses({governancePr:{...fixture.governancePr,draft:false}},"GOVERNANCE_PR_CONFLICT");
 });
 
 test("governance direction cannot be rewritten into release acceptance",()=>{
@@ -69,9 +80,11 @@ test("governance direction cannot be rewritten into release acceptance",()=>{
 
 test("reviewer must be separate and exact-head, and metadata still cannot grant authority",()=>{
   const good={source:"GITHUB_NATIVE_READBACK",reviewer:"independent-example",
-    verdict:"APPROVED",reviewId:123,reviewedHead:fixture.auditPr.headSha};
+    verdict:"APPROVED",reviewId:123,reviewedHead:fixture.governancePr.headSha};
   refuses({independentReview:{...good,reviewer:"KayzenRoot"}},"REVIEW_EVIDENCE_INVALID");
   refuses({independentReview:{...good,reviewedHead:"e".repeat(40)}},"REVIEW_EVIDENCE_INVALID");
+  // A review of the *audit* PR cannot certify the *governance policy* PR.
+  refuses({independentReview:{...good,reviewedHead:fixture.auditPr.headSha}},"REVIEW_EVIDENCE_INVALID");
   refuses({independentReview:{...good,source:"SELF_ATTESTED"}},"REVIEW_EVIDENCE_INVALID");
   refuses({independentReview:{...good,verdict:"COMMENTED"}},"REVIEW_EVIDENCE_INVALID");
   const result=classify({independentReview:good});
@@ -96,7 +109,7 @@ test("unreviewed, supposedly qualified or merely automated review cannot transfe
   const approvedMetadata={
     source:"GITHUB_NATIVE_READBACK",reviewer:"independent-provider",
     verdict:"APPROVED",reviewId:700,
-    reviewedHead:fixture.auditPr.headSha
+    reviewedHead:fixture.governancePr.headSha
   };
   // A caller can assert plausible identity/IDs but cannot confer power.
   const apparentApproval=classify({independentReview:approvedMetadata});
