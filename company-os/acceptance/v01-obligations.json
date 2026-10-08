@@ -175,11 +175,13 @@
     },
     {
       "id": "OPS-03",
-      "status": "PARTIAL",
+      "status": "PROVEN",
       "evidence": [
-        ".github/workflows/local-docker-runtime-validation.yml"
+        ".github/workflows/integrated-acceptance-validation.yml",
+        "company-os/acceptance/.gitleaksignore",
+        ".engineering/audits/WO-022-SECRET-SCAN-TRIAGE.md"
       ],
-      "reason": "Ignored secrets and policy checked; comprehensive secret scan unavailable"
+      "reason": "Historical/PR Gitleaks v8.24.3 scans passed (664 full-history commits at audited SHA); 8 precisely fingerprinted non-secret false positives self-triaged. Only scoped automated screening, not full security clearance."
     },
     {
       "id": "OPS-04",
