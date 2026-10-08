@@ -100,3 +100,20 @@ Examples:
 - `CORRECTION_REQUIRED → COMPLETE`
 - `MERGED → successor EXECUTING` before checkpoint promotion/admission
 - `RECOVERY_REQUIRED → blind mutation retry`
+
+## Proposed non-success blocked release-audit deferral (governance amendment)
+
+**Scope:** only an admitted **release acceptance audit** that remains objectively `BLOCKED / RELEASE_NOT_APPROVED`, with implementation remediation outside its immutable Context Lock.
+
+The Founder may explicitly authorize a **separate governance amendment proposal** for `BLOCKED_AWAITING_REMEDIATION`, even while the audit is active. This authorizes **proposal and independent governance review only**, not a second ADMITTED Work Order, release, or implementation.
+
+The blocked audit may relinquish its sole-admission slot **only after**:
+- a governance amendment is accepted through independent, exact-head review and separately recorded Founder direction;
+- the frozen audit verdict/issue/PR/Context Lock/CI evidence and outstanding DoD gaps are preserved;
+- a bounded administrative handoff reconciles checkpoint MD/JSON, registry, backlog, issue and audit PR, with expected Git SHAs and readback of all provider writes;
+- validators demonstrably recognize the **non-success** blocked deferral without treating it as APPROVED/MERGED/COMPLETE;
+- no other Work Order is ADMITTED during the transition.
+
+`BLOCKED_AWAITING_REMEDIATION` means **deferred incomplete audit**, not `APPROVED`, `MERGED`, `CHECKPOINT_PROMOTION`, `COMPLETE`, `RELEASED` or release acceptance. Ambiguous or partial state writes move to `RECOVERY_REQUIRED`, never to a free admission slot. The deferred audit cannot resume under the old Context Lock. After separately admitted remediation, a **new final acceptance Work Order** must test the exact release candidate and receive distinct Founder release acceptance.
+
+This exceptional transition may not waive high-assurance security/finance actions, independent reviewers or ordinary admission requirements for the successor. No branch-protection bypass, force-push or approval-by-chat-only is permitted.
