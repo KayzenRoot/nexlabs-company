@@ -49,7 +49,9 @@ jobs:
           const cp = JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
           const statuses = new Map();
 
-          for (let n=2;n<=22;n++) {
+          // Explicit pre-acceptance remediation precedes the already reserved WO-022.
+          const ordered = [...Array.from({length:20}, (_,i) => i+2), 23, 22];
+          for (const n of ordered) {
             const id = 'NXL-COMPANY-WO-' + String(n).padStart(3,'0');
             const path = '.engineering/work-orders/' + id + '.md';
             if (!fs.existsSync(path)) throw new Error('Missing Work Order: ' + id);
@@ -72,29 +74,20 @@ jobs:
           }
 
           const completedRef = String(cp.completedThroughWorkOrder || '');
-          const completedToken = completedRef.includes('WO-') ? completedRef.split('WO-').pop() : '';
-          const completedN = Number(completedToken);
-          if (!Number.isInteger(completedN) || completedN < 2 || completedN > 22) {
-            throw new Error('Checkpoint must declare a valid completedThroughWorkOrder');
-          }
+          const completionIndex = ordered.findIndex(n => completedRef === 'NXL-COMPANY-WO-' + String(n).padStart(3,'0'));
+          if (completionIndex < 0) throw new Error('Invalid checkpoint completion reference');
 
-          for (let n=2;n<=22;n++) {
-            const id = 'NXL-COMPANY-WO-' + String(n).padStart(3,'0');
+          for (let index = 0; index < ordered.length; index++) {
+            const id = 'NXL-COMPANY-WO-' + String(ordered[index]).padStart(3,'0');
             const status = statuses.get(id);
-
-            if (n <= completedN) {
-              if (!status.includes('APPROVED / MERGED')) {
-                throw new Error(id + ' is at/below completedThroughWorkOrder but is not APPROVED / MERGED');
-              }
-              continue;
-            }
-
-            if (cp.activeWorkOrder === id) {
-              if (!status.startsWith('ADMITTED')) {
-                throw new Error(id + ' is active but not ADMITTED');
+            if (index <= completionIndex) {
+              if (!status.includes('APPROVED / MERGED')) throw new Error(id + ' required complete before checkpoint');
+            } else if (cp.activeWorkOrder === id) {
+              if (index !== completionIndex + 1 || !status.startsWith('ADMITTED')) {
+                throw new Error(id + ' cannot bypass predecessor or admission');
               }
             } else if (!status.includes('NOT_ADMITTED')) {
-              throw new Error(id + ' is future/non-active and must remain NOT_ADMITTED');
+              throw new Error(id + ' has no admission authority');
             }
           }
 
