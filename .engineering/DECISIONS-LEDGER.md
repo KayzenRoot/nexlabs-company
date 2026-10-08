@@ -701,3 +701,20 @@
 ## D-0171 — MVP proof is bounded to an offline local demonstration
 **Status:** APPROVED IN WO-019
 **Decision:** Contract/E2E tests with deterministic injected adapters validate the control flow, not live provider security or autonomous production code delivery. Production capability claims require separately reviewed integration evidence.
+
+
+## D-0172 — WO-021 admits only local DoD recovery proof
+**Status:** APPROVED IN WO-021 (BOUNDED SCOPE)  
+**Decision:** The IMPORTANT production/cloud migration roadmap item is narrowed to the v0.1 NECESSARY requirement for tested **local CI fixture** recovery. No staging/production deployment is authorized or implied. External 24/7 migration remains FUTURE until separately admitted.
+
+## D-0173 — PostgreSQL restore validates and executes as one transaction
+**Status:** APPROVED IN WO-021  
+**Decision:** Restores must validate custom-format dump before mutation, require explicit destructive confirmation and use a single SQL transaction with fail-fast behavior. Shell and PowerShell keep equivalent security gates. Test synthetic backup->mutate->restore on isolated CI DB.
+
+## D-0174 — Artifact restore must prevalidate; file copy is not atomic
+**Status:** APPROVED IN WO-021  
+**Decision:** Archive listing/extraction must succeed before destructive changes to the target volume. Trusted provenance is an operator responsibility, and the final volume copy is not atomic. No production durability/RPO claim is permitted without staged/versioned cutover, backup and recovery proof.
+
+## D-0175 — Real Founder operations observability remains an open release gate
+**Status:** APPROVED IN WO-021 (GAP RECOGNITION)  
+**Decision:** A local engineering Git snapshot or a CI restore cannot be represented as live agent run, approval, failure, cost or service observability. WO-020 real operational metrics remain NOT_CONNECTED. v0.1 integrated acceptance requires explicit evidence or truthful correction of this DoD gap.
