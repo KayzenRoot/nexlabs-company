@@ -74,4 +74,23 @@ jobs:
           set -euo pipefail
           scanner="/tmp/gitleaks-8.24.3/gitleaks"
           if [ ! -x "$scanner" ]; then echo "Pinned Gitleaks binary unavailable"; exit 1; fi
-          "$scanner" git --log-opts="--all" --redact --exit-code=2 .
+          set +e
+          "$scanner" git --log-opts="--all" --redact --exit-code=2 --report-format=json --report-path=/tmp/nxl-wo022-history.json .
+          result=$?
+          set -e
+          if [ -s /tmp/nxl-wo022-history.json ]; then
+            node <<'NODE'
+          const fs=require('fs');
+          const rows=JSON.parse(fs.readFileSync('/tmp/nxl-wo022-history.json','utf8'));
+          const summary=new Map();
+          for(const row of rows){
+            const rule=String(row.RuleID||'unknown').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,65);
+            const file=String(row.File||'unknown').replace(/[^a-zA-Z0-9./_-]/g,'_').slice(0,150);
+            const key=rule+' :: '+file;
+            summary.set(key,(summary.get(key)||0)+1);
+          }
+          console.log('WO-022 historical findings (metadata ONLY; no secrets):',JSON.stringify([...summary].map(([key,count])=>({key,count}))));
+          console.log('WO-022 total historical findings:',rows.length);
+          NODE
+          fi
+          exit "$result"
