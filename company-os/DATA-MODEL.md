@@ -67,7 +67,10 @@ Represents Founder, human operator, AI agent or system integration actor.
 - work_order_key
 - project_id nullable
 - issue_ref
-- status
+- state (canonical lifecycle enum)
+- blocked_reason nullable (versioned, validated enum; required only while BLOCKED)
+- display_label nullable (derived, never an authority field)
+- disposition_evidence_ref nullable
 - classification
 - risk_class
 - admission_base_sha

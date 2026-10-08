@@ -11,11 +11,19 @@ Alternate states:
 - `BLOCKED`
 - `CANCELLED`
 
+Blocked Work Orders may carry a versioned `blocked_reason` value while their
+canonical `state` remains `BLOCKED`. The WO-022 administrative deferral uses
+`AWAITING_REMEDIATION`; `BLOCKED_AWAITING_REMEDIATION` is a derived display label,
+not a stored state. Unknown reason values fail closed. This disposition is
+non-success and preserves `RELEASE_NOT_APPROVED` / Founder acceptance `PENDING`.
+
 Rules:
 - only one admitted Work Order where governing policy requires serialization;
 - candidate-head change invalidates old exact-head evidence;
 - `MERGED` does not imply `PROMOTED`;
 - successor cannot execute before required promotion/admission.
+- a blocked audit releases its sole-admission slot only after exact canonical and
+  provider state reconciliation; an idle checkpoint alone cannot establish it.
 
 ## Task
 

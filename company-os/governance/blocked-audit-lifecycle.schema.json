@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KayzenRoot/nexlabs-company/blob/main/company-os/governance/blocked-audit-lifecycle.schema.json",
+  "title": "NexLabs non-success blocked acceptance audit disposition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "state", "blockedReason", "displayLabel", "auditIssue", "auditPr",
+    "governancePr", "auditHeadSha", "auditBaseSha", "auditStatus", "releaseVerdict",
+    "founderReleaseAcceptance", "proven", "partial", "blocked", "blockingAcceptanceCriterion",
+    "reviewModality"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "state": { "const": "BLOCKED" },
+    "blockedReason": { "const": "AWAITING_REMEDIATION" },
+    "displayLabel": { "const": "BLOCKED_AWAITING_REMEDIATION" },
+    "auditIssue": { "const": 23 },
+    "auditPr": { "const": 67 },
+    "governancePr": { "const": 128 },
+    "auditHeadSha": { "const": "7a5e42b1e3bfd0736668279780ec13ae4f96e13b" },
+    "auditBaseSha": { "const": "d2f7acc85babd62cfacb87a4d061ef39e74a566d" },
+    "auditStatus": { "const": "BLOCKED_FOR_RELEASE" },
+    "releaseVerdict": { "const": "RELEASE_NOT_APPROVED" },
+    "founderReleaseAcceptance": { "const": "PENDING" },
+    "proven": { "const": 19 },
+    "partial": { "const": 6 },
+    "blocked": { "const": 1 },
+    "blockingAcceptanceCriterion": { "const": "ACC-03" },
+    "reviewModality": { "const": "CODERABBIT_PLUS_OWNER_SELF_AUDIT_NOT_INDEPENDENT" }
+  }
+}

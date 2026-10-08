@@ -86,4 +86,13 @@ The retirement is valid **only after** these predicates hold:
 6. Only after governance main-state reconciliation, the original issue #23 and audit PR #67 may be administratively closed as **blocked, unmerged audit evidence**, without masquerading as successful implementation. Any unexpected provider result triggers `RECOVERY_REQUIRED` and halts admission.
 7. A separate readback after the issue/PR mutations must confirm **no residual admitted claim**, no conflicting active Context Lock, and the exact merged governance policy; only then can a new WO-024 Context Lock and single-admission transaction be compiled from fresh main.
 
+The canonical data model is versioned in
+`company-os/governance/blocked-audit-lifecycle.schema.json`. Store `state=BLOCKED`
+and `blockedReason=AWAITING_REMEDIATION` separately; the composite label is
+presentation only. `company-os/governance/blocked-audit-lifecycle.mjs` is the
+deterministic fail-closed validator, and its adversarial test suite must run in
+the governance CI and every affected lifecycle workflow. GitHub readback is
+required to release the slot; fixtures and branch files do not prove provider
+state.
+
 This is a tightly scoped administrative withdrawal, not a release promotion. A later, newly admitted final acceptance WO must independently assess all 26 DoD obligations on the exact release candidate and obtain explicit Founder release approval.

@@ -28,10 +28,12 @@ jobs:
           if(!wo.includes('ADMITTED / IN_PROGRESS')&&!wo.includes('APPROVED / MERGED'))throw new Error('WO-019 not in accepted lifecycle');
           const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
           if(cp.gefVersion!=='1.1.2')throw new Error('GEF baseline changed');
-          for(let n=22;n<=22;n++){
-            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
-            if(!fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8').includes('NOT_ADMITTED'))throw new Error('Future WO admitted: '+id);
-          }
+          const wo22=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8');
+          const registry=fs.readFileSync('.engineering/WORK-ORDER-REGISTRY.md','utf8');
+          if(!wo22.includes('**Status:** `BLOCKED`')||!wo22.includes('**Blocked reason:** `AWAITING_REMEDIATION`')||
+             !registry.includes('| NXL-COMPANY-WO-022 | #23 | BLOCKED | AWAITING_REMEDIATION |'))throw new Error('WO-022 blocked handoff state mismatch');
+          if(cp.wo022AdministrativeDisposition?.state!=='BLOCKED'||cp.wo022AdministrativeDisposition?.blockedReason!=='AWAITING_REMEDIATION'||
+             cp.wo022AdministrativeDisposition?.releaseVerdict!=='RELEASE_NOT_APPROVED')throw new Error('WO-022 canonical disposition or release guard missing');
           const current=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-020.md','utf8');
           if(!['NOT_ADMITTED','ADMITTED / IN_PROGRESS','APPROVED / MERGED'].some(s=>current.includes(s)))throw new Error('Invalid WO-020 lifecycle');
           const src=fs.readFileSync('company-os/cell/engine.mjs','utf8');
@@ -46,6 +48,8 @@ jobs:
           NODE
       - name: Unit and adversarial E2E tests
         run: node --test company-os/cell/engine.test.mjs
+      - name: WO-022 blocked lifecycle and adversarial authority tests
+        run: node --test company-os/governance/blocked-audit-lifecycle.test.mjs
       - name: Run local end-to-end demo
         run: node company-os/cell/cli.mjs demo
       - name: Validate Docker demo contract

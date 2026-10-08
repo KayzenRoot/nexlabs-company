@@ -32,8 +32,13 @@ jobs:
           if(cp.activeWorkOrder==='NXL-COMPANY-WO-023') {
             if(cp.activeIssue!==64||cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-023.json'||cp.admissionBaseSha!==lock.baseSha)throw Error('Active context drift');
             if(!registry.includes('| NXL-COMPANY-WO-023 | #64 | ADMITTED / IN_PROGRESS |'))throw Error('Registry mismatch');
-          } else if(cp.activeWorkOrder!==null || !registry.includes('| NXL-COMPANY-WO-023 | #64 | APPROVED / MERGED |'))throw Error('Promoted state mismatch');
-          if(!fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8').includes('NOT_ADMITTED'))throw Error('Acceptance admitted prematurely');
+          } else if(!registry.includes('| NXL-COMPANY-WO-023 | #64 | APPROVED / MERGED |') ||
+                    (cp.activeWorkOrder!==null&&!registry.includes('| '+cp.activeWorkOrder+' | #'+cp.activeIssue+' | ADMITTED / IN_PROGRESS |')))throw Error('Promoted state mismatch');
+          const wo22=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8');
+          if(!wo22.includes('**Status:** `BLOCKED`')||!wo22.includes('**Blocked reason:** `AWAITING_REMEDIATION`')||
+             !registry.includes('| NXL-COMPANY-WO-022 | #23 | BLOCKED | AWAITING_REMEDIATION |'))throw Error('WO-022 disposition mismatch');
+          if(cp.wo022AdministrativeDisposition?.state!=='BLOCKED'||cp.wo022AdministrativeDisposition?.blockedReason!=='AWAITING_REMEDIATION'||
+             cp.wo022AdministrativeDisposition?.releaseVerdict!=='RELEASE_NOT_APPROVED')throw Error('WO-022 release guard missing');
           for(const [p,sha] of Object.entries(lock.sourceBlobFingerprints)){
             if(!fs.existsSync(p)||!/^[a-f0-9]{40}$/.test(sha))throw Error('Invalid source fingerprint '+p);
           }
@@ -48,6 +53,7 @@ jobs:
           node --check company-os/founder/cli.mjs
           node --check company-os/founder/ui.mjs
           node --test company-os/founder/*.test.mjs
+          node --test company-os/governance/blocked-audit-lifecycle.test.mjs
       - name: Docker localhost-only real evidence HTTP smoke
         shell: bash
         run: |
