@@ -63,3 +63,29 @@ jobs:
           grep -q '127.0.0.1:4173:4173' infra/docker/compose.founder-demo.yaml
           grep -q 'read_only: true' infra/docker/compose.founder-demo.yaml
           ! grep -q 'docker.sock' infra/docker/compose.founder-demo.yaml
+
+      - name: Run isolated Docker HTTP smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker compose -f infra/docker/compose.founder-demo.yaml up -d
+          trap 'docker compose -f infra/docker/compose.founder-demo.yaml stop founder-command-center' EXIT
+          ready=0
+          for i in $(seq 1 30); do
+            if curl --fail --silent --show-error http://127.0.0.1:4173/healthz -o /tmp/nexlabs-founder-health.json; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          test "$ready" -eq 1
+          curl --fail --silent --show-error http://127.0.0.1:4173/v1/overview -o /tmp/nexlabs-founder-overview.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const health=JSON.parse(fs.readFileSync('/tmp/nexlabs-founder-health.json','utf8'));
+          const view=JSON.parse(fs.readFileSync('/tmp/nexlabs-founder-overview.json','utf8'));
+          if(health.http!=='LIVE'||health.runtimeDependencies!=='NOT_CHECKED')throw new Error('Liveness misrepresented');
+          if(view.trust.liveOperationalData!==false||view.governance.activeWorkOrder!=='NXL-COMPANY-WO-020')throw new Error('Wrong live/canonical status');
+          if(view.operations.approvals.count!==null||view.operations.agentRuns.count!==null)throw new Error('Uninstrumented operations misrepresented as zero');
+          console.log('Docker run + API smoke verified');
+          NODE
