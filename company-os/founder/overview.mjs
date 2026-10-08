@@ -26,16 +26,20 @@ export function projectOverview(checkpoint, registryMarkdown) {
       !requiredString(checkpoint.completedThroughWorkOrder)) throw new SnapshotError("CHECKPOINT_INVALID");
   const workOrders = parseRegistry(registryMarkdown);
   const active = checkpoint.activeWorkOrder ?? null;
-  if (active !== null && (!WO.test(active) || !workOrders.some(x => x.id === active && x.status === "ADMITTED / IN_PROGRESS")))
+  const admitted = workOrders.filter(x => x.status === "ADMITTED / IN_PROGRESS");
+  if (admitted.length > 1 || !workOrders.some(x =>
+      x.id === checkpoint.completedThroughWorkOrder && x.status === "APPROVED / MERGED"))
     throw new SnapshotError("CHECKPOINT_REGISTRY_CONFLICT");
-  if (active === null && workOrders.some(x => x.status === "ADMITTED / IN_PROGRESS"))
+  if (active !== null && (!WO.test(active) || admitted.length !== 1 ||
+      admitted[0].id !== active || admitted[0].issue !== checkpoint.activeIssue))
+    throw new SnapshotError("CHECKPOINT_REGISTRY_CONFLICT");
+  if (active === null && admitted.length !== 0)
     throw new SnapshotError("CHECKPOINT_REGISTRY_CONFLICT");
   if (!Number.isInteger(checkpoint.knownHigh) || checkpoint.knownHigh < 0 ||
       !Number.isInteger(checkpoint.knownCritical) || checkpoint.knownCritical < 0)
     throw new SnapshotError("CHECKPOINT_INVALID");
 
   const notConnected = () => ({ state: "NOT_CONNECTED", count: null, source: null });
-  const admitted = workOrders.filter(x => x.status === "ADMITTED / IN_PROGRESS");
   return {
     schemaVersion: 1,
     trust: { mode: "LOCAL_ENGINEERING_SNAPSHOT", liveOperationalData: false,
