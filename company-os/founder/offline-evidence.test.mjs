@@ -106,7 +106,7 @@ test("absence of offline evidence fails closed and cannot report zero", async ()
 test("HTML encoder escapes content rather than executing injected run identifiers", async () => {
   const {projectOverview}=await import("./overview.mjs");
   const snapshot=projectOverview({
-    schemaVersion:1,project:"NexLabs Company",gefVersion:"1.1.2",
+    schemaVersion:2,project:"NexLabs Company",gefVersion:"1.1.2",
     completedThroughWorkOrder:"NXL-COMPANY-WO-021",activeWorkOrder:null,knownHigh:0,knownCritical:0,status:"APPROVED"
   }, "| NXL-COMPANY-WO-021 | #22 | APPROVED / MERGED |");
   const malicious={...(await captureOfflineCellEvidence()),evidenceHead:'<script>alert(1)</script>'};

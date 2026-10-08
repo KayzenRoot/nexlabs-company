@@ -34,7 +34,7 @@ export function parseRegistry(markdown) {
 }
 
 export function projectOverview(checkpoint, registryMarkdown) {
-  if (!checkpoint || checkpoint.schemaVersion !== 1 || checkpoint.project !== "NexLabs Company" ||
+  if (!checkpoint || checkpoint.schemaVersion !== 2 || checkpoint.project !== "NexLabs Company" ||
       !requiredString(checkpoint.status) || !requiredString(checkpoint.gefVersion) ||
       !requiredString(checkpoint.completedThroughWorkOrder)) throw new SnapshotError("CHECKPOINT_INVALID");
   const workOrders = parseRegistry(registryMarkdown);
