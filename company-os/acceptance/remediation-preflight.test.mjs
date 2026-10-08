@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { runPreliminaryAudit } from "./v01-audit.mjs";
@@ -8,6 +9,9 @@ import { planBlockedAcceptance, RemediationPreflightError, RELEASE_GAPS } from "
 
 const root=fileURLToPath(new URL("../../", import.meta.url));
 const checkpoint=JSON.parse(fs.readFileSync(path.join(root, ".engineering/CHECKPOINT.json"), "utf8"));
+const baselineCheckpoint=JSON.parse(execFileSync("git",[
+  "show", checkpoint.admissionBaseSha+":.engineering/CHECKPOINT.json"
+],{cwd:root,encoding:"utf8"}));
 const audit=runPreliminaryAudit(root);
 // Candidate metadata are PLANNING FIXTURES; this pure unit test is NOT a
 // GitHub API check, an admission, or proof that the issues remain unchanged.
@@ -18,6 +22,7 @@ const issueFixtures=Array.from({length:8},(_,i)=>({
 const run=(o={})=>planBlockedAcceptance({
   audit:o.audit??audit,
   checkpoint:o.checkpoint??checkpoint,
+  baselineCheckpoint:o.baselineCheckpoint??baselineCheckpoint,
   candidateIssues:o.candidateIssues??issueFixtures
 });
 const rejects=(overrides,code)=>assert.throws(()=>run(overrides),e=>
@@ -28,6 +33,8 @@ test("remediation preflight is read-only and cannot admit a successor",()=>{
   const r=run();
   assert.equal(r.auditVerdict,"RELEASE_NOT_APPROVED");
   assert.equal(r.activeWorkOrder,"NXL-COMPANY-WO-022");
+  assert.equal(r.baselineActiveWorkOrder,null);
+  assert.equal(r.authorityDivergence,"BASE_MAIN_IDLE_AUDIT_BRANCH_ACTIVE");
   assert.equal(r.canStartImplementation,false);
   assert.equal(r.successorAdmission,"BLOCKED");
   assert.equal(r.nextAction,"REVIEW_GEF_BLOCKED_AUDIT_TRANSITION");
@@ -67,6 +74,19 @@ test("handoff refuses quiet reclassification of unresolved non-Founder gaps",()=
   rejects({audit:{...audit,unresolved:altered}},"GAP_STATUS_DRIFT");
   const alteredBlocked=audit.unresolved.map(x=>x.id==="GOV-04"?{...x,status:"BLOCKED"}:x);
   rejects({audit:{...audit,unresolved:alteredBlocked}},"GAP_STATUS_DRIFT");
+});
+
+test("admission baseline is loaded from real Git and remains idle, never authorizing successor",()=>{
+  assert.equal(baselineCheckpoint.activeWorkOrder,null);
+  assert.equal(baselineCheckpoint.activeStatus,"NONE");
+  assert.equal(checkpoint.activeWorkOrder,"NXL-COMPANY-WO-022");
+  assert.equal(checkpoint.activeStatus,"ADMITTED_IN_PROGRESS");
+  rejects({baselineCheckpoint:{...baselineCheckpoint,activeWorkOrder:"NXL-COMPANY-WO-024"}},"BASELINE_HANDOFF_CONFLICT");
+  rejects({baselineCheckpoint:{...baselineCheckpoint,activeStatus:"ADMITTED_IN_PROGRESS"}},"BASELINE_HANDOFF_CONFLICT");
+  rejects({baselineCheckpoint:{...baselineCheckpoint,completedThroughWorkOrder:"NXL-COMPANY-WO-022"}},"BASELINE_HANDOFF_CONFLICT");
+  assert.throws(()=>planBlockedAcceptance({
+    audit,checkpoint,candidateIssues:issueFixtures
+  }),e=>e instanceof RemediationPreflightError && e.code==="BASELINE_HANDOFF_CONFLICT");
 });
 
 test("no second active Work Order is accepted",()=>{
