@@ -85,7 +85,7 @@ jobs:
           const health=JSON.parse(fs.readFileSync('/tmp/nexlabs-founder-health.json','utf8'));
           const view=JSON.parse(fs.readFileSync('/tmp/nexlabs-founder-overview.json','utf8'));
           if(health.http!=='LIVE'||health.runtimeDependencies!=='NOT_CHECKED')throw new Error('Liveness misrepresented');
-          if(view.trust.liveOperationalData!==false||view.governance.activeWorkOrder!=='NXL-COMPANY-WO-020')throw new Error('Wrong live/canonical status');
+          if(view.trust.liveOperationalData!==false||!/^NXL-COMPANY-WO-\d{3}$/.test(view.governance.completedThrough))throw new Error('Wrong live/canonical status');
           if(view.operations.approvals.count!==null||view.operations.agentRuns.count!==null)throw new Error('Uninstrumented operations misrepresented as zero');
           console.log('Docker run + API smoke verified');
           NODE
