@@ -50,13 +50,63 @@ function parseWorkOrderStatus(text, expectedId) {
 function registryRows(text) {
   if (typeof text !== "string" || !text.includes("| Blocked reason |")) fail("REGISTRY_SCHEMA_MISSING");
   const rows = new Map();
-  const rowPattern = /^\|\s*(NXL-COMPANY-WO-\d{3})\s*\|\s*#(\d+)\s*\|\s*([^|]+)\|\s*([^|]+)\|/gm;
-  for (const [, id, issue, state, reason] of text.matchAll(rowPattern)) {
+  for (const line of text.split(/\r?\n/)) {
+    if (!line.startsWith("| NXL-COMPANY-WO-")) continue;
+    const columns = line.split("|").slice(1, -1).map(value => value.trim());
+    const [id, issueRef, rawState, rawReason] = columns;
+    const issue = typeof issueRef === "string" ? issueRef.match(/^#(\d+)$/)?.[1] : undefined;
+    if (columns.length !== 5 || !issue || !rawState || !rawReason) fail("REGISTRY_ROW_INVALID");
     if (rows.has(id)) fail("DUPLICATE_REGISTRY_ENTRY");
-    rows.set(id, { issue: Number(issue), state: state.trim(), reason: reason.trim() });
+    rows.set(id, { issue: Number(issue), state: rawState, reason: rawReason });
   }
   if (!rows.has(WO)) fail("WO_022_REGISTRY_MISSING");
   return rows;
+}
+
+function sameItems(actual, expected) {
+  return Array.isArray(actual) && actual.length === expected.length && expected.every(item => actual.includes(item));
+}
+
+function assertFreshReadback(readback, currentMainSha) {
+  if (!sha40(currentMainSha) || readback.observedMainSha !== currentMainSha ||
+      readback.checkpointSha !== currentMainSha || !readback.observedAt ||
+      !Number.isFinite(Date.parse(readback.observedAt))) fail("RECOVERY_REQUIRED_STALE_PROVIDER_READBACK");
+  if (Date.now() - Date.parse(readback.observedAt) > 15 * 60 * 1000 ||
+      Date.parse(readback.observedAt) - Date.now() > 60 * 1000)
+    fail("RECOVERY_REQUIRED_STALE_PROVIDER_READBACK");
+}
+
+function validIssue23(issue) {
+  return issue?.state === "CLOSED" && issue.workOrderState === "BLOCKED" &&
+    issue.blockedReason === "AWAITING_REMEDIATION" &&
+    issue.releaseVerdict === "RELEASE_NOT_APPROVED" &&
+    issue.founderReleaseAcceptance === "PENDING";
+}
+
+function validAuditPr67(auditPr, disposition) {
+  return auditPr?.state === "CLOSED" && auditPr.merged === false &&
+    auditPr.headSha === disposition.auditHeadSha && auditPr.baseSha === disposition.auditBaseSha &&
+    auditPr.disposition === "BLOCKED_UNMERGED_EVIDENCE";
+}
+
+function validGovernancePr128(governancePr, readback) {
+  return governancePr?.state === "MERGED" && governancePr.headSha === readback.governanceHeadSha &&
+    sha40(governancePr.mergeSha) && governancePr.reviewedHeadSha === governancePr.headSha &&
+    governancePr.technicalReview === "COMMENTED" &&
+    governancePr.ownerAudit === "OWNER_SELF_AUDIT / NOT_INDEPENDENT" && governancePr.checksPassed === true &&
+    readback.governanceMergeIsAncestorOfMain === true;
+}
+
+function validSuccessorClaim(readback, successorActive) {
+  const expectedActiveClaims = successorActive ? ["NXL-COMPANY-WO-024"] : [];
+  const expectedLocks = successorActive ? [".engineering/context-locks/NXL-COMPANY-WO-024.json"] : [];
+  const noUnexpectedClaims = sameItems(readback.activeAdmissionClaims, expectedActiveClaims) &&
+    sameItems(readback.activeContextLocks, expectedLocks);
+  if (!noUnexpectedClaims) return false;
+  return !successorActive || (readback.issue68?.state === "OPEN" &&
+    readback.issue68.workOrderState === "ADMITTED / IN_PROGRESS" &&
+    readback.issue68.contextLock === ".engineering/context-locks/NXL-COMPANY-WO-024.json" &&
+    sha40(readback.issue68.baseSha));
 }
 
 function validateProviderReadback(readback, currentMainSha, disposition, successorActive) {
@@ -65,36 +115,11 @@ function validateProviderReadback(readback, currentMainSha, disposition, success
   const auditPr = readback.auditPr67;
   const governancePr = readback.governancePr128;
   if (!issue || !auditPr || !governancePr) fail("RECOVERY_REQUIRED_PROVIDER_EVIDENCE_MISSING");
-  if (!sha40(currentMainSha) || readback.observedMainSha !== currentMainSha ||
-      readback.checkpointSha !== currentMainSha || !readback.observedAt ||
-      !Number.isFinite(Date.parse(readback.observedAt))) fail("RECOVERY_REQUIRED_STALE_PROVIDER_READBACK");
-  if (Date.now() - Date.parse(readback.observedAt) > 15 * 60 * 1000 ||
-      Date.parse(readback.observedAt) - Date.now() > 60 * 1000)
-    fail("RECOVERY_REQUIRED_STALE_PROVIDER_READBACK");
-  if (issue.state !== "CLOSED" || issue.workOrderState !== "BLOCKED" ||
-      issue.blockedReason !== "AWAITING_REMEDIATION" ||
-      issue.releaseVerdict !== "RELEASE_NOT_APPROVED" ||
-      issue.founderReleaseAcceptance !== "PENDING") fail("EXTERNAL_ISSUE_STATE_CONFLICT");
-  if (auditPr.state !== "CLOSED" || auditPr.merged !== false ||
-      auditPr.headSha !== disposition.auditHeadSha || auditPr.baseSha !== disposition.auditBaseSha ||
-      auditPr.disposition !== "BLOCKED_UNMERGED_EVIDENCE") fail("EXTERNAL_AUDIT_PR_STATE_CONFLICT");
-  if (governancePr.state !== "MERGED" || governancePr.headSha !== readback.governanceHeadSha ||
-      !sha40(governancePr.mergeSha) || governancePr.reviewedHeadSha !== governancePr.headSha ||
-      governancePr.technicalReview !== "COMMENTED" ||
-      governancePr.ownerAudit !== "OWNER_SELF_AUDIT / NOT_INDEPENDENT" || governancePr.checksPassed !== true ||
-      readback.governanceMergeIsAncestorOfMain !== true)
-    fail("GOVERNANCE_MERGE_READBACK_CONFLICT");
-  const expectedActiveClaims = successorActive ? ["NXL-COMPANY-WO-024"] : [];
-  const expectedLocks = successorActive ? [".engineering/context-locks/NXL-COMPANY-WO-024.json"] : [];
-  if (!Array.isArray(readback.activeAdmissionClaims) ||
-      JSON.stringify([...readback.activeAdmissionClaims].sort()) !== JSON.stringify(expectedActiveClaims) ||
-      !Array.isArray(readback.activeContextLocks) ||
-      JSON.stringify([...readback.activeContextLocks].sort()) !== JSON.stringify(expectedLocks))
-    fail("EXTERNAL_ACTIVE_ADMISSION_CLAIM");
-  if (successorActive && (!readback.issue68 || readback.issue68.state !== "OPEN" ||
-      readback.issue68.workOrderState !== "ADMITTED / IN_PROGRESS" ||
-      readback.issue68.contextLock !== ".engineering/context-locks/NXL-COMPANY-WO-024.json" ||
-      !sha40(readback.issue68.baseSha))) fail("EXTERNAL_SUCCESSOR_ADMISSION_CONFLICT");
+  assertFreshReadback(readback, currentMainSha);
+  if (!validIssue23(issue)) fail("EXTERNAL_ISSUE_STATE_CONFLICT");
+  if (!validAuditPr67(auditPr, disposition)) fail("EXTERNAL_AUDIT_PR_STATE_CONFLICT");
+  if (!validGovernancePr128(governancePr, readback)) fail("GOVERNANCE_MERGE_READBACK_CONFLICT");
+  if (!validSuccessorClaim(readback, successorActive)) fail("EXTERNAL_ACTIVE_ADMISSION_CLAIM");
   return true;
 }
 
@@ -121,8 +146,8 @@ export function inspectWo022Archive({ checkpoint, registry, backlog, wo022Text, 
   if (status === "PLANNED / NOT_ADMITTED") {
     if (row.reason !== "—" || checkpoint.wo022AdministrativeDisposition !== undefined)
       fail("PLANNED_WITH_ARCHIVE_CLAIM");
-    if (backlog && !backlog.includes("NXL-COMPANY-WO-022") ||
-        (backlog && !backlog.includes("PLANNED / NOT_ADMITTED"))) fail("BACKLOG_STATE_CONFLICT");
+    if (backlog !== undefined && (!backlog.includes("NXL-COMPANY-WO-022") ||
+        !backlog.includes("PLANNED / NOT_ADMITTED"))) fail("BACKLOG_STATE_CONFLICT");
     return Object.freeze({ mode: "PLANNED", admissionSlotAvailable: false,
       canRelease: false, canAdmitSuccessor: false, providerReconciled: false });
   }

@@ -7,28 +7,29 @@ export class SnapshotError extends Error {
 const requiredString = (v) => typeof v === "string" && v.length > 0 && v.length <= 256;
 const WO = /^NXL-COMPANY-WO-\d{3}$/;
 const STATES = new Set(["NOT_ADMITTED", "ADMITTED / IN_PROGRESS", "APPROVED / MERGED", "PLANNED / NOT_ADMITTED", "BLOCKED"]);
+function parseRegistryRow(line) {
+  const columns = line.split("|").slice(1, -1).map(value => value.trim());
+  const legacy = columns.length === 3 || columns.length === 4;
+  const id = columns[0];
+  const issueRef = columns[1];
+  const status = columns[2];
+  const blockedReason = legacy ? "—" : columns[3];
+  const issue = typeof issueRef === "string" ? issueRef.match(/^#(\d+)$/)?.[1] : undefined;
+  if ((columns.length !== 3 && columns.length !== 4 && columns.length !== 5) ||
+      !issue || !WO.test(id) || !STATES.has(status)) throw new SnapshotError("REGISTRY_INVALID");
+  const validBlocked = id === "NXL-COMPANY-WO-022" && Number(issue) === 23 &&
+    blockedReason === "AWAITING_REMEDIATION";
+  if ((status === "BLOCKED" && !validBlocked) || (status !== "BLOCKED" && blockedReason !== "—"))
+    throw new SnapshotError("REGISTRY_INVALID");
+  return {id, issue: Number(issue), status, blockedReason};
+}
+
 export function parseRegistry(markdown) {
   if (typeof markdown !== "string" || markdown.length > 120_000) throw new SnapshotError("REGISTRY_INVALID");
-  const rows = [];
-  for (const line of markdown.split(/\r?\n/)) {
-    if (!line.startsWith("| NXL-COMPANY-WO-")) continue;
-    const columns = line.split("|").slice(1, -1).map(value => value.trim());
-    const legacy = columns.length === 3 || columns.length === 4;
-    const [id, issueRef, rawStatus, rawReason] = legacy
-      ? [columns[0], columns[1], columns[2], "—"]
-      : columns;
-    const match = typeof issueRef === "string" ? issueRef.match(/^#(\d+)$/) : null;
-    const status = rawStatus?.trim();
-    const blockedReason = rawReason?.trim();
-    if ((columns.length !== 3 && columns.length !== 4 && columns.length !== 5) ||
-        !match || !WO.test(id) || !STATES.has(status))
-      throw new SnapshotError("REGISTRY_INVALID");
-    if ((status === "BLOCKED" && (id !== "NXL-COMPANY-WO-022" || Number(match[1]) !== 23 ||
-        blockedReason !== "AWAITING_REMEDIATION")) ||
-        (status !== "BLOCKED" && blockedReason !== "—")) throw new SnapshotError("REGISTRY_INVALID");
-    rows.push({ id, issue: Number(match[1]), status, blockedReason });
-  }
-  if (!rows.length || new Set(rows.map(x => x.id)).size !== rows.length) throw new SnapshotError("REGISTRY_INVALID");
+  const rows = markdown.split(/\r?\n/)
+    .filter(line => line.startsWith("| NXL-COMPANY-WO-"))
+    .map(parseRegistryRow);
+  if (!rows.length || new Set(rows.map(row => row.id)).size !== rows.length) throw new SnapshotError("REGISTRY_INVALID");
   return rows;
 }
 
