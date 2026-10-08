@@ -17,7 +17,7 @@
     ".engineering/DECISIONS-LEDGER.md": "a8e12715ac1d6d5a6aaed734ae14a8aadfd1b2a8",
     ".engineering/ARCHITECTURE.md": "38797d6b4c1423083afe6e3251bad9ae5668eb8c",
     ".engineering/REQUIREMENTS.md": "2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
-    ".engineering/TEST-BENCHMARK-PLAN.md": "2a2945ded79bfa50397d7c16a8eca51db6919d4",
+    ".engineering/TEST-BENCHMARK-PLAN.md": "2a2945ded79bfa50397d7c16a8eca51db6919d4b",
     "company-os/BACKUP-RESTORE-LOCAL.md": "4a69e7ea36877f30fdac0fa2c7e60c5ee5147b03",
     "infra/docker/compose.yml": "f740199b308d7ae0379f19773e9b1a092a2ef07e",
     ".engineering/work-orders/NXL-COMPANY-WO-021.md": "452110f22da43cee20235025bb8b985864ac1bef"
@@ -34,7 +34,8 @@
     ".github/workflows/founder-command-center-validation.yml",
     "company-os/STAGING-PRODUCTION-READINESS.md",
     "company-os/BACKUP-RESTORE-LOCAL.md",
-    "README.md"
+    "README.md",
+    ".github/workflows/local-docker-runtime-validation.yml"
   ],
   "externalProductionWrites": "PROHIBITED",
   "restores": "ISOLATED_EPHEMERAL_CI_FIXTURES_ONLY",
