@@ -38,10 +38,11 @@ jobs:
                     (cp.activeWorkOrder!==null&&!registry.includes('| '+cp.activeWorkOrder+' | #'+cp.activeIssue+' | ADMITTED / IN_PROGRESS |'))) {
             throw new Error('Unknown WO-020 lifecycle');
           }
-          for(const n of [22]) {
-            const p='.engineering/work-orders/NXL-COMPANY-WO-'+String(n).padStart(3,'0')+'.md';
-            if(!fs.readFileSync(p,'utf8').includes('NOT_ADMITTED'))throw new Error('Successor admitted: '+n);
-          }
+          const wo22=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8');
+          if(!wo22.includes('**Status:** `BLOCKED`')||!wo22.includes('**Blocked reason:** `AWAITING_REMEDIATION`')||
+             !registry.includes('| NXL-COMPANY-WO-022 | #23 | BLOCKED | AWAITING_REMEDIATION |'))throw new Error('WO-022 disposition mismatch');
+          if(cp.wo022AdministrativeDisposition?.state!=='BLOCKED'||cp.wo022AdministrativeDisposition?.blockedReason!=='AWAITING_REMEDIATION'||
+             cp.wo022AdministrativeDisposition?.releaseVerdict!=='RELEASE_NOT_APPROVED')throw new Error('WO-022 release guard missing');
           for(const [p,sha] of Object.entries(lock.sourceBlobFingerprints)) {
             if(!fs.existsSync(p)||!/^[0-9a-f]{40}$/.test(sha))throw new Error('Bad source fingerprint: '+p);
           }
@@ -59,6 +60,8 @@ jobs:
           node --check company-os/founder/overview.test.mjs
       - name: Unit, integration and security negative tests
         run: node --test company-os/founder/overview.test.mjs
+      - name: WO-022 blocked lifecycle and adversarial authority tests
+        run: node --test company-os/governance/blocked-audit-lifecycle.test.mjs
       - name: Docker compose least-privilege config
         run: |
           docker compose -f infra/docker/compose.founder-demo.yaml config --quiet

@@ -40,7 +40,10 @@ jobs:
             '.engineering/DECISIONS-LEDGER.md',
             '.engineering/CHECKPOINT.md',
             '.engineering/CHECKPOINT.json',
-            '.engineering/WORK-ORDER-REGISTRY.md'
+            '.engineering/WORK-ORDER-REGISTRY.md',
+            'company-os/governance/blocked-audit-lifecycle.schema.json',
+            'company-os/governance/blocked-audit-lifecycle.mjs',
+            'company-os/governance/blocked-audit-lifecycle.test.mjs'
           ];
           for (const path of required) {
             if (!fs.existsSync(path)) throw new Error('Missing canonical file: ' + path);
@@ -50,7 +53,8 @@ jobs:
           const statuses = new Map();
 
           // Explicit pre-acceptance remediation precedes the already reserved WO-022.
-          const ordered = [...Array.from({length:20}, (_,i) => i+2), 23, 22];
+          const ordered = [...Array.from({length:20}, (_,i) => i+2), 23, 22,
+            ...(fs.existsSync('.engineering/work-orders/NXL-COMPANY-WO-024.md') ? [24] : [])];
           for (const n of ordered) {
             const id = 'NXL-COMPANY-WO-' + String(n).padStart(3,'0');
             const path = '.engineering/work-orders/' + id + '.md';
@@ -80,10 +84,26 @@ jobs:
           for (let index = 0; index < ordered.length; index++) {
             const id = 'NXL-COMPANY-WO-' + String(ordered[index]).padStart(3,'0');
             const status = statuses.get(id);
+            const body = fs.readFileSync('.engineering/work-orders/' + id + '.md','utf8');
             if (index <= completionIndex) {
               if (!status.includes('APPROVED / MERGED')) throw new Error(id + ' required complete before checkpoint');
+            } else if (id === 'NXL-COMPANY-WO-022') {
+              const reason = body.match(/^(?:-\s*)?\*\*Blocked reason:\*\* \`([^\`]+)\`/m)?.[1];
+              const d = cp.wo022AdministrativeDisposition;
+              const registry = fs.readFileSync('.engineering/WORK-ORDER-REGISTRY.md','utf8');
+              const backlog = fs.readFileSync('.engineering/BACKLOG.md','utf8');
+              if (status !== 'BLOCKED' || reason !== 'AWAITING_REMEDIATION' ||
+                  d?.schemaVersion !== 1 || d?.state !== 'BLOCKED' || d?.blockedReason !== reason ||
+                  d?.releaseVerdict !== 'RELEASE_NOT_APPROVED' || d?.founderReleaseAcceptance !== 'PENDING' ||
+                  !registry.includes('| '+id+' | #23 | BLOCKED | AWAITING_REMEDIATION |') ||
+                  !backlog.includes('| '+id+' | #23 | NECESSARY | Integrated Acceptance | BLOCKED | AWAITING_REMEDIATION |')) {
+                throw new Error('WO-022 blocked state/reason or release guard mismatch');
+              }
             } else if (cp.activeWorkOrder === id) {
-              if (index !== completionIndex + 1 || !status.startsWith('ADMITTED')) {
+              const admissionIndex = id === 'NXL-COMPANY-WO-024' &&
+                statuses.get('NXL-COMPANY-WO-022') === 'BLOCKED'
+                ? ordered.indexOf(24) : completionIndex + 1;
+              if (index !== admissionIndex || !status.startsWith('ADMITTED')) {
                 throw new Error(id + ' cannot bypass predecessor or admission');
               }
             } else if (!status.includes('NOT_ADMITTED')) {
@@ -91,5 +111,20 @@ jobs:
             }
           }
 
+          const wo22=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8');
+          if(!wo22.includes('BLOCKED_FOR_RELEASE')||!wo22.includes('RELEASE_NOT_APPROVED'))throw new Error('Blocked audit verdict not preserved');
+          if(cp.activeWorkOrder===null && cp.activeStatus!=='NONE')throw new Error('Idle checkpoint has active status');
+          const successorPath='.engineering/work-orders/NXL-COMPANY-WO-024.md';
+          if(fs.existsSync(successorPath)) {
+            const successor=fs.readFileSync(successorPath,'utf8').match(/\*\*Status:\*\* \`([^\`]+)\`/m)?.[1];
+            if(!successor)throw new Error('WO-024 status missing');
+            if(cp.activeWorkOrder==='NXL-COMPANY-WO-024') {
+              if(!successor.startsWith('ADMITTED')||cp.activeIssue!==68||
+                 !fs.existsSync('.engineering/context-locks/NXL-COMPANY-WO-024.json'))throw new Error('WO-024 admission/Context Lock mismatch');
+            } else if(!successor.includes('NOT_ADMITTED'))throw new Error('WO-024 admitted without checkpoint authority');
+          } else if(cp.activeWorkOrder==='NXL-COMPANY-WO-024')throw new Error('Active WO-024 has no Work Order file');
+
           console.log('Canonical Source Pack lifecycle validation passed.');
           NODE
+      - name: WO-022 blocked lifecycle and adversarial authority tests
+        run: node --test company-os/governance/blocked-audit-lifecycle.test.mjs

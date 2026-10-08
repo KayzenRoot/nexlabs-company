@@ -35,6 +35,27 @@ test("registry rejects duplicate, unknown state and empty registry", () => {
   assert.throws(() => parseRegistry(registry + "\n" + registry), SnapshotError);
   assert.throws(() => parseRegistry("| NXL-COMPANY-WO-019 | #20 | COMPLETE |"), SnapshotError);
 });
+test("registry preserves canonical blocked state and its separate validated reason", () => {
+  const blockedRegistry = [
+    "| NXL-COMPANY-WO-022 | #23 | BLOCKED | AWAITING_REMEDIATION | `audit/22` |",
+    "| NXL-COMPANY-WO-023 | #64 | APPROVED / MERGED | — | `feat/23` |"
+  ].join("\n");
+  const rows = parseRegistry(blockedRegistry);
+  assert.deepEqual(rows[0], {id: "NXL-COMPANY-WO-022", issue: 23,
+    status: "BLOCKED", blockedReason: "AWAITING_REMEDIATION"});
+  assert.throws(() => parseRegistry(blockedRegistry.replace("AWAITING_REMEDIATION", "UNKNOWN")), SnapshotError);
+  const disposition = {
+    schemaVersion: 1, state: "BLOCKED", blockedReason: "AWAITING_REMEDIATION",
+    releaseVerdict: "RELEASE_NOT_APPROVED", founderReleaseAcceptance: "PENDING"
+  };
+  const view = projectOverview({...checkpoint, status: "WO_022_BLOCKED", activeWorkOrder: null,
+    activeIssue: null, completedThroughWorkOrder: "NXL-COMPANY-WO-023",
+    wo022AdministrativeDisposition: disposition}, blockedRegistry);
+  assert.equal(view.work.items[0].status, "BLOCKED");
+  assert.equal(view.work.items[0].blockedReason, "AWAITING_REMEDIATION");
+  assert.equal(view.work.admitted, 0);
+  assert.equal(view.trust.liveOperationalData, false);
+});
 test("checkpoint must match exactly one admitted work order", () => {
   assert.throws(() => projectOverview({ ...checkpoint, activeWorkOrder: null }, registry), /CHECKPOINT_REGISTRY_CONFLICT/);
   assert.throws(() => projectOverview({ ...checkpoint, activeWorkOrder: "NXL-COMPANY-WO-999" }, registry), /CHECKPOINT_REGISTRY_CONFLICT/);

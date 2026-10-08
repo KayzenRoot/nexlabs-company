@@ -67,6 +67,13 @@ Composite actions should use step records/sagas rather than pretending distribut
 
 Compensating actions must be explicit and safe.
 
+For the WO-022 administrative handoff, checkpoint/registry/backlog, issue #23 and
+PR #67 are separate provider records. Persist each confirmed step and read it
+back. If a write times out or any source disagrees, enter `RECOVERY_REQUIRED`,
+freeze later mutations and compare exact SHAs and states. Complete only a
+confirmed missing effect. Never release the admission slot from a local
+checkpoint while issue/PR claims or a Context Lock remain active.
+
 ## Database concurrency
 
 Use:
