@@ -21,7 +21,7 @@
 | NXL-COMPANY-WO-018 | #19 | APPROVED / MERGED | `design/NXL-COMPANY-WO-018-agent-runtime-hermes` |
 | NXL-COMPANY-WO-019 | #20 | APPROVED / MERGED | `feat/NXL-COMPANY-WO-019-autonomous-engineering-cell-mvp` |
 | NXL-COMPANY-WO-020 | #21 | APPROVED / MERGED | `feat/NXL-COMPANY-WO-020-founder-command-center` |
-| NXL-COMPANY-WO-021 | #22 | ADMITTED / IN_PROGRESS | `infra/NXL-COMPANY-WO-021-local-recovery-readiness` |
+| NXL-COMPANY-WO-021 | #22 | APPROVED / MERGED | `infra/NXL-COMPANY-WO-021-local-recovery-readiness` |
 | NXL-COMPANY-WO-022 | #23 | NOT_ADMITTED | TBD at admission |
 
 A row marked NOT_ADMITTED is roadmap metadata, not execution authority.
