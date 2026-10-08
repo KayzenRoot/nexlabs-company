@@ -57,6 +57,13 @@ jobs:
           console.log('Release remains gated, assessment complete');
           NODE
 
+      - name: Enforce read-only remediation governance preflight
+        run: |
+          node --check company-os/acceptance/remediation-preflight.mjs
+          node --check company-os/acceptance/remediation-preflight.test.mjs
+          node --test company-os/acceptance/remediation-preflight.test.mjs
+          echo 'Remediation remains PLANNED; WO-024 is NOT_ADMITTED and release remains BLOCKED'
+
   secret-scan:
     name: Historical/PR secrets detection (Gitleaks)
     runs-on: ubuntu-latest
