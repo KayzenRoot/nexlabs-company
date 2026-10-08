@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "workOrder": "NXL-COMPANY-WO-022",
+  "admissionBaseSha": "d2f7acc85babd62cfacb87a4d061ef39e74a566d",
+  "founderAcceptance": "PENDING",
+  "claimScope": "LOCAL_OFFLINE_PROTOTYPE_ONLY",
+  "items": [
+    {
+      "id": "GOV-01",
+      "status": "PROVEN",
+      "evidence": [
+        ".engineering/SOURCE-HIERARCHY.md"
+      ],
+      "reason": "Canonical Source Pack and hierarchy verified by CI"
+    },
+    {
+      "id": "GOV-02",
+      "status": "PARTIAL",
+      "evidence": [
+        ".engineering/WORK-ORDER-REGISTRY.md"
+      ],
+      "reason": "Predecessors PR-reviewed; current WO-022 audit not complete"
+    },
+    {
+      "id": "GOV-03",
+      "status": "PROVEN",
+      "evidence": [
+        ".engineering/CHECKPOINT.json"
+      ],
+      "reason": "Previous exact Git checkpoint promotion read back"
+    },
+    {
+      "id": "GOV-04",
+      "status": "PARTIAL",
+      "evidence": [
+        ".engineering/SECURITY.md"
+      ],
+      "reason": "No known HIGH/CRITICAL within bounded scopes; not comprehensive deployed-product security assurance"
+    },
+    {
+      "id": "BLUE-01",
+      "status": "PROVEN",
+      "evidence": [
+        "company/COMPANY-MASTER.md"
+      ],
+      "reason": "Approved company identity, strategy and founder scope"
+    },
+    {
+      "id": "BLUE-02",
+      "status": "PROVEN",
+      "evidence": [
+        "company/AI-ORGANIZATION.md"
+      ],
+      "reason": "Approved AI workforce model"
+    },
+    {
+      "id": "BLUE-03",
+      "status": "PROVEN",
+      "evidence": [
+        "company/PRODUCT-FACTORY.md"
+      ],
+      "reason": "Approved Product Factory and engineering model"
+    },
+    {
+      "id": "BLUE-04",
+      "status": "PROVEN",
+      "evidence": [
+        "company/SECURITY-ARCHITECTURE.md"
+      ],
+      "reason": "Approved security, finance and commercial baselines documented"
+    },
+    {
+      "id": "TECH-01",
+      "status": "PROVEN",
+      "evidence": [
+        "company-os/ARCHITECTURE.md"
+      ],
+      "reason": "Company OS functional architecture approved as design"
+    },
+    {
+      "id": "TECH-02",
+      "status": "PROVEN",
+      "evidence": [
+        "company-os/LOCAL-DOCKER-RUNTIME.md"
+      ],
+      "reason": "Local-first runtime design and CI Docker substrate"
+    },
+    {
+      "id": "TECH-03",
+      "status": "PROVEN",
+      "evidence": [
+        "company-os/AGENT-RUNTIME-DESIGN.md"
+      ],
+      "reason": "Provider-neutral runtime and Hermes adapter design, not live integration"
+    },
+    {
+      "id": "TECH-04",
+      "status": "PROVEN",
+      "evidence": [
+        "company-os/AUTHORIZATION-AND-APPROVAL-MODEL.md"
+      ],
+      "reason": "High-risk operations default denied; no real privileged execution"
+    },
+    {
+      "id": "MVP-01",
+      "status": "PROVEN",
+      "evidence": [
+        "company-os/CELL-MVP.md"
+      ],
+      "reason": "Founder-approved demo fixture enters deterministic cell, not real SSO"
+    },
+    {
+      "id": "MVP-02",
+      "status": "PARTIAL",
+      "evidence": [
+        "company-os/CELL-MVP.md"
+      ],
+      "reason": "Simulated local Work Order/plan, real persistent admission requires external governed tooling"
+    },
+    {
+      "id": "MVP-03",
+      "status": "PROVEN",
+      "evidence": [
+        "company-os/cell/engine.mjs"
+      ],
+      "reason": "Controlled source artifact through offline injected executor"
+    },
+    {
+      "id": "MVP-04",
+      "status": "PROVEN",
+      "evidence": [
+        ".engineering/evidence/NXL-COMPANY-WO-019-CLOSEOUT.md"
+      ],
+      "reason": "Hash-linked in-memory receipt and CI evidence verified"
+    },
+    {
+      "id": "MVP-05",
+      "status": "PARTIAL",
+      "evidence": [
+        "company-os/CELL-MVP.md"
+      ],
+      "reason": "QA/correction supported; governed independent human audit not performed by the cell"
+    },
+    {
+      "id": "MVP-06",
+      "status": "PROVEN",
+      "evidence": [
+        "company-os/cell/engine.mjs"
+      ],
+      "reason": "Bounded same-Work-Order correction attempts in deterministic cell"
+    },
+    {
+      "id": "MVP-07",
+      "status": "PROVEN",
+      "evidence": [
+        "company/CHECKPOINT-PROMOTION-PROTOCOL.md"
+      ],
+      "reason": "External Git checkpoint is promoted only after accepted PR review"
+    },
+    {
+      "id": "OPS-01",
+      "status": "PARTIAL",
+      "evidence": [
+        "company-os/OFFLINE-CELL-OBSERVABILITY.md"
+      ],
+      "reason": "Founder sees offline fixture run/fail/correction; live agents/approval/incident still NOT_CONNECTED"
+    },
+    {
+      "id": "OPS-02",
+      "status": "PROVEN",
+      "evidence": [
+        ".engineering/evidence/NXL-COMPANY-WO-021-CLOSEOUT.md"
+      ],
+      "reason": "Real synthetic-data CI backup/restore proof, not production RPO/RTO"
+    },
+    {
+      "id": "OPS-03",
+      "status": "PARTIAL",
+      "evidence": [
+        ".github/workflows/local-docker-runtime-validation.yml"
+      ],
+      "reason": "Ignored secrets and policy checked; comprehensive secret scan unavailable"
+    },
+    {
+      "id": "OPS-04",
+      "status": "PROVEN",
+      "evidence": [
+        "infra/docker/README.md"
+      ],
+      "reason": "Local Docker run documented and CI-tested"
+    },
+    {
+      "id": "ACC-01",
+      "status": "PARTIAL",
+      "evidence": [
+        ".engineering/work-orders/NXL-COMPANY-WO-022.md"
+      ],
+      "reason": "Final integrated audit admitted, not yet fully reviewed/accepted"
+    },
+    {
+      "id": "ACC-02",
+      "status": "PROVEN",
+      "evidence": [
+        "company-os/STAGING-PRODUCTION-READINESS.md"
+      ],
+      "reason": "Unverified operational risks and limitations explicitly documented"
+    },
+    {
+      "id": "ACC-03",
+      "status": "BLOCKED",
+      "evidence": [
+        ".engineering/DEFINITION-OF-DONE.md"
+      ],
+      "reason": "No explicit Founder acceptance of exact v0.1 candidate supplied"
+    }
+  ]
+}
