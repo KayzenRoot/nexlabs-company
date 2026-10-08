@@ -47,6 +47,28 @@ test("a fabricated released or accepted audit is rejected",()=>{
   rejects({audit:{...audit,fullDoDSatisfied:true}},"RELEASE_VERDICT_UNSAFE");
 });
 
+test("handoff refuses altered audit identity, scope, completeness or counts",()=>{
+  rejects({audit:{...audit,reviewState:"APPROVED"}},"RELEASE_VERDICT_UNSAFE");
+  rejects({audit:{...audit,scope:"LIVE_CONNECTED"}},"RELEASE_VERDICT_UNSAFE");
+  rejects({audit:{...audit,activeWorkOrder:"NXL-COMPANY-WO-024"}},"RELEASE_VERDICT_UNSAFE");
+  rejects({audit:{...audit,counts:{...audit.counts,PROVEN:20}}},"RELEASE_VERDICT_UNSAFE");
+  rejects({audit:{...audit,counts:null}},"RELEASE_VERDICT_UNSAFE");
+});
+
+test("handoff refuses stale base, unrelated branch, wrong lock or predecessor",()=>{
+  rejects({checkpoint:{...checkpoint,admissionBaseSha:"0".repeat(40)}},"ACTIVE_WO_CONFLICT");
+  rejects({checkpoint:{...checkpoint,activeBranch:"feat/unadmitted-wo-024"}},"ACTIVE_WO_CONFLICT");
+  rejects({checkpoint:{...checkpoint,activeContextLock:".engineering/context-locks/NXL-COMPANY-WO-024.json"}},"ACTIVE_WO_CONFLICT");
+  rejects({checkpoint:{...checkpoint,completedThroughWorkOrder:"NXL-COMPANY-WO-022"}},"ACTIVE_WO_CONFLICT");
+});
+
+test("handoff refuses quiet reclassification of unresolved non-Founder gaps",()=>{
+  const altered=audit.unresolved.map(x=>x.id==="OPS-01"?{...x,status:"NOT_PROVEN"}:x);
+  rejects({audit:{...audit,unresolved:altered}},"GAP_STATUS_DRIFT");
+  const alteredBlocked=audit.unresolved.map(x=>x.id==="GOV-04"?{...x,status:"BLOCKED"}:x);
+  rejects({audit:{...audit,unresolved:alteredBlocked}},"GAP_STATUS_DRIFT");
+});
+
 test("no second active Work Order is accepted",()=>{
   rejects({checkpoint:{...checkpoint,activeWorkOrder:"NXL-COMPANY-WO-024"}},"ACTIVE_WO_CONFLICT");
   rejects({checkpoint:{...checkpoint,activeStatus:"COMPLETED"}},"ACTIVE_WO_CONFLICT");
