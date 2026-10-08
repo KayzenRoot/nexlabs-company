@@ -39,6 +39,10 @@ export function planBlockedAcceptance({audit, checkpoint, candidateIssues}) {
   if(seen.size!==expected.size)fail("ROADMAP_INCOMPLETE");
   const unresolved=new Set(audit.unresolved.map(x=>x.id));
   if(unresolved.size!==audit.unresolved.length)fail("DUPLICATE_GAP");
+  // Pin the known blocked release assessment. A reclassified obligation
+  // requires a fresh independent audit instead of silent plan promotion.
+  if(unresolved.size!==Object.keys(RELEASE_GAPS).length ||
+     Object.keys(RELEASE_GAPS).some(id=>!unresolved.has(id)))fail("GAP_SET_CHANGED");
   for(const row of audit.unresolved) {
     if(!row || typeof row.id!=="string" ||
        !["PARTIAL","NOT_PROVEN","BLOCKED"].includes(row.status) ||
