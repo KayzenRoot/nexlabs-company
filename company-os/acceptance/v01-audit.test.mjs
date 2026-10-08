@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 import path from "node:path";
-import { evaluatePreliminaryAudit, runPreliminaryAudit, AcceptanceAuditError } from "./v01-audit.mjs";
+import os from "node:os";
+import { evaluatePreliminaryAudit, runPreliminaryAudit, isSafeEvidenceFile, AcceptanceAuditError } from "./v01-audit.mjs";
 
 const root=fileURLToPath(new URL("../../",import.meta.url));
 const cp=JSON.parse(fs.readFileSync(path.join(root,".engineering/CHECKPOINT.json"),"utf8"));
@@ -41,4 +42,24 @@ test("a mandatory DoD ID cannot be replaced by an arbitrary ID from the same gro
 test("not an executable production Company OS",()=>{
   assert.equal(evaluate().scope,"LOCAL_OFFLINE_PROTOTYPE_ONLY");
   assert.throws(()=>evaluate({claimScope:"PRODUCTION_READY"}),AcceptanceAuditError);
+});
+
+test("read-only evidence verifier rejects directories and external symlinks",()=>{
+  const base=fs.mkdtempSync(path.join(os.tmpdir(),"nxl-audit-base-"));
+  const outside=fs.mkdtempSync(path.join(os.tmpdir(),"nxl-audit-external-"));
+  try {
+    fs.mkdirSync(path.join(base,"evidence"));
+    fs.writeFileSync(path.join(base,"evidence","real.txt"),"test-only evidence");
+    fs.writeFileSync(path.join(outside,"external.txt"),"untrusted evidence");
+    assert.equal(isSafeEvidenceFile(base,"evidence/real.txt"),true);
+    assert.equal(isSafeEvidenceFile(base,"evidence"),false);
+    assert.equal(isSafeEvidenceFile(base,"../external.txt"),false);
+    if (process.platform!=="win32") {
+      fs.symlinkSync(path.join(outside,"external.txt"),path.join(base,"evidence","linked.txt"));
+      assert.equal(isSafeEvidenceFile(base,"evidence/linked.txt"),false);
+    }
+  } finally {
+    fs.rmSync(base,{recursive:true,force:true});
+    fs.rmSync(outside,{recursive:true,force:true});
+  }
 });
