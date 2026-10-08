@@ -12,7 +12,9 @@
 
 This is an evidence assessment, **not** production deployment or signed acceptance. The project currently proves a deterministic offline engineering cell, governed Git workflow, local Docker reproducibility and synthetic-data recovery, not a continuously running AI-native company with authenticated agents and durable live Company OS state. Passing CI only verifies that code/tests and structural contracts succeed, not that external systems exist.
 
-**Current matrix:** 19 `PROVEN` within bounded claims, 6 `PARTIAL`, 1 `BLOCKED` (after scoped OPS-03 secret-scan evidence). The HEAD of this report must still pass its own exact-head CI and review before any final audit claim.\n\nThe 26 DoD obligations are mapped explicitly in `v01-obligations.json` with exact source paths and a human-authored limitation note. A source path existing is **not itself proof** of its claim. The read-only audit script verifies existence, mandatory count, schema and status honesty, denies unsafe paths and refuses fictional Founder approval flags.
+**Current matrix:** 19 `PROVEN` within bounded claims, 6 `PARTIAL`, 1 `BLOCKED` (after scoped OPS-03 secret-scan evidence). The HEAD of this report must still pass its own exact-head CI and review before any final audit claim.
+
+The 26 DoD obligations are mapped explicitly in `v01-obligations.json` with exact source paths and a human-authored limitation note. A source path existing is **not itself proof** of its claim. The read-only audit script verifies existence, mandatory count, schema and status honesty, denies unsafe paths and refuses fictional Founder approval flags.
 
 ## Findings requiring a release decision
 
