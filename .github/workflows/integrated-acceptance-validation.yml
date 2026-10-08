@@ -13,6 +13,8 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -22,6 +24,7 @@ jobs:
           set -euo pipefail
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
+          import {execFileSync} from 'node:child_process';
           const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
           const lock=JSON.parse(fs.readFileSync('.engineering/context-locks/NXL-COMPANY-WO-022.json','utf8'));
           const wo=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8');
@@ -33,7 +36,11 @@ jobs:
             cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-022.json')throw Error('Acceptance must remain explicitly active pending signoff');
           if(!wo.includes('ADMITTED / IN_PROGRESS')||!registry.includes('| NXL-COMPANY-WO-022 | #23 | ADMITTED / IN_PROGRESS |'))throw Error('WO or registry state conflict');
           if(cp.completedThroughWorkOrder!=='NXL-COMPANY-WO-023')throw Error('Prior remediation not completed');
-          for(const [p,sha] of Object.entries(lock.sourceBlobFingerprints))if(!fs.existsSync(p)||!/^[a-f0-9]{40}$/.test(sha))throw Error('Invalid source fingerprint '+p);
+          for(const [p,sha] of Object.entries(lock.sourceBlobFingerprints)){
+            if(!fs.existsSync(p)||!/^[a-f0-9]{40}$/.test(sha))throw Error('Invalid source fingerprint '+p);
+            const actual=execFileSync('git',['rev-parse',lock.baseSha+':'+p],{encoding:'utf8'}).trim();
+            if(actual!==sha)throw Error('Source drift vs exact frozen base '+p);
+          }
           console.log('WO-022 single admission/lock preflight accepted; no release authorization');
           NODE
       - name: Run read-only integrated DoD evaluator
