@@ -49,3 +49,21 @@ jobs:
              x.founderApproval!=='PENDING'||x.unresolved.length<1)throw Error('Premature release authorization');
           console.log('Release remains gated, assessment complete');
           NODE
+
+  secret-scan:
+    name: Historical/PR secrets detection (Gitleaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Scan for repository secrets
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: "false"
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
