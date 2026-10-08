@@ -2,7 +2,7 @@
 
 **Status:** `WO_022_ADMINISTRATIVELY_BLOCKED_AND_RECONCILED`
 
-- GEF v1.1.2. Last successfully completed increment: `NXL-COMPANY-WO-023`. WO-022 remains an incomplete, non-success acceptance audit in `BLOCKED` with `blockedReason=AWAITING_REMEDIATION`.
+- GEF Bootstrap v1.1.2; canonical checkpoint schema 2. Last successfully completed increment: `NXL-COMPANY-WO-023`. WO-022 remains an incomplete, non-success acceptance audit in `BLOCKED` with `blockedReason=AWAITING_REMEDIATION`.
 - Implemented under PR #65: audited SHA `0e118d9f373c77a2d0a491a968e4e46182bcf67c`, merged at `976c7a00317530efe12e5c6d655e0a40dd4dd3b9`.
 - Exact-head CI: 22/22 SUCCESS; source Context Lock fingerprints: 11/11 matched.
 - Owner self-audit: `5450267377` (NOT independent).

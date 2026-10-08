@@ -50,6 +50,7 @@ jobs:
           }
 
           const cp = JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if (cp.schemaVersion !== 2) throw new Error('Checkpoint schema must be supported by GEF 1.1.2');
           const statuses = new Map();
 
           // Explicit pre-acceptance remediation precedes the already reserved WO-022.

@@ -13,7 +13,7 @@ const registry = [
   "| NXL-COMPANY-WO-021 | #22 | NOT_ADMITTED | TBD |"
 ].join("\n");
 const checkpoint = {
-  schemaVersion: 1, project: "NexLabs Company", versionTarget: "v0.1", gefVersion: "1.1.2",
+  schemaVersion: 2, project: "NexLabs Company", versionTarget: "v0.1", gefVersion: "1.1.2",
   status: "WO_020_ADMITTED", completedThroughWorkOrder: "NXL-COMPANY-WO-019",
   activeWorkOrder: "NXL-COMPANY-WO-020", activeIssue: 21, knownCritical: 0, knownHigh: 0,
   nextLegalAction: "REVIEW_WO_020"
@@ -57,6 +57,7 @@ test("registry preserves canonical blocked state and its separate validated reas
   assert.equal(view.trust.liveOperationalData, false);
 });
 test("checkpoint must match exactly one admitted work order", () => {
+  assert.throws(() => projectOverview({ ...checkpoint, schemaVersion: 1 }, registry), /CHECKPOINT_INVALID/);
   assert.throws(() => projectOverview({ ...checkpoint, activeWorkOrder: null }, registry), /CHECKPOINT_REGISTRY_CONFLICT/);
   assert.throws(() => projectOverview({ ...checkpoint, activeWorkOrder: "NXL-COMPANY-WO-999" }, registry), /CHECKPOINT_REGISTRY_CONFLICT/);
   assert.throws(() => projectOverview({ ...checkpoint, knownHigh: -1 }, registry), /CHECKPOINT_INVALID/);

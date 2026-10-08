@@ -57,11 +57,11 @@ jobs:
         run: |
           set -euo pipefail
           gef doctor --target "$GITHUB_WORKSPACE" --json | tee "$RUNNER_TEMP/doctor.json"
-          node -e "const x=JSON.parse(require('fs').readFileSync(process.env.RUNNER_TEMP+'/doctor.json','utf8')); if(!x.ok || x.terminal!=='SUCCEEDED') process.exit(1)"
+          node -e "const x=JSON.parse(require('fs').readFileSync(process.env.RUNNER_TEMP+'/doctor.json','utf8')); if(!x.ok || x.terminal!=='SUCCEEDED' || x.value?.doctor?.governance?.valid!==true) throw new Error('GEF doctor governance is invalid');"
 
       - name: GEF status
         shell: bash
         run: |
           set -euo pipefail
           gef status --target "$GITHUB_WORKSPACE" --json | tee "$RUNNER_TEMP/status.json"
-          node -e "const x=JSON.parse(require('fs').readFileSync(process.env.RUNNER_TEMP+'/status.json','utf8')); if(!x.ok || x.terminal!=='SUCCEEDED') process.exit(1)"
+          node -e "const x=JSON.parse(require('fs').readFileSync(process.env.RUNNER_TEMP+'/status.json','utf8')); if(!x.ok || x.terminal!=='SUCCEEDED' || x.value?.status?.release?.valid!==true) throw new Error('GEF status release checkpoint is invalid');"
