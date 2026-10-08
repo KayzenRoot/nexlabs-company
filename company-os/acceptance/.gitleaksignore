@@ -1,0 +1,13 @@
+# NXL-COMPANY-WO-022: precise, evidence-reviewed historical false positives only.
+# DO NOT add blanket exclusions by file, path, key pattern, or rule.
+# Two negative-test documentation lines, two Git object SHA-1 fingerprints,
+# and four GEF idempotency SHA-256 hashes. Not authentication credentials.
+# Re-review these references if source provenance changes.
+17b155da0e8572b6ab68000794afe9b0a579a9fa:.engineering/CHECKPOINT.md:generic-api-key:11
+86a328127585fe8a31b446fe0294da1c992490d5:.engineering/CHECKPOINT.md:generic-api-key:11
+1405d6067110be8c7b5398c5991bb6ce30311d22:.engineering/context-locks/NXL-COMPANY-WO-020.json:generic-api-key:19
+bc9cc94eda0f6fdaf6badde6bd0c705e63b40cee:.engineering/context-locks/NXL-COMPANY-WO-020.json:generic-api-key:19
+203a6f3495c7a569e0d84af7e0a40ddd97445078:.engineering/evidence/NXL-COMPANY-GEF-BOOTSTRAP-001/init-apply.json:generic-api-key:65
+203a6f3495c7a569e0d84af7e0a40ddd97445078:.engineering/evidence/NXL-COMPANY-GEF-BOOTSTRAP-001/init-plan.json:generic-api-key:65
+6a6eb26389ac767d7d1df61277b1e65eab593196:.engineering/evidence/NXL-COMPANY-GEF-BOOTSTRAP-001/init-apply.json:generic-api-key:65
+6a6eb26389ac767d7d1df61277b1e65eab593196:.engineering/evidence/NXL-COMPANY-GEF-BOOTSTRAP-001/init-plan.json:generic-api-key:65
