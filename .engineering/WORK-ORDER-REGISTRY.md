@@ -22,7 +22,7 @@
 | NXL-COMPANY-WO-019 | #20 | APPROVED / MERGED | `feat/NXL-COMPANY-WO-019-autonomous-engineering-cell-mvp` |
 | NXL-COMPANY-WO-020 | #21 | APPROVED / MERGED | `feat/NXL-COMPANY-WO-020-founder-command-center` |
 | NXL-COMPANY-WO-021 | #22 | APPROVED / MERGED | `infra/NXL-COMPANY-WO-021-local-recovery-readiness` |
-| NXL-COMPANY-WO-022 | #23 | NOT_ADMITTED | TBD at admission |
+| NXL-COMPANY-WO-022 | #23 | ADMITTED / IN_PROGRESS | `audit/NXL-COMPANY-WO-022-v01-integrated-acceptance` |
 | NXL-COMPANY-WO-023 | #64 | APPROVED / MERGED | `feat/NXL-COMPANY-WO-023-offline-cell-observability` |
 
 A row marked NOT_ADMITTED is roadmap metadata, not execution authority.
