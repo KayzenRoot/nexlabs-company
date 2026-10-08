@@ -16,7 +16,7 @@ Backups are ignored by Git.
 
 A backup is not trusted only because creation succeeded. Integrated acceptance should rehearse controlled restore and application-level integrity.
 
-## WO-021 recovery hardening (implementation candidate)
+## WO-021 recovery hardening (CI-proven local fixtures only)
 
 Restore now preflights PostgreSQL `pg_restore --list` and applies SQL within a single transaction with `--exit-on-error`; Bash/PowerShell keep explicit archive and destructive-confirmation inputs. Artifact restore validates tar listing and extraction in a disposable stage before deleting destination files. **Final artifact copy is not atomic** and archives are not authenticated; restore only trusted backups.
 
