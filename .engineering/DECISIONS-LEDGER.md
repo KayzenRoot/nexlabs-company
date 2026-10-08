@@ -651,3 +651,28 @@
 ## D-0159 — Runtime images never use floating latest
 **Status:** APPROVED IN WO-017  
 **Decision:** Local runtime image families are explicitly versioned and upgraded through governed maintenance rather than floating `latest` tags.
+
+
+## D-0160 — Provider-neutral AgentRuntime port
+**Status:** APPROVED IN WO-018  
+**Decision:** Hermes is the first design adapter behind a provider-independent session, invocation and evidence contract; Company OS governance remains upstream.
+
+## D-0161 — Hermes live execution requires isolated brokered tool authority
+**Status:** APPROVED IN WO-018  
+**Decision:** Upstream CLI is an integration surface, not a permission boundary. Before live use, disable privileged tools, validate version and broker tool calls through Company OS. No --yolo bypass.
+
+## D-0162 — Routing fails closed on policy, classification or budget mismatch
+**Status:** APPROVED IN WO-018  
+**Decision:** Model fallback cannot weaken residency/data/permission/budget rules; all providers must be eligible before selection.
+
+## D-0163 — Memory remains derived and non-canonical
+**Status:** APPROVED IN WO-018  
+**Decision:** Hermes skills/session memory and any vector/RAG cache may suggest knowledge but never self-promote policies, permissions, Work Orders or decisions.
+
+## D-0164 — Unknown completion blocks blind retry and fallback
+**Status:** APPROVED IN WO-018  
+**Decision:** An ambiguous external write enters RECOVERY_REQUIRED with read-only reconciliation before any new mutation.
+
+## D-0165 — Runtime budgets and audit are first-class controls
+**Status:** APPROVED IN WO-018  
+**Decision:** Each run has turn/time/spend ceilings; audit and provider receipts are recorded without raw secrets. Unknown spend is not zero.
