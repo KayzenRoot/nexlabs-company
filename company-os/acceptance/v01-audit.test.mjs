@@ -30,6 +30,14 @@ test("incomplete, duplicate and path traversal evidence fail closed",()=>{
   const entries=structuredClone(matrix.items);entries[0].evidence=["../../etc/passwd"];
   assert.throws(()=>evaluate({items:entries}),AcceptanceAuditError);
 });
+test("a mandatory DoD ID cannot be replaced by an arbitrary ID from the same group",()=>{
+  const entries=structuredClone(matrix.items);
+  const row=entries.find(item=>item.id==="GOV-04");
+  assert.ok(row);
+  row.id="GOV-99"; // Preserves counts and uniqueness but omits mandatory GOV-04.
+  assert.throws(()=>evaluate({items:entries}),e=>
+    e instanceof AcceptanceAuditError && e.code==="OBLIGATION_ID_SET_INVALID");
+});
 test("not an executable production Company OS",()=>{
   assert.equal(evaluate().scope,"LOCAL_OFFLINE_PROTOTYPE_ONLY");
   assert.throws(()=>evaluate({claimScope:"PRODUCTION_READY"}),AcceptanceAuditError);
