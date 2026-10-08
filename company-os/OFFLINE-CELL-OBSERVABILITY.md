@@ -1,6 +1,6 @@
 # WO-023 — Offline Cell Observability / Founder Command Center
 
-**Status:** Candidate. Local, deterministic, read-only execution evidence. Not approved until exact-head audit.
+**Status:** APPROVED / MERGED (WO-023) for read-only deterministic LOCAL fixture evidence. Production agent/Founder integrations remain unimplemented.
 
 ## What is actually measured
 At startup, `company-os/founder/cli.mjs` invokes the existing WO-019 `runDemo()` once, then validates the returned in-memory SHA-256 receipt chain before serving any evidence. The read-only endpoint `GET /v1/offline-cell-evidence` shows:
