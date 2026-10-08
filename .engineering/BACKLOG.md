@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. WO-023 local deterministic fixture visibility is APPROVED/MERGED. WO-022 is administratively reconciled as BLOCKED / AWAITING_REMEDIATION after issue #23 and PR #67 were read back closed, with PR #67 unmerged and no active admission claims. Release remains NOT_APPROVED and Founder release acceptance remains PENDING. WO-024 remains PLANNED / NOT_ADMITTED until a fresh post-merge provider readback, exact current Git base, new Context Lock and ordinary admission. Cloud production deferred.
+WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. WO-023 local deterministic fixture visibility is APPROVED/MERGED. WO-022 is administratively reconciled as BLOCKED / AWAITING_REMEDIATION; its frozen audit remains unmerged evidence, `RELEASE_NOT_APPROVED`, with Founder acceptance PENDING. WO-024 is admitted for the bounded local canonical PostgreSQL runtime and transactional outbox at its exact Git base and new Context Lock. Execution requires a passing preflight; production/provider mutations remain outside scope. Cloud production deferred.
 
 | WO | Issue | Classification | Phase | Status | Blocked reason |
 | --- | ---: | --- | --- | --- | --- |
@@ -28,6 +28,7 @@ WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local rec
 | NXL-COMPANY-WO-021 | #22 | IMPORTANT | Local Recovery Required Subset | APPROVED / MERGED | — |
 | NXL-COMPANY-WO-022 | #23 | NECESSARY | Integrated Acceptance | BLOCKED | AWAITING_REMEDIATION |
 | NXL-COMPANY-WO-023 | #64 | NECESSARY | Pre-acceptance Local Observability | APPROVED / MERGED | — |
+| NXL-COMPANY-WO-024 | #68 | NECESSARY | Company OS Persistence | ADMITTED / IN_PROGRESS | — |
 ## Phase gates
 
 ### Foundation

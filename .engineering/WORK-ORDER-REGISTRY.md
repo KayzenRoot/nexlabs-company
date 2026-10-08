@@ -24,4 +24,5 @@
 | NXL-COMPANY-WO-021 | #22 | APPROVED / MERGED | — | `infra/NXL-COMPANY-WO-021-local-recovery-readiness` |
 | NXL-COMPANY-WO-022 | #23 | BLOCKED | AWAITING_REMEDIATION | `audit/NXL-COMPANY-WO-022-v01-integrated-acceptance` |
 | NXL-COMPANY-WO-023 | #64 | APPROVED / MERGED | — | `feat/NXL-COMPANY-WO-023-offline-cell-observability` |
+| NXL-COMPANY-WO-024 | #68 | ADMITTED / IN_PROGRESS | — | `admission/NXL-COMPANY-WO-024-20261008` |
 A row marked NOT_ADMITTED is roadmap metadata, not execution authority.
