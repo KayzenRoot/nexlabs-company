@@ -37,7 +37,7 @@ NexLabs Company OS local infrastructure is executable under `infra/docker/`.
 
 `NXL-COMPANY-WO-019` is approved, merged and checkpoint-promoted.
 
-`NXL-COMPANY-WO-020` is the sole admitted Work Order on branch `feat/NXL-COMPANY-WO-020-founder-command-center`; its candidate is NOT yet approved or deployed. The local Founder Command Center is a read-only Git-source projection. Operational integrations, privileged approvals, live agents and production availability are NOT_CONNECTED.
+`NXL-COMPANY-WO-020` is APPROVED/MERGED for its local, read-only Founder Command Center. Run `node company-os/founder/cli.mjs` or use `infra/docker/compose.founder-demo.yaml` to inspect a Git-source engineering snapshot. Operational integrations, privileged approvals, live agents and production availability are NOT_CONNECTED. Integrated v0.1 DoD remains open.
 
 WO-021 and WO-022 remain non-executable until separately admitted.
 

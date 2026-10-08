@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-019 are complete. WO-020 is the only admitted Work Order; WO-021/022 remain NOT_ADMITTED.
+WO-002 through WO-020 are complete. No Work Order is admitted. WO-021 admission/defer decision is next; WO-021/022 remain NOT_ADMITTED.
 
 | WO | Issue | Classification | Phase | Status |
 | --- | ---: | --- | --- | --- |
@@ -24,7 +24,7 @@ WO-002 through WO-019 are complete. WO-020 is the only admitted Work Order; WO-0
 | NXL-COMPANY-WO-017 | #18 | NECESSARY | Company OS Design | APPROVED / MERGED |
 | NXL-COMPANY-WO-018 | #19 | NECESSARY | Agent Runtime Design | APPROVED / MERGED |
 | NXL-COMPANY-WO-019 | #20 | NECESSARY | MVP Build | APPROVED / MERGED |
-| NXL-COMPANY-WO-020 | #21 | IMPORTANT | Founder Operations | ADMITTED / IN_PROGRESS |
+| NXL-COMPANY-WO-020 | #21 | IMPORTANT | Founder Operations | APPROVED / MERGED |
 | NXL-COMPANY-WO-021 | #22 | IMPORTANT | Production Readiness | PLANNED / NOT_ADMITTED |
 | NXL-COMPANY-WO-022 | #23 | NECESSARY | Integrated Acceptance | PLANNED / NOT_ADMITTED |
 

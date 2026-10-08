@@ -1,22 +1,23 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_020_ADMITTED_FOUNDER_COMMAND_CENTER_IN_PROGRESS`
+**Status:** `WO_020_COMPLETE_FOUNDER_COMMAND_CENTER_LOCAL_READ_ONLY`
 
 - GEF: `1.1.2`
-- Last APPROVED/MERGED: `NXL-COMPANY-WO-019`
-- New admitted WO: `NXL-COMPANY-WO-020` / issue #21
-- Admission base: `fb2a0e0c2eb3b3a4fc09b2c058ba4b7892b73494`
-- Branch: `feat/NXL-COMPANY-WO-020-founder-command-center`
-- Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-020.json`
-- Previous implementation head: `87cd7755fa8291f4902ddaf841da60a03f74e5fe` (`19/19` recorded successful checks)
-- Repository disclosure: `PUBLIC_SAFE_ONLY`
-- WO-020 candidate: **NOT YET AUDITED**; do not claim tests or approval until exact-head CI completes.
-- Known HIGH/CRITICAL at admission: `0/0`; new work requires fresh review.
+- Completed through Work Order: `NXL-COMPANY-WO-020` (accepted **local read-only scope only**)
+- Audited implementation HEAD: `ef03fd2e9ddfaf4befe1ffa38eeee257267d7522`
+- Implementation merge: `bc9cc94eda0f6fdaf6badde6bd0c705e63b40cee` (PR #60)
+- Exact-head workflow result: `20/20 SUCCESS` including Node security/HTTP tests and Docker container HTTP smoke test
+- Owner self-audit review: `5450151486`, `APPROVED / NOT_INDEPENDENT`
+- Active Work Order / issue / branch / lock: `NONE`
+- Known CRITICAL/HIGH for this bounded scope: `0 / 0`
+- Repository: `PUBLIC_SAFE_ONLY`
 
-## Scope boundary
-Read-only, local-first Founder overview; not live agent execution, authenticated privileged action or production Company OS. PostgreSQL remains canonical for future transactional state; this dashboard will show Git-sourced engineering status and explicit NOT_CONNECTED markers for uninstrumented operations.
+## Accepted proof and limits
+- `company-os/founder/`: Node 22 read-only snapshot, responsive dashboard, HTTP query and adversarial consistency tests.
+- `infra/docker/compose.founder-demo.yaml`: read-only local Docker runtime; container HTTP smoke confirmed in CI, not installed on the Founder's PC.
+- The UI derives engineering status from Git-source files. External live agent runs, approval inbox, incidents, financial costs, cloud deployments, production health and privileged Founder commands are **NOT_CONNECTED**. No independent human audit was performed.
+- The v0.1 integrated Definition of Done, including substantive founder observability of real runs/failures/approvals, is **not yet fully satisfied**. This checkpoint is not a declaration of a launched Company OS.
 
 ## Next legal action
-`IMPLEMENT_AND_AUDIT_NXL_COMPANY_WO_020`
 
-No WO-021/022 admission before WO-020 exact-head approval, merge and checkpoint promotion.
+`DECIDE_WO_021_ADMISSION_OR_DEFERRAL` based on Scope and DoD. WO-021 is IMPORTANT, not automatically required for release; WO-022 integrated acceptance remains NOT_ADMITTED. No successor implementation until explicitly admitted with a fresh Context Lock.
