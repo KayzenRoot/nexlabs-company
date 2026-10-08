@@ -41,7 +41,7 @@ jobs:
           const wo=read('.engineering/work-orders/NXL-COMPANY-WO-018.md');
           if(!wo.includes('ADMITTED / IN_PROGRESS')&&!wo.includes('APPROVED / MERGED')) throw new Error('WO-018 lifecycle invalid');
           const cp=JSON.parse(read('.engineering/CHECKPOINT.json'));
-          if(cp.activeWorkOrder && cp.activeWorkOrder!=='NXL-COMPANY-WO-018') throw new Error('Unexpected active WO');
+          if(cp.gefVersion !== '1.1.2') throw new Error('Unexpected GEF version');
           console.log('Agent Runtime architecture structure valid');
           NODE
           node --test company-os/contracts/agent-runtime.test.mjs

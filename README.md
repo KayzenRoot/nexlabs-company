@@ -42,3 +42,8 @@ The next legal action is to **admit WO-018** against current canonical main and 
 WO-018 and later remain non-executable until admitted.
 
 > Repository disclosure: this repository is public. Never commit real credentials, local secret files, database dumps, runtime backups, private keys or protected operational material here.
+
+
+## Agent Runtime Design (WO-018)
+
+Company OS agent runtime is provider-neutral. Hermes is an optional adapter, not a mandatory dependency. Offline contract tests live at `company-os/contracts/`. Tool capabilities default-deny and budgets/unknown external writes require explicit authorization or reconciliation. WO-018 only designs the integration; live Hermes/tool broker is successor work.

@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-018 — Agent Runtime Abstraction & Hermes Integration Design
 
 **Issue:** #19
-**Status:** `ADMITTED / IN_PROGRESS`
+**Status:** `APPROVED / MERGED`
 **Classification:** `NECESSARY`
 **Risk:** `ELEVATED / AGENT_TOOL_AUTHORITY`
 **Admission base:** `ef31c761fd7d09383b7168604e9c4a5f580d406e`
@@ -63,3 +63,13 @@ Brazilian Portuguese. Identify audited SHA, contracts, permissions, fallback, me
 ## STOP CONDITION
 
 No WO-019 until WO-018 merged, audited and checkpoint-promoted.
+
+
+## Closeout
+
+- Review: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT` (review id 5450022043)
+- Audited SHA: `7147fb2dc4034bac5ff37de80281f7f4b2f7d5dd`
+- Implementation merge SHA: `a074445ae5169ef0377ead49ba4b21f39e6eedcb`
+- Exact head: `18/18 SUCCESS` validations, including new runtime contract tests
+- Residual live Hermes/broker isolation work: delegated to separately admitted WO-019; design tests do not prove real provider security
+- Next Work Order: NOT_ADMITTED; no execution rights granted
