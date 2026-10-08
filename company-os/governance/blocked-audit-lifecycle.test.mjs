@@ -8,6 +8,10 @@ const source = {
   registry: fs.readFileSync(".engineering/WORK-ORDER-REGISTRY.md", "utf8"),
   backlog: fs.readFileSync(".engineering/BACKLOG.md", "utf8"),
   wo022Text: fs.readFileSync(".engineering/work-orders/NXL-COMPANY-WO-022.md", "utf8"),
+  wo024Text: fs.existsSync(".engineering/work-orders/NXL-COMPANY-WO-024.md")
+    ? fs.readFileSync(".engineering/work-orders/NXL-COMPANY-WO-024.md", "utf8") : undefined,
+  wo024ContextLock: fs.existsSync(".engineering/context-locks/NXL-COMPANY-WO-024.json")
+    ? JSON.parse(fs.readFileSync(".engineering/context-locks/NXL-COMPANY-WO-024.json", "utf8")) : undefined,
   governanceText: fs.readFileSync("company/CHECKPOINT-PROMOTION-PROTOCOL.md", "utf8")
 };
 const auditHead = "7a5e42b1e3bfd0736668279780ec13ae4f96e13b";
@@ -23,14 +27,30 @@ const disposition = {
   reviewModality: "CODERABBIT_PLUS_OWNER_SELF_AUDIT_NOT_INDEPENDENT"
 };
 const blockedSource = () => structuredClone(source);
-const reconciledSource = () => {
+const setWo024FixtureState = (x, state) => {
+  const row = `| NXL-COMPANY-WO-024 | #68 | ${state} | — | \`admission/NXL-COMPANY-WO-024\` |`;
+  if (/^\| NXL-COMPANY-WO-024 \| #68 \|[^\n]*$/m.test(x.registry)) {
+    x.registry = x.registry.replace(/^\| NXL-COMPANY-WO-024 \| #68 \|[^\n]*$/m, row);
+  } else if (state === "ADMITTED / IN_PROGRESS") {
+    x.registry += `\n${row}\n`;
+  }
+  x.wo024Text = `# NXL-COMPANY-WO-024\n\n**Status:** \`${state}\`\n`;
+};
+const idleBlockedSource = () => {
   const x = blockedSource();
+  x.checkpoint = {...x.checkpoint, activeWorkOrder: null, activeIssue: null, activeBranch: null,
+    activeContextLock: null, activeStatus: "NONE", admissionBaseSha: null};
+  setWo024FixtureState(x, "PLANNED / NOT_ADMITTED");
+  return x;
+};
+const reconciledSource = () => {
+  const x = idleBlockedSource();
   x.checkpoint.wo022AdministrativeDisposition.governanceHeadSha = "b".repeat(40);
   x.checkpoint.wo022AdministrativeDisposition.governanceMergeSha = "d".repeat(40);
   return x;
 };
 const activeFixture = () => {
-  const x = blockedSource();
+  const x = idleBlockedSource();
   x.checkpoint = {...x.checkpoint, wo022AdministrativeDisposition: undefined,
     activeWorkOrder: "NXL-COMPANY-WO-022", activeIssue: 23,
     activeBranch: "audit/NXL-COMPANY-WO-022-v01-integrated-acceptance",
@@ -44,8 +64,10 @@ const activeFixture = () => {
   return x;
 };
 const plannedFixture = () => {
-  const x = blockedSource();
-  x.checkpoint = {...x.checkpoint}; delete x.checkpoint.wo022AdministrativeDisposition;
+  const x = idleBlockedSource();
+  x.checkpoint = {...x.checkpoint, activeWorkOrder: null, activeIssue: null, activeBranch: null,
+    activeContextLock: null, activeStatus: "NONE", admissionBaseSha: null};
+  delete x.checkpoint.wo022AdministrativeDisposition;
   x.registry = x.registry.replace(
     "| NXL-COMPANY-WO-022 | #23 | BLOCKED | AWAITING_REMEDIATION |",
     "| NXL-COMPANY-WO-022 | #23 | PLANNED / NOT_ADMITTED | — |"
@@ -70,6 +92,22 @@ const validProviderReadback = (mainSha = "c".repeat(40)) => ({
   governanceMergeIsAncestorOfMain: true,
   activeAdmissionClaims: [], activeContextLocks: []
 });
+const activeWo024Fixture = () => {
+  const x = reconciledSource();
+  const contextLock = {workOrderId: "NXL-COMPANY-WO-024", issue: 68,
+    state: "LOCKED_FOR_WO_024", baseSha: "f".repeat(40), branch: "admission/NXL-COMPANY-WO-024"};
+  x.wo024ContextLock = contextLock;
+  setWo024FixtureState(x, "ADMITTED / IN_PROGRESS");
+  x.checkpoint = {...x.checkpoint, activeWorkOrder: "NXL-COMPANY-WO-024", activeIssue: 68,
+    activeBranch: contextLock.branch, activeContextLock: ".engineering/context-locks/NXL-COMPANY-WO-024.json",
+    activeStatus: "ADMITTED_IN_PROGRESS", admissionBaseSha: contextLock.baseSha};
+  const providerReadback = validProviderReadback();
+  providerReadback.activeAdmissionClaims = ["NXL-COMPANY-WO-024"];
+  providerReadback.activeContextLocks = [".engineering/context-locks/NXL-COMPANY-WO-024.json"];
+  providerReadback.issue68 = {state: "OPEN", workOrderState: "ADMITTED / IN_PROGRESS",
+    contextLock: ".engineering/context-locks/NXL-COMPANY-WO-024.json", baseSha: contextLock.baseSha};
+  return {...x, currentMainSha: "c".repeat(40), providerReadback};
+};
 const reject = (fixture, code) => assert.throws(() => inspectWo022Archive(fixture),
   error => error instanceof ArchiveStateError && error.code === code);
 
@@ -106,6 +144,15 @@ test("candidate checkpoint cannot release the slot from caller-supplied matching
     providerReadback: validProviderReadback()}, "GOVERNANCE_REVIEW_RECEIPT_MISSING");
 });
 
+test("a normally admitted WO-024 occupies the reconciled slot and is not a second admission", () => {
+  const result = inspectWo022Archive(activeWo024Fixture());
+  assert.equal(result.providerReconciled, true);
+  assert.equal(result.successorAdmissionActive, true);
+  assert.equal(result.admissionSlotAvailable, false);
+  assert.equal(result.canAdmitSuccessor, false);
+  assert.equal(result.canRelease, false);
+});
+
 test("the current open, admitted issue and unmerged audit PR remain conflicting provider claims", () => {
   const p = validProviderReadback();
   p.issue23 = {state: "OPEN", workOrderState: "ADMITTED / IN_PROGRESS"};
@@ -131,13 +178,13 @@ test("rejects missing schema manifest and any unknown reason/display state", () 
 });
 
 test("rejects active claims in the checkpoint, registry, or provider even if another source is idle", () => {
-  const x = blockedSource();
+  const x = idleBlockedSource();
   x.registry = x.registry.replace(
     "| NXL-COMPANY-WO-022 | #23 | BLOCKED | AWAITING_REMEDIATION |",
     "| NXL-COMPANY-WO-022 | #23 | ADMITTED / IN_PROGRESS | — |"
   );
   reject(x, "WO_022_REGISTRY_CONFLICT");
-  const y = blockedSource(); y.checkpoint.activeWorkOrder = "NXL-COMPANY-WO-024";
+  const y = idleBlockedSource(); y.checkpoint.activeWorkOrder = "NXL-COMPANY-WO-024";
   y.checkpoint.activeIssue = 68;
   reject(y, "SINGLE_ACTIVE_CONFLICT");
   const z = {...reconciledSource(), currentMainSha: "c".repeat(40), providerReadback: validProviderReadback()};
@@ -176,7 +223,7 @@ test("rejects false release approval, completion promotion, and a second active 
   }
   const x = blockedSource(); x.checkpoint.completedThroughWorkOrder = "NXL-COMPANY-WO-022";
   reject(x, "CHECKPOINT_BASE_INVALID");
-  const y = blockedSource();
+  const y = idleBlockedSource();
   y.registry = y.registry.replace("| NXL-COMPANY-WO-021 | #22 | APPROVED / MERGED | — |",
     "| NXL-COMPANY-WO-021 | #22 | ADMITTED / IN_PROGRESS | — |");
   reject(y, "IDLE_WITH_ADMITTED_CLAIM");

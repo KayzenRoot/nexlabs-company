@@ -100,7 +100,10 @@ jobs:
                 throw new Error('WO-022 blocked state/reason or release guard mismatch');
               }
             } else if (cp.activeWorkOrder === id) {
-              if (index !== completionIndex + 1 || !status.startsWith('ADMITTED')) {
+              const admissionIndex = id === 'NXL-COMPANY-WO-024' &&
+                statuses.get('NXL-COMPANY-WO-022') === 'BLOCKED'
+                ? ordered.indexOf(24) : completionIndex + 1;
+              if (index !== admissionIndex || !status.startsWith('ADMITTED')) {
                 throw new Error(id + ' cannot bypass predecessor or admission');
               }
             } else if (!status.includes('NOT_ADMITTED')) {
