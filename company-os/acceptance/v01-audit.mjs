@@ -34,6 +34,11 @@ export function evaluatePreliminaryAudit({ matrix, checkpoint, evidenceExists })
     }
   }
   if(Object.entries(expectedGroups).some(([g,n])=>counts[g]!==n))fail("OBLIGATION_COUNT_INVALID");
+  // Group counts alone are insufficient: they can conceal a missing mandatory obligation.
+  const requiredIds = new Set(Object.entries(expectedGroups).flatMap(([g,n]) =>
+    Array.from({length:n},(_,i)=>`${g}-${String(i+1).padStart(2,"0")}`)));
+  if (ids.size !== requiredIds.size || [...requiredIds].some(id=>!ids.has(id)))
+    fail("OBLIGATION_ID_SET_INVALID");
   // DoD requires Founder explicit approval. We refuse a mere matrix flag as signed authority.
   if(matrix.founderAcceptance!=="PENDING")fail("FOUNDER_APPROVAL_UNVERIFIED");
   if(matrix.claimScope!=="LOCAL_OFFLINE_PROTOTYPE_ONLY")fail("RELEASE_SCOPE_CONFLICT");
