@@ -154,7 +154,7 @@ test("provider readback requires the exact committed COMMENTED technical review"
 test("a provider readback with a different reviewed governance head cannot release the slot", () => {
   const providerReadback = validProviderReadback();
   providerReadback.governancePr128.reviewedHeadSha = "e".repeat(40);
-  reject({...blockedSource(), currentMainSha: "c".repeat(40), providerReadback},
+  reject({...reconciledSource(), currentMainSha: "c".repeat(40), providerReadback},
     "GOVERNANCE_MERGE_READBACK_CONFLICT");
 });
 
