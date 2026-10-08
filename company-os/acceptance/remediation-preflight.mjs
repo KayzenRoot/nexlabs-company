@@ -24,13 +24,27 @@ const WO=id=>`NXL-COMPANY-WO-${String(id).padStart(3,"0")}`;
 // This function uses only supplied, explicitly labeled evidence metadata; it
 // does not fetch GitHub, change checkpoint state, sign a release or start work.
 export function planBlockedAcceptance({audit, checkpoint, candidateIssues}) {
+  // A handoff plan must bind to the same *preliminary* offline audit and
+  // immutable admission identity. A fabricated or stale metadata object must
+  // not appear to be a trustworthy predecessor of WO-024.
   if(!audit || audit.state!=="RELEASE_NOT_APPROVED" ||
+     audit.reviewState!=="PRELIMINARY" ||
+     audit.scope!=="LOCAL_OFFLINE_PROTOTYPE_ONLY" ||
+     audit.activeWorkOrder!=="NXL-COMPANY-WO-022" ||
      audit.founderApproval!=="PENDING" || audit.fullDoDSatisfied!==false ||
-     !Array.isArray(audit.unresolved))fail("RELEASE_VERDICT_UNSAFE");
+     !Array.isArray(audit.unresolved) ||
+     !audit.counts || audit.counts.PROVEN!==19 ||
+     audit.counts.PARTIAL!==6 || audit.counts.NOT_PROVEN!==0 ||
+     audit.counts.BLOCKED!==1)fail("RELEASE_VERDICT_UNSAFE");
   if(!checkpoint || checkpoint.gefVersion!=="1.1.2" ||
      checkpoint.activeWorkOrder!=="NXL-COMPANY-WO-022" ||
      checkpoint.activeStatus!=="ADMITTED_IN_PROGRESS" ||
-     checkpoint.activeIssue!==23)fail("ACTIVE_WO_CONFLICT");
+     checkpoint.activeIssue!==23 ||
+     checkpoint.activeBranch!=="audit/NXL-COMPANY-WO-022-v01-integrated-acceptance" ||
+     checkpoint.activeContextLock!==".engineering/context-locks/NXL-COMPANY-WO-022.json" ||
+     checkpoint.admissionBaseSha!=="d2f7acc85babd62cfacb87a4d061ef39e74a566d" ||
+     checkpoint.completedThroughWorkOrder!=="NXL-COMPANY-WO-023")
+     fail("ACTIVE_WO_CONFLICT");
   if(!Array.isArray(candidateIssues))fail("ROADMAP_UNVERIFIED");
   const expected=new Set(Array.from({length:8},(_,i)=>WO(i+24)));
   const seen=new Set();
@@ -57,6 +71,10 @@ export function planBlockedAcceptance({audit, checkpoint, candidateIssues}) {
     if(!row || typeof row.id!=="string" ||
        !["PARTIAL","NOT_PROVEN","BLOCKED"].includes(row.status) ||
        !Object.hasOwn(RELEASE_GAPS,row.id))fail("GAP_UNMAPPED");
+    // These six partials and one blocked Founder acceptance are the
+    // authenticated *planning snapshot*, not a claim about live integrations.
+    if(row.status!==(row.id==="ACC-03"?"BLOCKED":"PARTIAL"))
+      fail("GAP_STATUS_DRIFT");
   }
   const map=Object.fromEntries(audit.unresolved.map(x=>[
     x.id,{status:x.status,candidateWOs:RELEASE_GAPS[x.id].map(WO)}
