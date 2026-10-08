@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-022",
+  "issue": 23,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "audit/NXL-COMPANY-WO-022-v01-integrated-acceptance",
+  "baseSha": "d2f7acc85babd62cfacb87a4d061ef39e74a566d",
+  "state": "LOCKED_FOR_WO_022",
+  "admission": "ADMITTED",
+  "risk": "ELEVATED_RELEASE_AUDIT_READ_ONLY",
+  "sourceBlobFingerprints": {
+    ".engineering/CHECKPOINT.json": "bef930acbd3b88bdf14c02631aeac631a0d48783",
+    ".engineering/DECISIONS-LEDGER.md": "b3e0192a6c82fc48d613d4d5f6e19b5f513d6434",
+    ".engineering/SCOPE.md": "d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/ARCHITECTURE.md": "38797d6b4c1423083afe6e3251bad9ae5668eb8c",
+    ".engineering/REQUIREMENTS.md": "2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    ".engineering/TEST-BENCHMARK-PLAN.md": "2a2945ded79bfa50397d7c16a8eca51db6919d4b",
+    "company-os/OFFLINE-CELL-OBSERVABILITY.md": "f250ba4776720f52573c2577bbbcacea96a95079",
+    "company-os/STAGING-PRODUCTION-READINESS.md": "a608bfd59e117070848a73f0aa6bed5717d2ec21",
+    "company-os/CELL-MVP.md": "20ef59842ad4fe59af0200f227be88ab4322cf35",
+    ".engineering/work-orders/NXL-COMPANY-WO-022.md": "25044e64eb2888dc1aac0ceb99e6795ae88f0189"
+  },
+  "allowedPaths": [
+    ".engineering/",
+    "company-os/acceptance/",
+    ".github/workflows/",
+    "README.md"
+  ],
+  "externalWrites": "PROHIBITED",
+  "founderAcceptance": "EXPLICIT_ONLY_PENDING",
+  "releaseAuthority": "NOT_GRANTED"
+}
