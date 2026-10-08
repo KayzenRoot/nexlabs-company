@@ -1,39 +1,22 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_017_COMPLETE_LOCAL_DOCKER_RUNTIME_CANONICAL`
+**Status:** `WO_018_ADMITTED_AGENT_RUNTIME_DESIGN_IN_PROGRESS`
 
-- Project: NexLabs Company
-- Version target: `v0.1`
-- Phase: `AGENT_RUNTIME_READY_FOR_WO_018_ADMISSION`
 - GEF baseline: `1.1.2`
 - Completed through Work Order: `NXL-COMPANY-WO-017`
-- WO-017 audited head: `d2a13b6b79891e4ab0dee9c590025a9feb8c98c5`
-- WO-017 Local Docker Runtime merge SHA: `0dcc2ace4aa1cc218d950511bd01a68de798a32c`
-- Active Work Order: `NONE`
-- Active issue: `NONE`
-- Active branch: `NONE`
-- Active Context Lock: `NONE`
-- Known HIGH/CRITICAL blockers: `0 known`
-- Repository disclosure risk: `PUBLIC — public-safe information only`
-
-## Canonical local-runtime authority
-
-Primary authority: `company-os/LOCAL-DOCKER-RUNTIME.md`
-
-Supporting authority:
-- `company-os/SECRETS-AND-CONFIGURATION.md`
-- `company-os/BACKUP-RESTORE-LOCAL.md`
-- `company-os/HEALTH-AND-READINESS.md`
-- `company-os/LOCAL-OBSERVABILITY.md`
-- `company-os/DEVELOPER-RUNBOOK.md`
-- executable contracts under `infra/docker/`
+- Active Work Order: `NXL-COMPANY-WO-018`
+- Active issue: `#19`
+- Active branch: `design/NXL-COMPANY-WO-018-agent-runtime-hermes`
+- Admission base SHA: `ef31c761fd7d09383b7168604e9c4a5f580d406e`
+- Active Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-018.json`
+- Active status: `ADMITTED / IN_PROGRESS`
+- Known HIGH/CRITICAL: `0 known at admission`
+- Repository disclosure: `PUBLIC_SAFE_ONLY`
 
 ## Next legal action
 
-`ADMIT_NXL_COMPANY_WO_018`
-
-Admission requires rehydrating this checkpoint and canonical sources, recompiling WO-018 against current main and creating a fresh Context Lock.
+`EXECUTE_WO_018_AGENT_RUNTIME_HERMES_DESIGN`
 
 ## Stop state
 
-WO-018 remains `PLANNED / NOT_ADMITTED`. No WO-018 execution may begin until its own admission and Context Lock are committed.
+WO-019 onward remain NOT_ADMITTED. Exact-head audit and separate checkpoint promotion are required.

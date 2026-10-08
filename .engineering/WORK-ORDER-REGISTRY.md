@@ -18,7 +18,7 @@
 | NXL-COMPANY-WO-015 | #16 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-015-investor-readiness-pitch-data-room` |
 | NXL-COMPANY-WO-016 | #17 | APPROVED / MERGED | `planning/NXL-COMPANY-WO-016-company-os-functional-architecture` |
 | NXL-COMPANY-WO-017 | #18 | APPROVED / MERGED | `infra/NXL-COMPANY-WO-017-local-docker-runtime` |
-| NXL-COMPANY-WO-018 | #19 | NOT_ADMITTED | TBD at admission |
+| NXL-COMPANY-WO-018 | #19 | ADMITTED / IN_PROGRESS | `design/NXL-COMPANY-WO-018-agent-runtime-hermes` |
 | NXL-COMPANY-WO-019 | #20 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-020 | #21 | NOT_ADMITTED | TBD at admission |
 | NXL-COMPANY-WO-021 | #22 | NOT_ADMITTED | TBD at admission |
