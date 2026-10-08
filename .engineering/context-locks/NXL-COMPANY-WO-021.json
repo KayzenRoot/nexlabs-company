@@ -24,6 +24,10 @@
   },
   "allowedPaths": [
     ".engineering/",
+    "infra/docker/scripts/restore-postgres.sh",
+    "infra/docker/scripts/restore-postgres.ps1",
+    "infra/docker/scripts/restore-artifacts.sh",
+    "infra/docker/scripts/restore-artifacts.ps1",
     "infra/docker/scripts/ci-recovery-rehearsal.sh",
     ".github/workflows/local-recovery-readiness-validation.yml",
     ".github/workflows/engineering-cell-validation.yml",
