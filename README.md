@@ -35,11 +35,11 @@ NexLabs Company OS local infrastructure is executable under `infra/docker/`.
 
 ## Current governed state
 
-`NXL-COMPANY-WO-019` is complete.
+`NXL-COMPANY-WO-019` is approved, merged and checkpoint-promoted.
 
-The next legal action is to **admit WO-020** against current canonical main and create a fresh Context Lock.
+`NXL-COMPANY-WO-020` is the sole admitted Work Order on branch `feat/NXL-COMPANY-WO-020-founder-command-center`; its candidate is NOT yet approved or deployed. The local Founder Command Center is a read-only Git-source projection. Operational integrations, privileged approvals, live agents and production availability are NOT_CONNECTED.
 
-WO-020 and later remain non-executable until admitted.
+WO-021 and WO-022 remain non-executable until separately admitted.
 
 > Repository disclosure: this repository is public. Never commit real credentials, local secret files, database dumps, runtime backups, private keys or protected operational material here.
 

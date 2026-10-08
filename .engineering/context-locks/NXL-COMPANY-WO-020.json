@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-020",
+  "issue": 21,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "feat/NXL-COMPANY-WO-020-founder-command-center",
+  "baseSha": "fb2a0e0c2eb3b3a4fc09b2c058ba4b7892b73494",
+  "admission": "ADMITTED",
+  "state": "LOCKED_FOR_WO_020",
+  "sourceBlobFingerprints": {
+    ".engineering/CHECKPOINT.json": "055dc58200f6007c666d2db415157ce65faf6df1",
+    ".engineering/DECISIONS-LEDGER.md": "a8e12715ac1d6d5a6aaed734ae14a8aadfd1b2a8",
+    ".engineering/SCOPE.md": "d75ca03b81fd77b1ce560f7add02ec36cf96785b",
+    ".engineering/DEFINITION-OF-DONE.md": "a2f82dbf2a6ae9a888e7323f0a90390dd86a88a2",
+    ".engineering/ARCHITECTURE.md": "38797d6b4c1423083afe6e3251bad9ae5668eb8c",
+    ".engineering/REQUIREMENTS.md": "2bdef5063d9e15d0781b8a244b689e9acb4b30e4",
+    "company-os/ARCHITECTURE.md": "41a9bfeebb070418e8a014027e5765229e327c6d",
+    "company-os/OBSERVABILITY-CONTRACT.md": "9f1c3fe58981a3647865874121a2c742fbbb6ae9",
+    "company-os/API-CONTRACTS.md": "21ca61f8c60544fea3185cfeceb9810b79f887bd",
+    "company-os/AUTHORIZATION-AND-APPROVAL-MODEL.md": "eca6ba54e96caf73601ac3028d4393c38727a185",
+    ".engineering/work-orders/NXL-COMPANY-WO-020.md": "eecade9af0c214738a4778f3cbc5306b84951101"
+  },
+  "allowedPaths": [
+    "company-os/founder/",
+    "company-os/FOUNDER-COMMAND-CENTER.md",
+    "infra/docker/compose.founder-demo.yaml",
+    ".github/workflows/founder-command-center-validation.yml",
+    ".github/workflows/engineering-cell-validation.yml",
+    ".engineering/",
+    "README.md"
+  ],
+  "externalMutations": "PROHIBITED",
+  "execution": "LOCAL_READ_ONLY",
+  "nextWorkOrdersNotAdmitted": [
+    "NXL-COMPANY-WO-021",
+    "NXL-COMPANY-WO-022"
+  ]
+}
