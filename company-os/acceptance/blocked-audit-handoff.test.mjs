@@ -79,3 +79,31 @@ test("reviewer must be separate and exact-head, and metadata still cannot grant 
   assert.equal(result.canTransferAdmission,false);
   assert.equal(result.canRelease,false);
 });
+
+test("open issue without admitted claim is not this active-audit snapshot; no slot is released",()=>{
+  // A GitHub issue may remain open while administratively blocked; the
+  // openness alone is not admission. A transition needs a NEW, separately
+  // accepted provider-backed validator rather than accepting this stale
+  // snapshot or assuming main is idle.
+  refuses({auditIssue:{...fixture.auditIssue,admission:"BLOCKED"}}, "AUDIT_ISSUE_CONFLICT");
+  refuses({auditIssue:{...fixture.auditIssue,admission:"NOT_ADMITTED"}}, "AUDIT_ISSUE_CONFLICT");
+  refuses({auditPr:{...fixture.auditPr,state:"closed",merged:false}}, "AUDIT_PR_CONFLICT");
+  refuses({auditPr:{...fixture.auditPr,draft:false,merged:false}}, "AUDIT_PR_CONFLICT");
+  assert.equal(classify().canTransferAdmission,false);
+});
+
+test("unreviewed, supposedly qualified or merely automated review cannot transfer authority",()=>{
+  const approvedMetadata={
+    source:"GITHUB_NATIVE_READBACK",reviewer:"independent-provider",
+    verdict:"APPROVED",reviewId:700,
+    reviewedHead:fixture.auditPr.headSha
+  };
+  // A caller can assert plausible identity/IDs but cannot confer power.
+  const apparentApproval=classify({independentReview:approvedMetadata});
+  assert.equal(apparentApproval.reviewState,"REVIEW_METADATA_NEEDS_INDEPENDENT_VERIFICATION");
+  assert.equal(apparentApproval.canTransferAdmission,false);
+  assert.equal(apparentApproval.canAmendCanonicalPolicy,false);
+  assert.equal(apparentApproval.canRelease,false);
+  refuses({independentReview:{...approvedMetadata,verdict:"COMMENTED"}},"REVIEW_EVIDENCE_INVALID");
+  refuses({independentReview:{...approvedMetadata,reviewer:"KayzenRoot"}},"REVIEW_EVIDENCE_INVALID");
+});
