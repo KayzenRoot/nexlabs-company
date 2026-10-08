@@ -2,7 +2,7 @@
 
 Status: `ROADMAP_BASELINE_WO_002`
 
-WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. WO-023 local deterministic fixture visibility is APPROVED/MERGED. The checkpoint candidate has no active Work Order, but provider reconciliation for the still-admitted WO-022 audit remains pending. WO-022 is proposed as BLOCKED / AWAITING_REMEDIATION; release remains NOT_APPROVED and Founder release acceptance remains PENDING. WO-024 cannot be admitted until provider readback clears every conflicting admission claim. Cloud production deferred.
+WO-002 through WO-021 are approved/merged; WO-021 accepted only the CI-local recovery subset. WO-023 local deterministic fixture visibility is APPROVED/MERGED. WO-022 is administratively reconciled as BLOCKED / AWAITING_REMEDIATION after issue #23 and PR #67 were read back closed, with PR #67 unmerged and no active admission claims. Release remains NOT_APPROVED and Founder release acceptance remains PENDING. WO-024 remains PLANNED / NOT_ADMITTED until a fresh post-merge provider readback, exact current Git base, new Context Lock and ordinary admission. Cloud production deferred.
 
 | WO | Issue | Classification | Phase | Status | Blocked reason |
 | --- | ---: | --- | --- | --- | --- |
