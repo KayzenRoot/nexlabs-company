@@ -1,45 +1,47 @@
 # NXL-COMPANY-WO-019 — Autonomous Engineering Cell MVP
 
-**Issue:** #20  
-**Status:** `PLANNED / NOT_ADMITTED`  
-**Classification:** `NECESSARY`  
-**Dependencies:** WO-009, WO-016, WO-017 and WO-018 APPROVED
+**Issue:** #20
+**Status:** `ADMITTED / IN_PROGRESS`
+**Classification:** `NECESSARY`
+**Risk:** `ELEVATED / AUTONOMOUS_TOOL_EXECUTION`
+**Admission base:** `1916ca9bc3d98c4a9f1dc15012514d15e5e7eeec`
+**Branch:** `feat/NXL-COMPANY-WO-019-autonomous-engineering-cell-mvp`
+**Context Lock:** `.engineering/context-locks/NXL-COMPANY-WO-019.json`
 
-## OBJECTIVE
-Implement the first autonomous cell that turns founder-approved product intent into a governed engineering increment.
+## Objective
+Implement and test the first executable engineering-cell pipeline: Founder-approved intent → plan → Work Order/Context Lock → bounded executor adapter → staged file edits → QA → correction → review/evidence → checkpoint **handoff**.
 
-## CONTEXT
-This Work Order is part of the NexLabs Company v0.1 roadmap created by WO-002. It has no execution authority until explicitly admitted after all listed dependencies are approved and the current canonical checkpoint is rehydrated.
+## Scope / safety boundary
+- Local, dependency-free Node 22 demonstration and tests with an injected deterministic executor; no real LLM/provider activity is claimed.
+- No host shell, Docker socket, raw secrets, banking/Web3 writes or GitHub mutation from the cell.
+- Use immutable in-memory staging for proposed edits; never apply proposed edits directly to the live repository.
+- Founder intent needs exact digest/actor/organization/base binding, and an explicit approval; missing/stale authority is denied.
+- Restrict edits to declared allowlist, validate relative safe paths, reject prohibited extensions/paths, budget attempts and produce append-only event receipts.
+- QA is a separate deterministic evaluator, not an implicit executor verdict; review must not claim independent human signoff.
+- Correction loop is bounded and cannot automatically waive a failed test.
+- End with `READY_FOR_GOVERNED_PR` and a read-only checkpoint handoff. Actual GitHub PR, merge and checkpoint promotion stay in GEF process and are never performed implicitly.
 
-## SCOPE
-At admission, refine this planned objective into the smallest sufficient increment required by the canonical Scope and Definition of Done.
+## Deliverables
+- `company-os/cell/engine.mjs`: deterministic cell application service.
+- `company-os/cell/fixtures.mjs`: demo executor, cases.
+- `company-os/cell/cli.mjs`: offline executable proof.
+- `company-os/cell/engine.test.mjs`: adversarial E2E/contract tests.
+- `company-os/CELL-MVP.md`: architecture, boundary, runbook.
+- `infra/docker/compose.cell-demo.yaml`: isolated read-only local demo.
+- `.github/workflows/engineering-cell-validation.yml`: permanent CI gate.
+- Source hierarchy/decision ledger/checkpoint/registry/backlog updates and exact-head review evidence.
 
-## OUT OF SCOPE
-Implementation or decisions not necessary to this Work Order; unrelated cleanup; bypassing predecessor gates; execution while this file remains NOT_ADMITTED.
-
-## FILES/SOURCES TO READ
-At admission: current Checkpoint; Decisions Ledger/ADRs; Scope; DoD; Architecture; Requirements; applicable prior approved artifacts; this issue; exact Git/provider state.
-
-## REQUIREMENTS
-Trace every admitted deliverable to canonical requirements. Unknown or conflicting authority must block execution rather than be guessed.
-
-## ARCHITECTURE RULES
-Preserve founder authority, provider independence, auditability, fail-closed high-risk behavior, local-first portability and GEF governance.
-
-## CONSTRAINTS
-Exact base SHA, active branch, Context Lock, allowed files, acceptance criteria and tests are intentionally compiled only at admission time.
-
-## ACCEPTANCE CRITERIA
-To be frozen at admission from the then-current canonical sources. Must include objective evidence, source consistency, no unresolved HIGH/CRITICAL finding and a proposed Checkpoint Delta.
-
-## TESTS
-Risk-appropriate tests/evidence are compiled at admission. Documentation work requires structural/consistency validation; software work follows the risk matrix in TEST-BENCHMARK-PLAN.md.
-
-## DELIVERABLES
-Planner; Work Order compiler; executor adapter; QA; reviewer/auditor; evidence; correction loop; checkpoint handoff; local E2E proof.
-
-## REVIEW FORMAT
-Brazilian Portuguese. Report exact base/head, scope, evidence, findings by severity, risks, verdict and proposed Checkpoint Delta.
+## Acceptance
+1. Valid Founder action-bound approval and Context Lock required.
+2. Planner and compiler generate explicit task/Work Order ID, allowed paths and SHA-scoped context.
+3. Executor cannot mutate GitHub/host; proposals are untrusted data.
+4. Scope/path traversal/policy bypass fail closed.
+5. QA rejects faulty proposal, bounded correction can subsequently pass without erasing failed evidence.
+6. Exact hash/immutable receipt and correction history survive to review.
+7. High assurance approval is not implicitly granted; merge/promotion is never automatic.
+8. Deterministic E2E passes positive and adversarial tests, including cancellation, stale context, mismatched approval, unsafe edit, unsuccessful correction and recovery.
+9. All predecessor validators remain green and new cell validator passes on the same exact head.
+10. WO-020 through WO-022 remain NOT_ADMITTED; no HIGH/CRITICAL unresolved finding.
 
 ## STOP CONDITION
-Do not execute while status is `PLANNED / NOT_ADMITTED`. At future execution, stop at exact-head audit; do not advance to a successor while correction/block remains.
+Stop after exact-head PR review and bounded checkpoint promotion. No automatic admission/execution of WO-020. Live provider-backed execution requires separate reviewed sandbox and authority integration; a fake-provider proof is not production autonomy.
