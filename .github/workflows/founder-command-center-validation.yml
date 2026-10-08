@@ -37,7 +37,7 @@ jobs:
             throw new Error('Unknown WO-020 lifecycle');
           }
           for(const n of [21,22]) {
-            const p='.engineering/work-orders/NXL-COMPANY-WO-'+n+'.md';
+            const p='.engineering/work-orders/NXL-COMPANY-WO-'+String(n).padStart(3,'0')+'.md';
             if(!fs.readFileSync(p,'utf8').includes('NOT_ADMITTED'))throw new Error('Successor admitted: '+n);
           }
           for(const [p,sha] of Object.entries(lock.sourceBlobFingerprints)) {
