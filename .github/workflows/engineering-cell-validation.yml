@@ -1,0 +1,50 @@
+name: Validate NexLabs Engineering Cell
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  engineering-cell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check engineering-cell lifecycle and safety contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const paths=['company-os/cell/engine.mjs','company-os/cell/engine.test.mjs','company-os/cell/cli.mjs','company-os/cell/fixtures.mjs','company-os/CELL-MVP.md','infra/docker/compose.cell-demo.yaml'];
+          for(const path of paths)if(!fs.existsSync(path))throw new Error('Missing WO-019 artifact: '+path);
+          const wo=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-019.md','utf8');
+          if(!wo.includes('ADMITTED / IN_PROGRESS')&&!wo.includes('APPROVED / MERGED'))throw new Error('WO-019 not in accepted lifecycle');
+          const cp=JSON.parse(fs.readFileSync('.engineering/CHECKPOINT.json','utf8'));
+          if(cp.gefVersion!=='1.1.2')throw new Error('GEF baseline changed');
+          for(let n=20;n<=22;n++){
+            const id='NXL-COMPANY-WO-'+String(n).padStart(3,'0');
+            if(!fs.readFileSync('.engineering/work-orders/'+id+'.md','utf8').includes('NOT_ADMITTED'))throw new Error('Future WO admitted: '+id);
+          }
+          const src=fs.readFileSync('company-os/cell/engine.mjs','utf8');
+          for(const word of ['APPROVAL_REQUIRED','CONTEXT_STALE','SCOPE_DENIED','RECOVERY_REQUIRED','PENDING_GEF_REVIEW','merge_authorized:false']){
+            if(!src.includes(word))throw new Error('Missing cell guardrail: '+word);
+          }
+          const compose=fs.readFileSync('infra/docker/compose.cell-demo.yaml','utf8');
+          for(const word of ['read_only: true','network_mode: none','cap_drop:','no-new-privileges:true',':ro']){
+            if(!compose.includes(word))throw new Error('Demo isolation missing: '+word);
+          }
+          console.log('Cell structural/authority gates accepted');
+          NODE
+      - name: Unit and adversarial E2E tests
+        run: node --test company-os/cell/engine.test.mjs
+      - name: Run local end-to-end demo
+        run: node company-os/cell/cli.mjs demo
+      - name: Validate Docker demo contract
+        run: docker compose -f infra/docker/compose.cell-demo.yaml config --quiet

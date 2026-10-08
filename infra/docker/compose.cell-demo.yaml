@@ -1,0 +1,16 @@
+name: nexlabs-cell-demo
+services:
+  cell-demo:
+    image: node:22-alpine
+    user: "1000:1000"
+    working_dir: /app
+    command: ["node", "company-os/cell/cli.mjs", "demo"]
+    volumes:
+      - ../../:/app:ro
+    read_only: true
+    network_mode: none
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
