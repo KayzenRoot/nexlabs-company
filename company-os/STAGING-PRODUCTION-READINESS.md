@@ -1,7 +1,7 @@
 # NexLabs Company OS — Local Recovery & Future Staging/Production Readiness
 
 **Work Order:** NXL-COMPANY-WO-021
-**Status:** IMPLEMENTATION_CANDIDATE / NO_PRODUCTION_DEPLOYMENT
+**Status:** APPROVED/MERGED / CI_FIXTURE_LOCAL_RECOVERY_ONLY / NO_PRODUCTION_DEPLOYMENT
 **Scope:** DoD-critical offline local recovery rehearsal and portability runbook, **not** authorization to deploy or operate 24/7 infrastructure.
 
 ## Environments and promotion gates
