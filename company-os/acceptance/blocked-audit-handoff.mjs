@@ -14,7 +14,7 @@ const AUDIT_LOCK=".engineering/context-locks/NXL-COMPANY-WO-022.json";
 // A successful classification never grants execution authority. GitHub-native
 // reviews and the source pack must still be independently reconciled.
 export function assessBlockedAuditHandoff({
-  mainCheckpoint, auditCheckpoint, auditIssue, auditPr,
+  mainCheckpoint, auditCheckpoint, auditIssue, auditPr, governancePr,
   successorIssue, decision, assessment, independentReview=null
 }) {
   if(!mainCheckpoint || mainCheckpoint.gefVersion!=="1.1.2" ||
@@ -40,6 +40,16 @@ export function assessBlockedAuditHandoff({
       !isSha(auditPr.headSha) || typeof auditPr.author!=="string" ||
       auditPr.author.length<1)
     fail("AUDIT_PR_CONFLICT");
+  // A review of PR #67 cannot approve the *distinct governance amendment*
+  // proposed in PR #128. Bind the package to both PR identities and demand
+  // a separately verified exact governance-head review.
+  if(!governancePr || governancePr.number!==128 ||
+      governancePr.state!=="open" || governancePr.draft!==true ||
+      governancePr.merged!==false || governancePr.baseSha!==BASE ||
+      governancePr.headBranch!=="governance/NXL-GOV-blocked-audit-handoff-proposal" ||
+      !isSha(governancePr.headSha) ||
+      typeof governancePr.author!=="string" || governancePr.author.length<1)
+    fail("GOVERNANCE_PR_CONFLICT");
   if(!successorIssue || successorIssue.number!==68 ||
       successorIssue.id!=="NXL-COMPANY-WO-024" ||
       successorIssue.state!=="open" ||
@@ -62,10 +72,11 @@ export function assessBlockedAuditHandoff({
   if(independentReview!==null) {
     if(typeof independentReview!=="object" ||
         independentReview.verdict!=="APPROVED" ||
-        independentReview.reviewer===auditPr.author ||
+        (independentReview.reviewer===auditPr.author ||
+         independentReview.reviewer===governancePr.author) ||
         typeof independentReview.reviewer!=="string" ||
         independentReview.reviewer.length<1 ||
-        independentReview.reviewedHead!==auditPr.headSha ||
+        independentReview.reviewedHead!==governancePr.headSha ||
         independentReview.source!=="GITHUB_NATIVE_READBACK" ||
         !Number.isSafeInteger(independentReview.reviewId) ||
         independentReview.reviewId<1)
@@ -79,6 +90,7 @@ export function assessBlockedAuditHandoff({
     founderGovernanceDirection:"APPROVED_IN_CONVERSATION",
     reviewState,
     authorityDivergence:"BASE_MAIN_IDLE_AUDIT_BRANCH_ACTIVE",
+    proposedGovernanceReviewHead:governancePr.headSha,
     auditVerdict:"RELEASE_NOT_APPROVED",
     releaseFounderAcceptance:"PENDING",
     successor:"NXL-COMPANY-WO-024",
