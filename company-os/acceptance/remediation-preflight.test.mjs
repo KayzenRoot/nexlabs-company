@@ -64,7 +64,7 @@ test("missing, duplicated or invented release obligations fail closed",()=>{
   rejects({audit:{...audit,unresolved:audit.unresolved.slice(1)}},"GAP_SET_CHANGED");
   rejects({audit:{...audit,unresolved:[...audit.unresolved,audit.unresolved[0]]}},"DUPLICATE_GAP");
   rejects({audit:{...audit,unresolved:[...audit.unresolved,{id:"UNKNOWN-01",status:"PARTIAL"}]}},"GAP_SET_CHANGED");
-  rejects({audit:{...audit,unresolved:audit.unresolved.map(x=>x.id==="ACC-03"?{...x,status:"PROVEN"}:x)}},"GAP_UNMAPPED");
+  rejects({audit:{...audit,unresolved:audit.unresolved.map(x=>x.id==="ACC-03"?{...x,status:"PROVEN"}:x)}},"FOUNDER_SIGNOFF_NOT_REQUESTED");
 });
 
 test("the exact Founder-signoff blocker cannot be omitted",()=>{
