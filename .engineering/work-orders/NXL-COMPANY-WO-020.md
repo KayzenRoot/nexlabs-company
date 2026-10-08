@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-020 — Founder Command Center & Company Observability
 
 **Issue:** #21
-**Status:** `ADMITTED / IN_PROGRESS`
+**Status:** `APPROVED / MERGED` (accepted *local read-only snapshot scope*)
 **Classification:** `IMPORTANT` (minimal founder visibility is NECESSARY under v0.1 DoD)
 **Risk:** `STANDARD` (local, read-only, no identity/mutation authority)
 **Admission base:** `fb2a0e0c2eb3b3a4fc09b2c058ba4b7892b73494`
@@ -58,3 +58,13 @@ Português brasileiro: base/head SHA, diff, scope and DoD mapping, tests/checks,
 
 ## STOP CONDITION
 Stop at implementation PR exact-head audit. If ACCEPTED, only then merge and promote checkpoint in separate governance step. No WO-021 admission before promotion and closure of WO-020.
+
+
+## CLOSEOUT — exact-head approval
+- Owner self-audit: `APPROVED / NOT_INDEPENDENT`, review `5450151486`
+- Audited HEAD: `ef03fd2e9ddfaf4befe1ffa38eeee257267d7522`
+- Implementation PR: #60, merged at `bc9cc94eda0f6fdaf6badde6bd0c705e63b40cee`
+- Exact-head checks: `20/20 SUCCESS`; includes isolated Docker runtime HTTP smoke and adversarial authorization/state checks.
+- Evidence: `.engineering/evidence/NXL-COMPANY-WO-020-CLOSEOUT.md`
+- Bounded feature: public-safe local engineering snapshot, no Founder privileged action, no PostgreSQL live projections, no real approval/run/finance integration.
+- Integrated DoD for real operational observability remains NOT FULLY SATISFIED. No WO-021/022 admitted by this closeout.
