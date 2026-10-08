@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-023 — Evidence-backed offline cell visibility
 
 **Issue:** #64
-**Status:** `ADMITTED / IN_PROGRESS`
+**Status:** `APPROVED / MERGED` (bounded offline fixture scope)
 **Classification:** `NECESSARY` for v0.1 minimum Founder visibility, not complete production observability
 **Risk:** `STANDARD` (read-only, fixture-only)
 **Admission base:** `86a328127585fe8a31b446fe0294da1c992490d5`
@@ -57,3 +57,11 @@ PT-BR exact base/head, 22 CI workflows, files/scope, source authority, security/
 
 ## STOP CONDITION
 Stop at exact-head PR audit; separate checkpoint promotion after successful merge/readback. No WO-022 admission before WO-023 promotion and feasibility review.
+
+## CLOSEOUT
+- Owner self-audit: `APPROVED / NOT_INDEPENDENT`, review #5450267377.
+- Audited head `0e118d9f373c77a2d0a491a968e4e46182bcf67c`; PR #65 merge `976c7a00317530efe12e5c6d655e0a40dd4dd3b9`.
+- Exact-head CI 22/22 SUCCESS including Node 22 and isolated Docker HTTP evidence; admission-base fingerprints 11/11 matched.
+- Evidence Bundle: `.engineering/evidence/NXL-COMPANY-WO-023-CLOSEOUT.md`.
+- NOT_CONNECTED: real agents, Founder identity, external approvals, incidents, deployments, finance and production telemetry.
+- WO-022 still NOT_ADMITTED and v0.1 not accepted.
