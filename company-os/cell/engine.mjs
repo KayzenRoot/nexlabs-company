@@ -107,8 +107,11 @@ export function verifyReceiptChain(events){
   }
   return true;
 }
-export async function runEngineeringCell({intent,approval,contextLock,executor,now_ms=Date.now(),signal}){
+export async function runEngineeringCell({intent,approval,contextLock,executor,trustedApprovalVerifier,now_ms=Date.now(),signal}){
   const allowed=verifyIntent(intent,approval,contextLock,now_ms);
+  assert(typeof trustedApprovalVerifier==="function","AUTHORIZATION_DENIED","Trusted Founder identity/approval verifier adapter required");
+  const verified=await trustedApprovalVerifier(Object.freeze(structuredClone(approval)),Object.freeze(structuredClone(intent)));
+  assert(verified===true,"AUTHORIZATION_DENIED","Founder identity/approval not verified by trusted authority");
   assert(executor&&typeof executor.propose==="function","EXECUTOR_CONTRACT","Injected adapter required");
   const log=eventLog();
   const workOrder={key:"CELL-"+intent.intent_id.toUpperCase(),base_sha:intent.base_sha,organization_id:intent.organization_id,scope:allowed.slice(),source_fingerprint:contextLock.source_fingerprint,acceptance:structuredClone(intent.acceptance)};
@@ -128,6 +131,10 @@ export async function runEngineeringCell({intent,approval,contextLock,executor,n
     }catch(error){
       log.append("EXECUTOR_ERROR",{attempt,code:"PROVIDER_FAILURE"});
       return {status:"BLOCKED",reason:"PROVIDER_FAILURE",workOrder,events:log.events,checkpoint_handoff:null};
+    }
+    if(signal?.aborted){
+      log.append("CANCELLED",{attempt,after:"PROVIDER_PROPOSAL"});
+      return {status:"CANCELLED",workOrder,events:log.events,checkpoint_handoff:null};
     }
     if(proposal?.state==="UNKNOWN_COMPLETION"){
       log.append("RECOVERY_REQUIRED",{attempt,reason:"UNKNOWN_COMPLETION"});
