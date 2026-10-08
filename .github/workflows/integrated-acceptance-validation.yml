@@ -65,6 +65,9 @@ jobs:
           node --check company-os/acceptance/blocked-audit-handoff.mjs
           node --check company-os/acceptance/blocked-audit-handoff.test.mjs
           node --test company-os/acceptance/blocked-audit-handoff.test.mjs
+          node --check company-os/acceptance/blocked-closeout-readiness.mjs
+          node --check company-os/acceptance/blocked-closeout-readiness.test.mjs
+          node --test company-os/acceptance/blocked-closeout-readiness.test.mjs
           echo 'Remediation remains PLANNED; WO-024 is NOT_ADMITTED and release remains BLOCKED'
 
   secret-scan:
