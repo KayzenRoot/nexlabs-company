@@ -107,6 +107,10 @@ Examples:
 
 The Founder may explicitly authorize a **separate governance amendment proposal** for `BLOCKED_AWAITING_REMEDIATION`, even while the audit is active. This authorizes **proposal and independent governance review only**, not a second ADMITTED Work Order, release, or implementation.
 
+**Proposed canonical field mapping for the independently reviewed amendment:** keep `workOrder.state = BLOCKED` as the existing canonical state. Use `workOrder.blockedReason = AWAITING_REMEDIATION` as a **new, versioned substatus** only when an accepted governance schema/validator amendment provides that field. `BLOCKED_AWAITING_REMEDIATION` is a human-facing composite display label, **not** an additional top-level `workOrder.state` enum. Retain `release.verdict = RELEASE_NOT_APPROVED` and `release.founderAcceptance = PENDING`. Before this schema has been independently accepted and applied, a consumer encountering the composite string as a top-level state or any unknown `blockedReason` **must reject any admission-slot release** rather than treating an unrecognized state as terminal/success. This text does not create, migrate, or authorize the substatus by itself.
+
+**Required validator amendment and negative tests before enactment:** normalize the existing Company OS Work Order state machine, checkpoint/registry/issue mapping and all 22+ persistent GitHub gates to the same state/substatus schema; deny unknown enum/substatus, a still-active issue/PR, an unreviewed deferral, missing Founder governance evidence and any second active WO. The controlled transition must be tested in a separate reviewed exact-head governance increment before any actual update of WO-022 state. Avoid disabling CI checks.
+
 The blocked audit may relinquish its sole-admission slot **only after**:
 - a governance amendment is accepted through independent, exact-head review and separately recorded Founder direction;
 - the frozen audit verdict/issue/PR/Context Lock/CI evidence and outstanding DoD gaps are preserved;
