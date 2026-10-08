@@ -27,10 +27,11 @@ Authority is resolved by domain. A newer file does not automatically override an
 | 20 | Company OS architecture | `company-os/ARCHITECTURE.md` plus functional architecture contracts |
 | 21 | Local Docker runtime | `company-os/LOCAL-DOCKER-RUNTIME.md` plus `infra/docker/` executable contracts |
 | 22 | Agent runtime | `company-os/AGENT-RUNTIME-DESIGN.md` plus Hermes integration and contract tests |
-| 23 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
-| 24 | Deployment | `DEPLOYMENT.md` |
-| 25 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
-| 26 | Conversation | transient context only |
+| 23 | Autonomous Engineering Cell MVP | `company-os/CELL-MVP.md` plus cell engine, tests and exact-head evidence |
+| 24 | Validation | `TEST-BENCHMARK-PLAN.md` plus exact-head evidence |
+| 25 | Deployment | `DEPLOYMENT.md` |
+| 26 | Future work | `BACKLOG.md`, Work Order Registry and GitHub issues |
+| 27 | Conversation | transient context only |
 
 If canonical sources conflict, are missing, stale, or bound to another Git head, stop the affected progression and reconcile through the active Work Order. Never infer approval from chat history.
 
@@ -301,3 +302,8 @@ The local runtime implements WO-016 architecture. It may not redefine PostgreSQL
 ## Agent runtime authority
 
 `company-os/AGENT-RUNTIME-DESIGN.md` governs provider-neutral session/tool/memory/budget/routing semantics. `company-os/HERMES-ADAPTER-SPEC.md` pins Hermes as a replaceable design adapter, not a required provider or host installation. Executable pure contract tests are under `company-os/contracts/`. Company OS governance and security policies outrank adapter affordances.
+
+
+## Autonomous Engineering Cell MVP authority
+
+`company-os/CELL-MVP.md` and `company-os/cell/engine.mjs` describe the first executable, offline engineering-cell slice. Approval verification, context lock, edit scope, QA, correction and receipt integrity are required. This deterministic mock-executor run is **not** evidence of live Hermes/LLM, host execution, GitHub mutation, independent human review or actual checkpoint promotion. Provider adapters cannot change authority.
