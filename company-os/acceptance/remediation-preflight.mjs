@@ -39,6 +39,10 @@ export function planBlockedAcceptance({audit, checkpoint, candidateIssues}) {
   if(seen.size!==expected.size)fail("ROADMAP_INCOMPLETE");
   const unresolved=new Set(audit.unresolved.map(x=>x.id));
   if(unresolved.size!==audit.unresolved.length)fail("DUPLICATE_GAP");
+  // ACC-03 cannot be approved or omitted by general continuation instructions.
+  if(!unresolved.has("ACC-03") ||
+     audit.unresolved.find(x=>x.id==="ACC-03")?.status!=="BLOCKED")
+    fail("FOUNDER_SIGNOFF_NOT_REQUESTED");
   // Pin the known blocked release assessment. A reclassified obligation
   // requires a fresh independent audit instead of silent plan promotion.
   if(unresolved.size!==Object.keys(RELEASE_GAPS).length ||
@@ -48,10 +52,6 @@ export function planBlockedAcceptance({audit, checkpoint, candidateIssues}) {
        !["PARTIAL","NOT_PROVEN","BLOCKED"].includes(row.status) ||
        !Object.hasOwn(RELEASE_GAPS,row.id))fail("GAP_UNMAPPED");
   }
-  // ACC-03 never becomes accepted from generic implementation instructions.
-  if(!unresolved.has("ACC-03") ||
-     audit.unresolved.find(x=>x.id==="ACC-03")?.status!=="BLOCKED")
-    fail("FOUNDER_SIGNOFF_NOT_REQUESTED");
   const map=Object.fromEntries(audit.unresolved.map(x=>[
     x.id,{status:x.status,candidateWOs:RELEASE_GAPS[x.id].map(WO)}
   ]));
