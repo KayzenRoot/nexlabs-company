@@ -11,7 +11,7 @@ A failed first proposal remains visible in the receipt chain; a passing correcti
 - Adapter returns **data only**, never permissions or shell commands.
 - No filesystem writes, GitHub tokens, Docker socket, subprocess, network calls or wallet/bank APIs.
 - Edit paths are allowlisted and traversal / protected paths are denied.
-- Founder approval binds digest, actor, organization and exact Git base, with expiry.
+- Founder approval binds digest, actor, organization and exact Git base, with expiry. A separate **trustedApprovalVerifier** adapter must affirm the approval; self-declared `approver_role=FOUNDER` never grants execution by itself. The offline demo verifier is a TEST FIXTURE, not real authentication.
 - Proposed edits are staged in memory only.
 - QA gates are deterministic and not a substitute for actual CI on changed repo files.
 - \`READY_FOR_GOVERNED_PR\` is **not** PR opened, code merged, or checkpoint promoted.
