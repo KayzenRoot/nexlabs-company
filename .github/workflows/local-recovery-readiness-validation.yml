@@ -30,7 +30,8 @@ jobs:
             if(cp.activeIssue!==22||cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-021.json'||cp.admissionBaseSha!==lock.baseSha)throw Error('Active context drift');
             if(!registry.includes('| NXL-COMPANY-WO-021 | #22 | ADMITTED / IN_PROGRESS |'))throw Error('Registry drift');
           } else if(!registry.includes('| NXL-COMPANY-WO-021 | #22 | APPROVED / MERGED |') || (cp.activeWorkOrder!==null && !registry.includes('| '+cp.activeWorkOrder+' | #'+cp.activeIssue+' | ADMITTED / IN_PROGRESS |')))throw Error('Checkpoint drift');
-          if(!fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8').includes('NOT_ADMITTED'))throw Error('WO-022 admitted prematurely');
+          const release=fs.readFileSync('.engineering/work-orders/NXL-COMPANY-WO-022.md','utf8');
+          if(!release.includes(cp.activeWorkOrder==='NXL-COMPANY-WO-022'?'ADMITTED / IN_PROGRESS':'NOT_ADMITTED'))throw Error('WO-022 lifecycle unexpected');
           if(lock.restores!=='ISOLATED_EPHEMERAL_CI_FIXTURES_ONLY')throw Error('Risk/restore boundary changed');
           for(const [path,sha] of Object.entries(lock.sourceBlobFingerprints))if(!fs.existsSync(path)||!/^[0-9a-f]{40}$/.test(sha))throw Error('Invalid fingerprint: '+path);
           console.log('WO-021 authority and scope validated');
