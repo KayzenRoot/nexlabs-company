@@ -1,6 +1,6 @@
 # NexLabs Founder Command Center — WO-020
 
-**Status:** ADMITTED IMPLEMENTATION CANDIDATE; not approved/merged/deployed.
+**Status:** APPROVED / MERGED local read-only snapshot (WO-020). Docker and HTTP smoke validated in CI; not deployed to Founder's own machine or internet. Not live operational Company OS.
 
 ## Why this slice
 v0.1 requires minimum founder visibility before final acceptance, but WO-019 only demonstrates a deterministic offline executor. This small dashboard reads the repository's accepted/working engineering metadata and surfaces **unavailable** operational signals without inventing live agents, payments, approvals or runtime health.
