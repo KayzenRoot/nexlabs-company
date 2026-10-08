@@ -34,7 +34,8 @@ jobs:
           if(cp.activeWorkOrder==='NXL-COMPANY-WO-020') {
             if(cp.activeIssue!==21||cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-020.json')throw new Error('Active WO mismatch');
             if(!registry.includes('| NXL-COMPANY-WO-020 | #21 | ADMITTED / IN_PROGRESS |'))throw new Error('Registry mismatch');
-          } else if(cp.activeWorkOrder!==null||!registry.includes('| NXL-COMPANY-WO-020 | #21 | APPROVED / MERGED |')) {
+          } else if(!registry.includes('| NXL-COMPANY-WO-020 | #21 | APPROVED / MERGED |') ||
+                    (cp.activeWorkOrder!==null&&!registry.includes('| '+cp.activeWorkOrder+' | #'+cp.activeIssue+' | ADMITTED / IN_PROGRESS |'))) {
             throw new Error('Unknown WO-020 lifecycle');
           }
           for(const n of [22]) {
