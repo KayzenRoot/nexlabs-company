@@ -72,6 +72,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          scanner="$(find /tmp -maxdepth 2 -type f -path '/tmp/gitleaks-*/gitleaks' -print -quit)"
-          if [ -z "$scanner" ]; then echo "Gitleaks binary unavailable"; exit 1; fi
+          scanner="/tmp/gitleaks-8.24.3/gitleaks"
+          if [ ! -x "$scanner" ]; then echo "Pinned Gitleaks binary unavailable"; exit 1; fi
           "$scanner" git --log-opts="--all" --redact --exit-code=2 .
