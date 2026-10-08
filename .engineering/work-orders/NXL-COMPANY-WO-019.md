@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-019 — Autonomous Engineering Cell MVP
 
 **Issue:** #20
-**Status:** `ADMITTED / IN_PROGRESS`
+**Status:** `APPROVED / MERGED`
 **Classification:** `NECESSARY`
 **Risk:** `ELEVATED / AUTONOMOUS_TOOL_EXECUTION`
 **Admission base:** `1916ca9bc3d98c4a9f1dc15012514d15e5e7eeec`
@@ -45,3 +45,15 @@ Implement and test the first executable engineering-cell pipeline: Founder-appro
 
 ## STOP CONDITION
 Stop after exact-head PR review and bounded checkpoint promotion. No automatic admission/execution of WO-020. Live provider-backed execution requires separate reviewed sandbox and authority integration; a fake-provider proof is not production autonomy.
+
+
+## Closeout
+
+- Owner self-audit: `OWNER_SELF_AUDIT_APPROVED / NOT_INDEPENDENT`, review `5450076448`
+- Audited head: `87cd7755fa8291f4902ddaf841da60a03f74e5fe`
+- Implementation merged: `f31ea1bf10af2b0ad064459571b146eabb00d82a`
+- Required validators: `19/19 SUCCESS` on exact audited head
+- Offline E2E/adversarial tests and Docker Compose config passed in CI
+- Known HIGH/CRITICAL for accepted offline demonstration: `0/0`
+- Real Founder SSO/identity, live Hermes, isolated mutation broker, external GitHub writes and independent review are NOT proven.
+- WO-020 remains NOT_ADMITTED pending separate admission.
