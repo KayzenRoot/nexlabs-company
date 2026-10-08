@@ -53,10 +53,25 @@ export function evaluatePreliminaryAudit({ matrix, checkpoint, evidenceExists })
   });
 }
 
+// An evidence path must resolve to a regular file inside the checkout. Existing
+// directory entries or symlinks to external files do not establish trustworthy proof.
+export function isSafeEvidenceFile(root, relativePath) {
+  if (typeof relativePath !== "string" || relativePath.startsWith("/") ||
+      relativePath.includes("\\\\") || relativePath.split("/").some(s=>!s || s==="." || s==="..")) return false;
+  try {
+    const canonicalRoot=fs.realpathSync(root);
+    const absolute=path.resolve(root,relativePath);
+    const resolved=fs.realpathSync(absolute);
+    const rel=path.relative(canonicalRoot,resolved);
+    return !!rel && rel!==".." && !rel.startsWith(".."+path.sep) &&
+      !path.isAbsolute(rel) && fs.lstatSync(absolute).isFile() && fs.statSync(resolved).isFile();
+  } catch { return false; }
+}
+
 export function runPreliminaryAudit(root) {
   const cp=JSON.parse(fs.readFileSync(path.join(root,".engineering/CHECKPOINT.json"),"utf8"));
   const matrix=JSON.parse(fs.readFileSync(path.join(root,"company-os/acceptance/v01-obligations.json"),"utf8"));
-  return evaluatePreliminaryAudit({matrix,checkpoint:cp,evidenceExists:file=>fs.existsSync(path.join(root,file))});
+  return evaluatePreliminaryAudit({matrix,checkpoint:cp,evidenceExists:file=>isSafeEvidenceFile(root,file)});
 }
 
 if(process.argv[1] && path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
