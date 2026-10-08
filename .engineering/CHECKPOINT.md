@@ -1,33 +1,18 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_018_COMPLETE_AGENT_RUNTIME_DESIGN_CANONICAL`
+**Status:** `WO_019_ADMITTED_AUTONOMOUS_ENGINEERING_CELL_IN_PROGRESS`
 
-- Project: NexLabs Company v0.1
-- GEF baseline: `1.1.2`
-- Completed through Work Order: `NXL-COMPANY-WO-018`
-- Exact implementation audited head: `7147fb2dc4034bac5ff37de80281f7f4b2f7d5dd`
-- Implementation merge SHA: `a074445ae5169ef0377ead49ba4b21f39e6eedcb`
-- Active Work Order: `NONE`
-- Active issue/branch/Context Lock: `NONE`
-- Known HIGH/CRITICAL findings in accepted design scope: `0/0`
-- Public-safe repository only
-
-## Canonical agent runtime design
-
-- `company-os/AGENT-RUNTIME-DESIGN.md`
-- `company-os/HERMES-ADAPTER-SPEC.md`
-- `company-os/AGENT-SESSION-PROTOCOL.md`
-- `company-os/MODEL-ROUTING-AND-FALLBACK.md`
-- `company-os/TOOL-CAPABILITY-BROKER.md`
-- `company-os/AGENT-MEMORY-BOUNDARIES.md`
-- `company-os/AGENT-BUDGET-AND-TELEMETRY.md`
-- `company-os/AGENT-FAILURE-AND-RECOVERY.md`
-- `company-os/contracts/agent-runtime.mjs` and offline tests
-
-These are DESIGN contracts with offline verification; no claim of live Hermes execution or authorized host execution.
+- Completed through: `NXL-COMPANY-WO-018`
+- Admission base: `1916ca9bc3d98c4a9f1dc15012514d15e5e7eeec`
+- Active Work Order: `NXL-COMPANY-WO-019`
+- Issue: `#20`
+- Branch: `feat/NXL-COMPANY-WO-019-autonomous-engineering-cell-mvp`
+- Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-019.json`
+- GEF: `1.1.2`
+- Known HIGH/CRITICAL: `0 known at admission`
 
 ## Next legal action
+`VALIDATE_WO_019_CELL_AND_OPEN_PR`
 
-`ADMIT_NXL_COMPANY_WO_019`
-
-WO-019 is NOT_ADMITTED until a separate Context Lock and admission are committed.
+## STOP
+WO-020..022 are NOT_ADMITTED. Executor proof uses offline deterministic fake adapter and never has live GitHub, Docker, LLM or host authority.

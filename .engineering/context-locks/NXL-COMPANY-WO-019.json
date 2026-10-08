@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "workOrderId": "NXL-COMPANY-WO-019",
+  "issue": 20,
+  "repository": "KayzenRoot/nexlabs-company",
+  "branch": "feat/NXL-COMPANY-WO-019-autonomous-engineering-cell-mvp",
+  "baseSha": "1916ca9bc3d98c4a9f1dc15012514d15e5e7eeec",
+  "sourceAuthority": [
+    ".engineering/CHECKPOINT.json",
+    "company/AUTONOMOUS-SOFTWARE-FACTORY.md",
+    "company-os/AGENT-RUNTIME-DESIGN.md",
+    "company-os/TOOL-CAPABILITY-BROKER.md",
+    "company-os/ARCHITECTURE.md"
+  ],
+  "allowedPaths": [
+    "company-os/cell/",
+    "company-os/CELL-MVP.md",
+    "infra/docker/compose.cell-demo.yaml",
+    ".github/workflows/engineering-cell-validation.yml",
+    ".engineering/"
+  ],
+  "executorCapability": "DETERMINISTIC_OFFLINE_ONLY",
+  "mutationsExternal": "PROHIBITED",
+  "state": "LOCKED_FOR_WO_019"
+}

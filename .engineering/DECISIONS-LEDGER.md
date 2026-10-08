@@ -676,3 +676,28 @@
 ## D-0165 — Runtime budgets and audit are first-class controls
 **Status:** APPROVED IN WO-018  
 **Decision:** Each run has turn/time/spend ceilings; audit and provider receipts are recorded without raw secrets. Unknown spend is not zero.
+
+
+## D-0166 — Engineering-cell MVP requires trusted Founder approval verification
+**Status:** APPROVED IN WO-019
+**Decision:** Exact intent digest, organization, actor and Git SHA binding are necessary but not sufficient. A trusted identity/approval-verifier port must affirm the Founder approval; untrusted self-asserted approval fields alone do not grant authority.
+
+## D-0167 — Executor proposals are untrusted staged data
+**Status:** APPROVED IN WO-019
+**Decision:** The first cell uses an injected offline deterministic proposal adapter, with strict file allowlist and no host/GitHub/network/tool mutation. A real agent runtime needs a separately governed isolated broker.
+
+## D-0168 — QA and correction preserve failure evidence
+**Status:** APPROVED IN WO-019
+**Decision:** Deterministic acceptance checks run independently of executor proposals. A failed attempt is appended to hash-linked evidence and correction attempts are capped; failure cannot auto-approve.
+
+## D-0169 — Autonomous cell cannot self-merge or promote checkpoint
+**Status:** APPROVED IN WO-019
+**Decision:** Success produces READY_FOR_GOVERNED_PR and PENDING_GEF_REVIEW only. Actual PR mutation, exact-head audit, merger and checkpoint promotion remain GEF-controlled external operations.
+
+## D-0170 — Ambiguous completion and cancellation fail closed
+**Status:** APPROVED IN WO-019
+**Decision:** UNKNOWN_COMPLETION becomes RECOVERY_REQUIRED without blind replay. Cancellation prevents staging/promotion, and provider errors do not trigger unbounded retries.
+
+## D-0171 — MVP proof is bounded to an offline local demonstration
+**Status:** APPROVED IN WO-019
+**Decision:** Contract/E2E tests with deterministic injected adapters validate the control flow, not live provider security or autonomous production code delivery. Production capability claims require separately reviewed integration evidence.
