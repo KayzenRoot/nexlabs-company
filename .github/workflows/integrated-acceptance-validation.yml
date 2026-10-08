@@ -90,6 +90,12 @@ jobs:
             summary.set(key,(summary.get(key)||0)+1);
           }
           console.log('WO-022 historical findings (metadata ONLY; no secrets):',JSON.stringify([...summary].map(([key,count])=>({key,count}))));
+          console.log('WO-022 historical locations (NO secret values):',JSON.stringify(rows.map(row=>({
+            line:Number(row.StartLine)||null,
+            revision:/^[a-f0-9]{40}$/.test(String(row.Commit||''))?String(row.Commit).slice(0,12):'unknown',
+            rule:String(row.RuleID||'unknown').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,65),
+            file:String(row.File||'unknown').replace(/[^a-zA-Z0-9./_-]/g,'_').slice(0,150)
+          }))));
           console.log('WO-022 total historical findings:',rows.length);
           NODE
           fi
