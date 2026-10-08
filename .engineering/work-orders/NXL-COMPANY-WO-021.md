@@ -1,7 +1,7 @@
 # NXL-COMPANY-WO-021 — Local Recovery Proof & Production-Readiness Boundaries
 
 **Issue:** #22
-**Status:** `ADMITTED / IN_PROGRESS`
+**Status:** `APPROVED / MERGED` (CI-local recovery subset only)
 **Classification:** `IMPORTANT` roadmap; this admission executes only the **NECESSARY v0.1 DoD recovery/operations subset**.
 **Risk:** `ELEVATED` — stateful restore in *ephemeral CI fixtures only*.
 **Admission base:** `dc38085cb057073a4551728dfc2a962b119903c0`
@@ -61,3 +61,12 @@ PT-BR, base/head SHA, changed files, tests/real Docker recovery evidence, findin
 
 ## STOP CONDITION
 Stop after exact-head audit and separate checkpoint promotion. No WO-022 admission while this WO requires correction or is blocked. Production rollout explicitly prohibited.
+
+
+## CLOSEOUT
+- Owner self-audit: `APPROVED / NOT_INDEPENDENT`; review `5450216793`.
+- Exact audited HEAD: `7bd86ab4b37c14d7a8ad3ce622e08c37df31d3ea`; implementation PR #62 squash-merged at `6cfccedd85789b30450e86b142281e8e070d3097`.
+- `21/21` exact-head checks SUCCESS; recovery workflow `37711032530`, actual CI Docker Postgres/artifact restores and negative paths.
+- Context Lock 10/10 blob SHAs match admission base.
+- Evidence: `.engineering/evidence/NXL-COMPANY-WO-021-CLOSEOUT.md`.
+- No 24/7 deployment or production restore; WO-020 telemetry still NOT_CONNECTED and v0.1 integrated DoD remains open. WO-022 NOT_ADMITTED.
