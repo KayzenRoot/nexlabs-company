@@ -28,7 +28,8 @@ jobs:
           const registry=fs.readFileSync('.engineering/WORK-ORDER-REGISTRY.md','utf8');
           if(cp.gefVersion!=='1.1.2'||cp.repositoryDisclosure!=='PUBLIC_SAFE_ONLY')throw new Error('GEF/public boundary changed');
           if(lock.workOrderId!=='NXL-COMPANY-WO-020'||lock.issue!==21||lock.branch!=='feat/NXL-COMPANY-WO-020-founder-command-center')throw new Error('Lock identity mismatch');
-          if(!/^[0-9a-f]{40}$/.test(lock.baseSha)||cp.admissionBaseSha!==lock.baseSha)throw new Error('Git admission base mismatch');
+          if(!/^[0-9a-f]{40}$/.test(lock.baseSha))throw new Error('Invalid WO-020 base');
+          if(cp.activeWorkOrder==='NXL-COMPANY-WO-020'&&cp.admissionBaseSha!==lock.baseSha)throw new Error('Active WO-020 base mismatch');
           if(!wo.includes('ADMITTED / IN_PROGRESS')&&!wo.includes('APPROVED / MERGED'))throw new Error('WO-020 not in admitted/approved lifecycle');
           if(cp.activeWorkOrder==='NXL-COMPANY-WO-020') {
             if(cp.activeIssue!==21||cp.activeContextLock!=='.engineering/context-locks/NXL-COMPANY-WO-020.json')throw new Error('Active WO mismatch');
