@@ -16,6 +16,8 @@ const source = {
 };
 const auditHead = "7a5e42b1e3bfd0736668279780ec13ae4f96e13b";
 const auditBase = "d2f7acc85babd62cfacb87a4d061ef39e74a566d";
+const governanceHead = "80ecdd9fede11e7356d42b24a2b0da62b4cd994f";
+const governanceMerge = "c4b167425b8a32976f7dbb7dde69ed6d61c6f16d";
 const disposition = {
   schemaVersion: 1, state: "BLOCKED", blockedReason: "AWAITING_REMEDIATION",
   displayLabel: "BLOCKED_AWAITING_REMEDIATION", auditIssue: 23, auditPr: 67,
@@ -45,8 +47,8 @@ const idleBlockedSource = () => {
 };
 const reconciledSource = () => {
   const x = idleBlockedSource();
-  x.checkpoint.wo022AdministrativeDisposition.governanceHeadSha = "b".repeat(40);
-  x.checkpoint.wo022AdministrativeDisposition.governanceMergeSha = "d".repeat(40);
+  x.checkpoint.wo022AdministrativeDisposition.governanceHeadSha = governanceHead;
+  x.checkpoint.wo022AdministrativeDisposition.governanceMergeSha = governanceMerge;
   return x;
 };
 const activeFixture = () => {
@@ -81,13 +83,13 @@ const plannedFixture = () => {
 };
 const validProviderReadback = (mainSha = "c".repeat(40)) => ({
   observedMainSha: mainSha, checkpointSha: mainSha, observedAt: new Date().toISOString(),
-  governanceHeadSha: "b".repeat(40),
+  governanceHeadSha: governanceHead,
   issue23: {state: "CLOSED", workOrderState: "BLOCKED", blockedReason: "AWAITING_REMEDIATION",
     releaseVerdict: "RELEASE_NOT_APPROVED", founderReleaseAcceptance: "PENDING"},
   auditPr67: {state: "CLOSED", merged: false, headSha: auditHead, baseSha: auditBase,
     disposition: "BLOCKED_UNMERGED_EVIDENCE"},
-  governancePr128: {state: "MERGED", headSha: "b".repeat(40), reviewedHeadSha: "b".repeat(40),
-    mergeSha: "d".repeat(40), technicalReview: "COMMENTED",
+  governancePr128: {state: "MERGED", headSha: governanceHead, reviewedHeadSha: governanceHead,
+    mergeSha: governanceMerge, technicalReview: "COMMENTED",
     ownerAudit: "OWNER_SELF_AUDIT / NOT_INDEPENDENT", checksPassed: true},
   governanceMergeIsAncestorOfMain: true,
   activeAdmissionClaims: [], activeContextLocks: []
@@ -139,9 +141,21 @@ test("only a committed exact review receipt and fresh GitHub readback release th
   assert.equal(result.ownerAudit, "OWNER_SELF_AUDIT / NOT_INDEPENDENT");
 });
 
-test("candidate checkpoint cannot release the slot from caller-supplied matching provider SHAs", () => {
-  reject({...blockedSource(), currentMainSha: "c".repeat(40),
-    providerReadback: validProviderReadback()}, "GOVERNANCE_REVIEW_RECEIPT_MISSING");
+test("provider readback requires the exact committed COMMENTED technical review", () => {
+  for (const technicalReview of [undefined, "UNCOMMENTED"]) {
+    const providerReadback = validProviderReadback();
+    if (technicalReview === undefined) delete providerReadback.governancePr128.technicalReview;
+    else providerReadback.governancePr128.technicalReview = technicalReview;
+    reject({...reconciledSource(), currentMainSha: "c".repeat(40), providerReadback},
+      "GOVERNANCE_MERGE_READBACK_CONFLICT");
+  }
+});
+
+test("a provider readback with a different reviewed governance head cannot release the slot", () => {
+  const providerReadback = validProviderReadback();
+  providerReadback.governancePr128.reviewedHeadSha = "e".repeat(40);
+  reject({...reconciledSource(), currentMainSha: "c".repeat(40), providerReadback},
+    "GOVERNANCE_MERGE_READBACK_CONFLICT");
 });
 
 test("a normally admitted WO-024 occupies the reconciled slot and is not a second admission", () => {

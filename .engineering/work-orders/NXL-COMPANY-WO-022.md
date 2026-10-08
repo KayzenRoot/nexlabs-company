@@ -51,6 +51,6 @@ The exact-head audit has stopped at `BLOCKED_FOR_RELEASE`. Do not resume it unde
 ## NON-SUCCESS ADMINISTRATIVE DISPOSITION
 - Canonical Work Order state: `BLOCKED`; blocked reason: `AWAITING_REMEDIATION`.
 - `BLOCKED_AWAITING_REMEDIATION` is a display label only; it is not a top-level state.
-- This governance candidate proposes administrative retirement of the admitted read-only audit from the single-admission slot. It takes effect only after merge and exact provider reconciliation. It is not `APPROVED`, `MERGED`, `COMPLETE`, or release approval.
+- The admitted read-only audit was administratively retired from the single-admission slot after governance PR #128 merged and exact provider reconciliation confirmed issue #23 `CLOSED / BLOCKED`, PR #67 `CLOSED / UNMERGED`, and no residual active admission claim or Context Lock. This is not `APPROVED`, `MERGED`, `COMPLETE`, or release approval.
 - Frozen audit evidence: PR #67 exact head `7a5e42b1e3bfd0736668279780ec13ae4f96e13b`, base `d2f7acc85babd62cfacb87a4d061ef39e74a566d`; 19 PROVEN, 6 PARTIAL, 1 BLOCKED (`ACC-03`); verdict `BLOCKED_FOR_RELEASE` / `RELEASE_NOT_APPROVED`.
 - Founder release acceptance remains `PENDING`. The later final acceptance must use a newly admitted Work Order and exact release candidate.
