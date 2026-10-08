@@ -1,23 +1,16 @@
 # NexLabs Company Checkpoint
 
-**Status:** `WO_020_COMPLETE_FOUNDER_COMMAND_CENTER_LOCAL_READ_ONLY`
+**Status:** `WO_021_ADMITTED_LOCAL_RECOVERY_READINESS_IN_PROGRESS`
 
-- GEF: `1.1.2`
-- Completed through Work Order: `NXL-COMPANY-WO-020` (accepted **local read-only scope only**)
-- Audited implementation HEAD: `ef03fd2e9ddfaf4befe1ffa38eeee257267d7522`
-- Implementation merge: `bc9cc94eda0f6fdaf6badde6bd0c705e63b40cee` (PR #60)
-- Exact-head workflow result: `20/20 SUCCESS` including Node security/HTTP tests and Docker container HTTP smoke test
-- Owner self-audit review: `5450151486`, `APPROVED / NOT_INDEPENDENT`
-- Active Work Order / issue / branch / lock: `NONE`
-- Known CRITICAL/HIGH for this bounded scope: `0 / 0`
-- Repository: `PUBLIC_SAFE_ONLY`
-
-## Accepted proof and limits
-- `company-os/founder/`: Node 22 read-only snapshot, responsive dashboard, HTTP query and adversarial consistency tests.
-- `infra/docker/compose.founder-demo.yaml`: read-only local Docker runtime; container HTTP smoke confirmed in CI, not installed on the Founder's PC.
-- The UI derives engineering status from Git-source files. External live agent runs, approval inbox, incidents, financial costs, cloud deployments, production health and privileged Founder commands are **NOT_CONNECTED**. No independent human audit was performed.
-- The v0.1 integrated Definition of Done, including substantive founder observability of real runs/failures/approvals, is **not yet fully satisfied**. This checkpoint is not a declaration of a launched Company OS.
+- GEF `1.1.2`; last approved/promotion: WO-020, main `dc38085cb057073a4551728dfc2a962b119903c0`.
+- Sole active order: `NXL-COMPANY-WO-021`, issue #22, branch `infra/NXL-COMPANY-WO-021-local-recovery-readiness`.
+- Admission base: `dc38085cb057073a4551728dfc2a962b119903c0`.
+- Context Lock: `.engineering/context-locks/NXL-COMPANY-WO-021.json`.
+- **Only admitted scope:** v0.1 DoD local backup/restore evidence and offline staging/production readiness documentation.
+- Risk: `ELEVATED` due to **fixture-only** isolated Docker destructive restore tests; no production/data actions.
+- WO-020 Founder dashboard metrics remain `NOT_CONNECTED`; real run/approval/failure observability **not proven**.
+- Implementation candidate **NOT YET AUDITED/APPROVED**; no exact-head tests or production deploy claimed.
+- WO-022 still NOT_ADMITTED.
 
 ## Next legal action
-
-`DECIDE_WO_021_ADMISSION_OR_DEFERRAL` based on Scope and DoD. WO-021 is IMPORTANT, not automatically required for release; WO-022 integrated acceptance remains NOT_ADMITTED. No successor implementation until explicitly admitted with a fresh Context Lock.
+`IMPLEMENT_AND_AUDIT_NXL_COMPANY_WO_021`. No successor while candidate unapproved or blocked.
