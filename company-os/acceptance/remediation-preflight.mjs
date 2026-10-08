@@ -14,6 +14,11 @@ export const RELEASE_GAPS=Object.freeze({
   "ACC-03": [31]
 });
 export const FIRST_REMEDIATION_WO="NXL-COMPANY-WO-024";
+// Snapshot of issue references verified at audit preparation. This is NOT
+// a live GitHub fetch or proof of current planning state.
+export const PLANNED_ISSUE_NUMBERS=Object.freeze(Object.fromEntries(
+  Array.from({length:8},(_,i)=>[`NXL-COMPANY-WO-${String(i+24).padStart(3,"0")}`,i+68])
+));
 const WO=id=>`NXL-COMPANY-WO-${String(id).padStart(3,"0")}`;
 
 // This function uses only supplied, explicitly labeled evidence metadata; it
@@ -32,7 +37,8 @@ export function planBlockedAcceptance({audit, checkpoint, candidateIssues}) {
   for(const issue of candidateIssues) {
     if(!issue || typeof issue.id!=="string" || seen.has(issue.id) ||
        !expected.has(issue.id) || issue.state!=="PLANNED / NOT_ADMITTED" ||
-       !Number.isSafeInteger(issue.issueNumber) || issue.issueNumber<1)
+       !Number.isSafeInteger(issue.issueNumber) ||
+       issue.issueNumber!==PLANNED_ISSUE_NUMBERS[issue.id])
       fail("CANDIDATE_NOT_SAFE");
     seen.add(issue.id);
   }
